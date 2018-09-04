@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary", "CycWpfLibrary\CycWpfLibrary.csproj", "{DC9B1571-60B9-48D4-A147-24820D8E895B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{F7BE7006-BEC6-4E50-8E1E-EDA671BB78F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPractice", "Test\CommandPractice.csproj", "{F7BE7006-BEC6-4E50-8E1E-EDA671BB78F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

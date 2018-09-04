@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+  <Window.DataContext>
+    <local:MainWindowViewModel />
+  </Window.DataContext>
+  <Window.CommandBindings>
+    <CommandBinding Command="{x:Static local:MainWindowViewModel.Requery}"
+                    Executed="Requery_Executed"/>
+  </Window.CommandBindings>
+  <Grid>
+    <StackPanel>
+      <Label Content="{Binding Label}" />
+      <Button Content="Command Button"
+              Command="{Binding ChangeLabelCommand}"/>
+      <Button Content="RoutedCommand Button"
+              Command="{x:Static local:MainWindowViewModel.Requery}" />
+    </StackPanel>
+
+  </Grid>
 </Window>
