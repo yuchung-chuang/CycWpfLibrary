@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace CycWpfLibrary.NativeMethods
 {
@@ -28,5 +31,43 @@ namespace CycWpfLibrary.NativeMethods
       Console.WriteLine(result);
     }
 
+    /// <summary>
+    /// 取得<paramref name="path"/>之PackUri物件
+    /// </summary>
+    /// <param name="path">應用程式資料夾內之路徑</param>
+    public static Uri PackUri(this string path)
+    {
+      return new Uri($"pack://application:,,,/" + path);
+    }
+
+    /// <summary>
+    /// 取得作業系統的Dpi放大率，需要在<paramref name="window"/>已經載入後使用。
+    /// </summary>
+    public static Point GetDpiRatio(this Window window)
+    {
+      Point Dpi = new Point();
+      Point DpiRatio = new Point(1, 1);
+      PresentationSource source = PresentationSource.FromVisual(window);
+      if (source == null)
+      {
+        throw new NullReferenceException("找不到此Window的Visual"); 
+      }
+      else
+      {
+        Dpi.X = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+        Dpi.Y = 96.0 * source.CompositionTarget.TransformToDevice.M22;
+        DpiRatio.X = Dpi.X / 96;
+        DpiRatio.Y = Dpi.Y / 96;
+      }
+      return DpiRatio;
+    }
+
+    /// <summary>
+    /// 取得當下滑鼠在螢幕上的座標。
+    /// </summary>
+    public static Point GetMousePosOnScreen(this Window window)
+    {
+      return window.PointToScreen(Mouse.GetPosition(window));
+    }
   }
 }
