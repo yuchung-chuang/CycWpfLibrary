@@ -22,11 +22,26 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// 初始化<see cref="RelayCommand"/>的執行個體。
     /// </summary>
+    public RelayCommand()
+    {
+
+    }
+    /// <summary>
+    /// 將方法<paramref name="execute"/>封裝成命令，並使此命令永遠可執行。
+    /// </summary>
     /// <param name="execute">要封裝成命令的方法，需有一個<see cref="object"/>類別的參數。</param>
-    /// <param name="canExecute">判斷<paramref name="execute"/>是否可以執行的方法，需有一個<see cref="object"/>類別的參數。</param>
-    public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+    public RelayCommand(Action<object> execute) : this()
     {
       _execute = execute;
+      _canExecute = (obj) => true;
+    }
+    /// <summary>
+    /// 將方法<paramref name="execute"/>封裝成命令，並由<paramref name="canExecute"/>判斷此命令是否可執行。
+    /// </summary>
+    /// <param name="execute">要封裝成命令的方法，需有一個<see cref="object"/>類別的參數。</param>
+    /// <param name="canExecute">判斷<paramref name="execute"/>是否可以執行的方法，需有一個<see cref="object"/>類別的參數。</param>
+    public RelayCommand(Action<object> execute, Predicate<object> canExecute) : this(execute)
+    {
       _canExecute = canExecute;
     }
 

@@ -67,6 +67,7 @@
     <Compile Include="Media\ColorResources.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="NativeMethods\PointExtensions.cs" />
     <Compile Include="NativeMethods\System.cs" />
     <Compile Include="Xaml\MergedStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
