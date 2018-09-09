@@ -65,6 +65,7 @@
     <Compile Include="Media\ColorExtensions.cs" />
     <Compile Include="CycWpfLibrary\Math.cs" />
     <Compile Include="Media\ColorResources.cs" />
+    <Compile Include="MVVM\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\ValueConverterBase.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
