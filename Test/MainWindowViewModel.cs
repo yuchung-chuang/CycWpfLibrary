@@ -23,7 +23,7 @@ namespace Test
       return num < 10;
     }
 
-    public static RoutedUICommand Requery { get; set; }
+    public static RoutedUICommand Requery { get; set; } = new RoutedUICommand();
 
     public MainWindowViewModel()
     {

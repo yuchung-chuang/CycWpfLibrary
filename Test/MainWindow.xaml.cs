@@ -16,6 +16,9 @@ namespace Test
     private void Requery_Executed(object sender, ExecutedRoutedEventArgs e)
     {
       // 按下按鈕或按下鍵盤Ctrl+R都會觸發
+      var n = int.Parse(label1.Content as string);
+      label1.Content = (n++).ToString();
+
     }
   }
 }

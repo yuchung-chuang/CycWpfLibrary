@@ -49,7 +49,10 @@ namespace CycWpfLibrary.MVVM
     /// </summary>
     /// <param name="sender">發生屬性改變的物件。</param>
     /// <param name="e">屬性改變的參數。</param>
-    public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
+    public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+
+    }
 
     /// <summary>
     /// 取得相依屬性的值。
