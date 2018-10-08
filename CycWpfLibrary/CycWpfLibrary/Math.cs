@@ -11,16 +11,12 @@ namespace CycWpfLibrary
   {
     public static int LinConvert(int value1, int max1, int min1, int max2, int min2)
     {
-      float r = (float)(max2 - min2) / (max1 - min1);
-      return (int)Round(min2 + (value1 - min1) * r);
+      return (int)Round(LinConvert((double)value1, max1, min1, max2, min2));
     }
-
     public static float LinConvert(float value1, float max1, float min1, float max2, float min2)
     {
-      float r = (max2 - min2) / (max1 - min1);
-      return (min2 + (value1 - min1) * r);
+      return (float)LinConvert((double)value1, max1, min1, max2, min2);
     }
-
     public static double LinConvert(double value1, double max1, double min1, double max2, double min2)
     {
       double r = (max2 - min2) / (max1 - min1);
@@ -34,17 +30,8 @@ namespace CycWpfLibrary
 
     public static int Clamp(float value, int Max, int Min)
     {
-      if (Min > Max)
-        Swap(ref Max, ref Min);
-
-      if (value > Max)
-        return Max;
-      else if (value < Min)
-        return Min;
-      else
-        return (int)value;
+      return (int)Clamp((double)value, Max, Min);
     }
-
     public static double Clamp(double value, double Max, double Min)
     {
       if (Min > Max)
@@ -60,30 +47,31 @@ namespace CycWpfLibrary
 
     public static void Swap<T>(ref T x, ref T y) => (x, y) = (y, x);
 
+    /// <summary>
+    /// 判斷<paramref name="value"/>是否位於閉區間[<paramref name="Max"/>,<paramref name="Min"/>]中。
+    /// </summary>
     public static bool IsIn(int value, int Max, int Min)
     {
-      if (Min > Max)
-        Swap(ref Max, ref Min);
-      return (value <= Max && value >= Min) ? true : false;
+      return IsIn((double)value, Max, Min);
     }
-
+    /// <summary>
+    /// 判斷<paramref name="value"/>是否位於閉區間[<paramref name="Max"/>,<paramref name="Min"/>]中。
+    /// </summary>
     public static bool IsIn(float value, int Max, int Min)
     {
+      return IsIn((double)value, Max, Min);
+    }
+    /// <summary>
+    /// 判斷<paramref name="value"/>是否位於閉區間[<paramref name="Max"/>,<paramref name="Min"/>]中。<paramref name="excludeBoundary"/>為真時，改為判斷開區間(<paramref name="Max"/>,<paramref name="Min"/>)。
+    /// </summary>
+    public static bool IsIn(double value, double Max, double Min, bool excludeBoundary = false)
+    {
       if (Min > Max)
         Swap(ref Max, ref Min);
-      return (value <= Max && value >= Min) ? true : false;
-    }
-
-    public static bool IsIn(float value, int Max, int Min, bool excludeBoundary)
-    {
       if (!excludeBoundary)
-        return IsIn(value, Max, Min);
+        return (value <= Max && value >= Min) ? true : false;
       else
-      {
-        if (Min > Max)
-          Swap(ref Max, ref Min);
         return (value < Max && value > Min) ? true : false;
-      }
     }
 
     public static double LogBase(double Base, double num)

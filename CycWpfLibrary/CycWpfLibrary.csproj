@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,16 +35,21 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\practices\Audio_practice\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.5.9.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.5.9\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -63,15 +69,21 @@
   <ItemGroup>
     <Compile Include="CycWpfLibrary\ArrayExtensions.cs" />
     <Compile Include="Geometry\PointExtensions.cs" />
+    <Compile Include="Linq\EnumerableExtensions.cs" />
     <Compile Include="Linq\Expressions\ExpressionExtensions.cs" />
     <Compile Include="Media\ColorExtensions.cs" />
     <Compile Include="CycWpfLibrary\Math.cs" />
     <Compile Include="Media\ColorResources.cs" />
+    <Compile Include="Media\Converters.cs" />
+    <Compile Include="Media\Drawing.cs" />
+    <Compile Include="Media\PixelBitmap.cs" />
     <Compile Include="MVVM\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="MVVM\ValueConverterBase.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="NativeMethods\System.cs" />
+    <Compile Include="NAudio\LoopStream.cs" />
+    <Compile Include="NAudio\WavePlayer.cs" />
     <Compile Include="Xaml\MergedStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

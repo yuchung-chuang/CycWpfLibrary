@@ -17,8 +17,10 @@ namespace CycWpfLibrary.MVVM
       remove { CommandManager.RequerySuggested -= value; }
     }
 
-    Action<object> _execute;
-    Predicate<object> _canExecute;
+    private Action _execute;
+    private Func<bool> _canExecute;
+    private Action<object> _executeInput;
+    private Predicate<object> _canExecuteInput;
     /// <summary>
     /// 初始化<see cref="RelayCommand"/>的執行個體。
     /// </summary>
@@ -29,11 +31,29 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// 將方法<paramref name="execute"/>封裝成命令，並使此命令永遠可執行。
     /// </summary>
+    /// <param name="execute">要封裝成命令的方法。</param>
+    public RelayCommand(Action execute) : this()
+    {
+      _execute = execute;
+      _canExecute = () => true;
+    }
+    /// <summary>
+    /// 將方法<paramref name="execute"/>封裝成命令，並由<paramref name="canExecute"/>判斷此命令是否可執行。
+    /// </summary>
+    /// <param name="execute">要封裝成命令的方法。</param>
+    /// <param name="canExecute">判斷<paramref name="action"/>是否可執行的方法。</param>
+    public RelayCommand(Action execute, Func<bool> canExecute) : this(execute)
+    {
+      _canExecute = canExecute;
+    }
+    /// <summary>
+    /// 將方法<paramref name="execute"/>封裝成命令，並使此命令永遠可執行。
+    /// </summary>
     /// <param name="execute">要封裝成命令的方法，需有一個<see cref="object"/>類別的參數。</param>
     public RelayCommand(Action<object> execute) : this()
     {
-      _execute = execute;
-      _canExecute = (obj) => true;
+      _executeInput = execute;
+      _canExecuteInput = (obj) => true;
     }
     /// <summary>
     /// 將方法<paramref name="execute"/>封裝成命令，並由<paramref name="canExecute"/>判斷此命令是否可執行。
@@ -42,25 +62,32 @@ namespace CycWpfLibrary.MVVM
     /// <param name="canExecute">判斷<paramref name="execute"/>是否可以執行的方法，需有一個<see cref="object"/>類別的參數。</param>
     public RelayCommand(Action<object> execute, Predicate<object> canExecute) : this(execute)
     {
-      _canExecute = canExecute;
+      _canExecuteInput = canExecute;
     }
 
     /// <summary>
     /// 判斷<see cref="Execute(object)"/>是否可以執行。
     /// </summary>
-    /// <param name="parameter">需要輸入的參數，若不需要請輸入<see cref="null"/>。</param>
-    public bool CanExecute(object parameter)
+    public bool CanExecute(object parameter = null)
     {
-      return _canExecute == null || _canExecute(parameter); ;
+      return (parameter == null) ? 
+        _canExecute == null || _canExecute() : 
+        _canExecuteInput == null || _canExecuteInput(parameter); 
     }
 
     /// <summary>
     /// 執行封裝的方法。
     /// </summary>
-    /// <param name="parameter">需要輸入的參數，若不需要請輸入<see cref="null"/>。</param>
-    public void Execute(object parameter)
+    public void Execute(object parameter = null)
     {
-      _execute(parameter);
+      if (parameter == null)
+      {
+        _execute();
+      }
+      else
+      {
+        _executeInput(parameter);
+      }
     }
   }
 }
