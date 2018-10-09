@@ -2,6 +2,9 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using Grid = System.Windows.Controls.Grid;
+using Image = System.Windows.Controls.Image;
+using Window = System.Windows.Window;
 
 namespace CycWpfLibrary.Media
 {
@@ -77,6 +80,14 @@ namespace CycWpfLibrary.Media
       _Pixel = pixel;
       Synchronize(nameof(Pixel)); //更新bitmap
     }
+    public PixelBitmap(byte[,,] pixel3)
+    {
+      var width = pixel3.GetLength(0);
+      var height = pixel3.GetLength(1);
+      _Pixel3 = pixel3;
+      _Bitmap = new Bitmap(width, height, PixelImageFormat); //不更新pixel
+      Synchronize(nameof(Pixel3));
+    }
     public object Clone()
     {
       if (this._Bitmap == null)
@@ -116,12 +127,23 @@ namespace CycWpfLibrary.Media
           break;
       }
     }
+
+    public void ShowSnapShot()
+    {
+      var window = new Window();
+      var grid = new Grid();
+      var image = new Image();
+      window.Content = grid;
+      grid.Children.Add(image);
+      image.Source = this.ToBitmapSource();
+      window.ShowDialog();
+    }
     #endregion
 
     #region Convert Methods
     private void PixelToPixel3()
     {
-      _Pixel3 = new byte[_Bitmap.Width, _Bitmap.Height, 4];
+      _Pixel3 = new byte[_Bitmap.Width, _Bitmap.Height, Byte];
       int idx;
       for (int x = 0; x < _Bitmap.Width; x++)
       {
@@ -138,11 +160,14 @@ namespace CycWpfLibrary.Media
 
     private void Pixel3ToPixel()
     {
-      _Pixel = new byte[_Pixel.Length];
+      var width = _Pixel3.GetLength(0);
+      var height = _Pixel3.GetLength(1);
+      var depth = _Pixel3.GetLength(2);
+      _Pixel = new byte[width * height * depth];
       int idx;
-      for (int x = 0; x < _Bitmap.Width; x++)
+      for (int x = 0; x < width; x++)
       {
-        for (int y = 0; y < _Bitmap.Height; y++)
+        for (int y = 0; y < height; y++)
         {
           idx = x * Byte + y * Stride;
           _Pixel[idx]     = _Pixel3[x, y, 3]; //B
