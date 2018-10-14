@@ -78,5 +78,15 @@ namespace CycWpfLibrary
     {
       return Log(num) / Log(Base);
     }
+
+    /// <summary>
+    /// 判斷<paramref name="A"/>是否約等於<paramref name="B"/>。
+    /// </summary>
+    /// <param name="tol">容許誤差。</param>
+    public static bool ApproxEqual(double A, double B, double tol)
+    {
+      return IsIn(A, B + tol, B - tol);
+    }
+
   }
 }

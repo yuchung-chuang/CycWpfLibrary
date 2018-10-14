@@ -27,7 +27,7 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// Storage for triggers
     /// </summary>
-    public List<TriggerBase> Triggers
+    public new List<TriggerBase> Triggers
     {
       get
       {
