@@ -30,19 +30,20 @@ namespace CycWpfLibrary.MVVM
     /// </summary>
     /// <param name="sender">發生屬性改變的物件。</param>
     /// <param name="e">屬性改變的參數。</param>
-    public static void OnValuePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    private static void OnValuePropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
     {
       //觸發屬性改變事件。
-      Instance.ValueChanged(sender, e);
+      Instance.ValueChanged?.Invoke(sender, e);
 
       //觸發父類別屬性改變的覆寫方法。
       Instance.OnValueChanged(sender, e);
     }
 
+    #region events and virtual methods
     /// <summary>
     /// 當屬性改變時，提供給外界註冊、觸發的事件。
     /// </summary>
-    public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
+    public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged;
 
     /// <summary>
     /// 當屬性改變時，提供給外界覆寫的方法。
@@ -53,7 +54,9 @@ namespace CycWpfLibrary.MVVM
     {
 
     }
+    #endregion
 
+    #region public methods
     /// <summary>
     /// 取得相依屬性的值。
     /// </summary>
@@ -66,5 +69,6 @@ namespace CycWpfLibrary.MVVM
     /// <param name="sender">擁有相依屬性的物件。</param>
     /// <param name="value">要設定給相依屬性的值。</param>
     public static void SetValue(DependencyObject sender, Property value) => sender.SetValue(ValueProperty, value);
+    #endregion
   }
 }

@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using SolidColorBrush = System.Windows.Media.SolidColorBrush;
+using Colors = System.Windows.Media.Colors;
 using Grid = System.Windows.Controls.Grid;
 using Image = System.Windows.Controls.Image;
 using Window = System.Windows.Window;
@@ -130,8 +132,14 @@ namespace CycWpfLibrary.Media
 
     public void ShowSnapShot()
     {
-      var window = new Window();
-      var grid = new Grid();
+      var window = new Window
+      {
+        Background = new SolidColorBrush(Colors.LightGray),
+      };
+      var grid = new Grid
+      {
+        Background = null,
+      };
       var image = new Image();
       window.Content = grid;
       grid.Children.Add(image);

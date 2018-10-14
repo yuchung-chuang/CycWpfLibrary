@@ -13,8 +13,7 @@ namespace CycWpfLibrary.MVVM
     /// 當其他屬性變更時觸發此事件。
     /// 請安裝Fody.PropertyChanged套件以自動呼叫此事件。
     /// </summary>
-    public event PropertyChangedEventHandler PropertyChanged 
-      = (sender, e) => { }; //必須初始化，否則設定Command時會報錯
+    public event PropertyChangedEventHandler PropertyChanged;
 
     /// <summary>
     /// 提供方法呼叫<see cref="PropertyChanged"/>事件。
@@ -22,7 +21,7 @@ namespace CycWpfLibrary.MVVM
     /// <param name="property">發生<see cref="PropertyChanged"/>的屬性。</param>
     public void OnPropertyChanged(string property)
     {
-      PropertyChanged(this, new PropertyChangedEventArgs(property));
+      PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
     }
   }
 }
