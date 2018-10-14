@@ -25,7 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -83,6 +83,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\AdjustableRect.xaml.cs">
+      <DependentUpon>AdjustableRect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DropImageReceiver.xaml.cs">
+      <DependentUpon>DropImageReceiver.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CycWpfLibrary\ArrayExtensions.cs" />
     <Compile Include="Geometry\PointExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions.cs" />
@@ -100,7 +106,7 @@
     <Compile Include="MVVM\Converters\MathConverter.cs" />
     <Compile Include="MVVM\Converters\MultiConverterBase .cs" />
     <Compile Include="MVVM\Converters\ValueConverterBase.cs" />
-    <Compile Include="MVVM\Interactivity.cs" />
+    <Compile Include="MVVM\Commands\Interactivity.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="NativeMethods\System.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
@@ -136,6 +142,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MVVM\Animations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\AdjustableRect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DropImageReceiver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\iosLayout\packages\Fody.3.1.3\build\Fody.targets" Condition="Exists('..\..\iosLayout\packages\Fody.3.1.3\build\Fody.targets')" />
