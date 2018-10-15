@@ -89,6 +89,7 @@
     <Compile Include="Controls\DropImageReceiver.xaml.cs">
       <DependentUpon>DropImageReceiver.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Media\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\ArrayExtensions.cs" />
     <Compile Include="Geometry\PointExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions.cs" />
@@ -107,7 +108,9 @@
     <Compile Include="MVVM\Converters\MultiConverterBase .cs" />
     <Compile Include="MVVM\Converters\ValueConverterBase.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
+    <Compile Include="MVVM\Converters\DebugConverter.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
+    <Compile Include="MVVM\ViewModels\ViewModelUserControl.cs" />
     <Compile Include="NativeMethods\System.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
     <Compile Include="NAudio\WavePlayer.cs" />

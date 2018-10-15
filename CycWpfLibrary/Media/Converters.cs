@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Size = System.Drawing.Size;
 
 namespace CycWpfLibrary.Media
 {
@@ -60,6 +61,39 @@ namespace CycWpfLibrary.Media
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap)
     {
       return pixelBitmap.Bitmap.ToBitmapSource();
+    }
+
+    /// <summary>
+    /// ???
+    /// </summary>
+    [Obsolete("Need to be fixed.", true)]
+    private static PixelBitmap ToPixelBitmap(this BitmapSource bitmapSource)
+    {
+      var encoder = new BmpBitmapEncoder();
+      var memoryStream = new MemoryStream();
+      encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+      encoder.Save(memoryStream);
+      var pixel = memoryStream.GetBuffer();
+      return new PixelBitmap(pixel, new Size((int)bitmapSource.Width, (int)bitmapSource.Height));
+    }
+    [Obsolete("Need to be fixed.", true)]
+    public static BitmapImage ToBitmapImage(this BitmapSource bitmapSource)
+    {
+      BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+      MemoryStream memoryStream = new MemoryStream();
+      BitmapImage bImg = new BitmapImage();
+
+      encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+      encoder.Save(memoryStream);
+
+      memoryStream.Position = 0;
+      bImg.BeginInit();
+      bImg.StreamSource = memoryStream;
+      bImg.EndInit();
+
+      memoryStream.Close();
+
+      return bImg;
     }
   }
 }

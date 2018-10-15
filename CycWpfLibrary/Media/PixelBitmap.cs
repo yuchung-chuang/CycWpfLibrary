@@ -7,10 +7,11 @@ using Colors = System.Windows.Media.Colors;
 using Grid = System.Windows.Controls.Grid;
 using Image = System.Windows.Controls.Image;
 using Window = System.Windows.Window;
+using DependencyObject = System.Windows.DependencyObject;
 
 namespace CycWpfLibrary.Media
 {
-  public class PixelBitmap : ICloneable
+  public class PixelBitmap : DependencyObject, ICloneable
   {
     public int Width => _Bitmap.Width;
     public int Height => _Bitmap.Height;
