@@ -20,8 +20,7 @@
         DragEnter="grid_DragEnter"
         DragLeave="grid_DragLeave"
         MouseDown="grid_MouseDown">
-    <Image Name="image"
-           Source="{Binding DropImageSource}"/>
+    <Image Name="image"/>
     <Border Name="border"
             Background="Transparent" />
   </Grid>

@@ -103,9 +103,11 @@
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
+    <Compile Include="MVVM\Converters\ComboConverterBase.cs" />
+    <Compile Include="MVVM\Converters\ConverterBase.cs" />
     <Compile Include="MVVM\Converters\MarginConverter.cs" />
     <Compile Include="MVVM\Converters\MathConverter.cs" />
-    <Compile Include="MVVM\Converters\MultiConverterBase .cs" />
+    <Compile Include="MVVM\Converters\MultiValueConverterBase .cs" />
     <Compile Include="MVVM\Converters\ValueConverterBase.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
     <Compile Include="MVVM\Converters\DebugConverter.cs" />
