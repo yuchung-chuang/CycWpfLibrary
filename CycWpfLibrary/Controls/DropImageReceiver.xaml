@@ -1,17 +1,17 @@
 ﻿<cycMVVM:ViewModelUserControl x:Class="CycWpfLibrary.Controls.DropImageReceiver"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:cycMVVM="clr-namespace:CycWpfLibrary.MVVM"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:CycWpfLibrary.Controls"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:cycMVVM="clr-namespace:CycWpfLibrary.MVVM"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:local="clr-namespace:CycWpfLibrary.Controls"
+                              mc:Ignorable="d"
+                              d:DesignHeight="450"
+                              d:DesignWidth="800">
   <UserControl.Resources>
     <SolidColorBrush x:Key="ShadowBrush"
                      x:Name="ShadowBrush"
-                     Color="#9987CEFA"/>
+                     Color="#9987CEFA" />
   </UserControl.Resources>
   <!--background color animation-->
   <Grid Name="grid"
@@ -20,7 +20,7 @@
         DragEnter="grid_DragEnter"
         DragLeave="grid_DragLeave"
         MouseDown="grid_MouseDown">
-    <Image Name="image"/>
+    <Image Name="image" />
     <Border Name="border"
             Background="Transparent" />
   </Grid>

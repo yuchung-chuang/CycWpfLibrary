@@ -83,9 +83,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\AdjustableRect.xaml.cs">
-      <DependentUpon>AdjustableRect.xaml</DependentUpon>
+    <Compile Include="Controls\Axis.xaml.cs">
+      <DependentUpon>Axis.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DesignModels\AxisDesignModel.cs" />
     <Compile Include="Controls\DropImageReceiver.xaml.cs">
       <DependentUpon>DropImageReceiver.xaml</DependentUpon>
     </Compile>
@@ -103,14 +104,15 @@
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
-    <Compile Include="MVVM\Converters\ComboConverterBase.cs" />
-    <Compile Include="MVVM\Converters\ConverterBase.cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\ConverterBase.cs" />
     <Compile Include="MVVM\Converters\MarginConverter.cs" />
     <Compile Include="MVVM\Converters\MathConverter.cs" />
-    <Compile Include="MVVM\Converters\MultiValueConverterBase .cs" />
-    <Compile Include="MVVM\Converters\ValueConverterBase.cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\ValueConverterBase.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
     <Compile Include="MVVM\Converters\DebugConverter.cs" />
+    <Compile Include="MVVM\Converters\UniversalConverter.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelUserControl.cs" />
     <Compile Include="NativeMethods\System.cs" />
@@ -136,6 +138,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Controls\Fonts\fontawesome-webfont.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -149,11 +152,15 @@
     <Folder Include="MVVM\Animations\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\AdjustableRect.xaml">
+    <Page Include="Controls\Axis.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DropImageReceiver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Styles\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
