@@ -18,12 +18,16 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// 父類別的單例實例。
     /// </summary>
-    public static Parent Instance { get; private set; } = new Parent();
+    public static readonly Parent Instance = new Parent();
 
+    #region Dependency Properties
     /// <summary>
     /// 宣告相依屬性，並綁定屬性改變的回呼。
     /// </summary>
-    public static DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(Property), typeof(AttachedPropertyBase<Parent, Property>), new PropertyMetadata(new PropertyChangedCallback(OnValuePropertyChanged)));
+    public static DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(Property), typeof(AttachedPropertyBase<Parent, Property>), new UIPropertyMetadata(
+      default(Property),
+      new PropertyChangedCallback(OnValuePropertyChanged),
+      new CoerceValueCallback(OnValuePropertyUpdated)));
 
     /// <summary>
     /// 當屬性改變時，系統自動觸發的回呼。
@@ -39,6 +43,24 @@ namespace CycWpfLibrary.MVVM
       Instance.OnValueChanged(sender, e);
     }
 
+    /// <summary>
+    /// 當屬性被設定時(即便設定的數值一樣)，系統自動觸發的回呼。
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="baseValue"></param>
+    /// <returns></returns>
+    private static object OnValuePropertyUpdated(DependencyObject sender, object baseValue)
+    {
+      //觸發屬性改變事件。
+      Instance.ValueUpdated?.Invoke(sender, baseValue);
+
+      //觸發父類別屬性改變的覆寫方法。
+      Instance.OnValueUpdated(sender, baseValue);
+
+      return baseValue;
+    }
+    #endregion
+
     #region events and virtual methods
     /// <summary>
     /// 當屬性改變時，提供給外界註冊、觸發的事件。
@@ -46,11 +68,24 @@ namespace CycWpfLibrary.MVVM
     public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged;
 
     /// <summary>
+    /// 當屬性被設定時(即便設定的數值一樣)，提供給外界註冊、觸發的事件。
+    /// </summary>
+    public event Action<DependencyObject, object> ValueUpdated;
+
+    /// <summary>
     /// 當屬性改變時，提供給外界覆寫的方法。
     /// </summary>
     /// <param name="sender">發生屬性改變的物件。</param>
     /// <param name="e">屬性改變的參數。</param>
     public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+    {
+
+    }
+
+    /// <summary>
+    /// 當屬性被設定時(即便設定的數值一樣)，提供改外界覆寫的方法。
+    /// </summary>
+    public virtual void OnValueUpdated(DependencyObject sender, object baseValue)
     {
 
     }
