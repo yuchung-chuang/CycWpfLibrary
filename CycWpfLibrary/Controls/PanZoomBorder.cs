@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using CycWpfLibrary.Media;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Bitmap = System.Drawing.Bitmap;
 
 namespace CycWpfLibrary.Controls
 {
@@ -102,6 +105,7 @@ namespace CycWpfLibrary.Controls
       }
     }
 
+    //private Bitmap cursorBitmap = Properties.Resources.cursor_drag;
     private void child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       if (child != null)
@@ -109,7 +113,8 @@ namespace CycWpfLibrary.Controls
         var tt = GetTranslateTransform(child);
         start = e.GetPosition(this);
         origin = new Point(tt.X, tt.Y);
-        this.Cursor = Cursors.Hand;
+        //Cursor = cursorBitmap.ToCursor(cursorBitmap.Width / 2, cursorBitmap.Height / 2);
+        Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
         child.CaptureMouse();
       }
     }
@@ -123,7 +128,7 @@ namespace CycWpfLibrary.Controls
       }
     }
 
-    void child_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    private void child_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
     {
       this.Reset();
     }

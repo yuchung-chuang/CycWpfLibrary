@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Size = System.Drawing.Size;
@@ -15,6 +17,7 @@ namespace CycWpfLibrary.Media
 {
   public static class Converters
   {
+    // BitmapImage
     public static Bitmap ToBitmap(this BitmapImage bitmapImage)
     {
       using (MemoryStream outStream = new MemoryStream())
@@ -30,6 +33,7 @@ namespace CycWpfLibrary.Media
       return new PixelBitmap(bitmapImage.ToBitmap());
     }
 
+    // Bitmap
     [DllImport("gdi32.dll")]
     public static extern bool DeleteObject(IntPtr hObject);
     public static BitmapSource ToBitmapSource(this Bitmap bitmap)
@@ -52,12 +56,60 @@ namespace CycWpfLibrary.Media
 
       return retval;
     }
-    
     public static PixelBitmap ToPixelBitmap(this Bitmap bitmap)
     {
       return new PixelBitmap(bitmap);
     }
 
+    public struct IconInfo
+    {
+      public bool fIcon;
+      public int xHotspot;
+      public int yHotspot;
+      public IntPtr hbmMask;
+      public IntPtr hbmColor;
+    }
+    [DllImport("user32.dll")]
+    static extern IntPtr CreateIconIndirect(ref IconInfo piconinfo);
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo piconinfo);
+    class SafeIconHandle : SafeHandleZeroOrMinusOneIsInvalid
+    {
+      [DllImport("user32.dll", SetLastError = true)]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool DestroyIcon([In] IntPtr hIcon);
+      private SafeIconHandle()
+          : base(true)
+      {
+      }
+      public SafeIconHandle(IntPtr hIcon)
+          : base(true)
+      {
+        this.SetHandle(hIcon);
+      }
+      protected override bool ReleaseHandle()
+      {
+        return DestroyIcon(this.handle);
+      }
+    }
+    public static Cursor ToCursor(this Bitmap b, int x, int y)
+    {
+      /// get icon from input bitmap
+      IconInfo ico = new IconInfo();
+      GetIconInfo(b.GetHicon(), ref ico);
+
+      /// set the hotspot
+      ico.xHotspot = x;
+      ico.yHotspot = y;
+      ico.fIcon = false;
+
+      /// create a cursor from iconinfo
+      IntPtr cursor = CreateIconIndirect(ref ico);
+      return CursorInteropHelper.Create(new SafeIconHandle(cursor));
+    }
+
+    // PixelBitamp
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap)
     {
       return pixelBitmap.Bitmap.ToBitmapSource();
