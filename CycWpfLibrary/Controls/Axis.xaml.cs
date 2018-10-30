@@ -119,13 +119,17 @@ namespace CycWpfLibrary.Controls
     private AdjustType GetState(Point mousePos)
     {
       var state = new AdjustType();
-      if (ApproxEqual(mousePos.X, AxisLeft, tol))
+      if (ApproxEqual(mousePos.X, AxisLeft, tol) &&
+        IsIn(mousePos.Y, AxisTop, AxisBottom))
         state = state.Add(AdjustType.Left);
-      if (ApproxEqual(mousePos.Y, AxisTop, tol))
+      if (ApproxEqual(mousePos.Y, AxisTop, tol) &&
+        IsIn(mousePos.X, AxisLeft, AxisRight))
         state = state.Add(AdjustType.Top);
-      if (ApproxEqual(mousePos.X, AxisRight, tol))
+      if (ApproxEqual(mousePos.X, AxisRight, tol) &&
+        IsIn(mousePos.Y, AxisTop, AxisBottom))
         state = state.Add(AdjustType.Right);
-      if (ApproxEqual(mousePos.Y, AxisBottom, tol))
+      if (ApproxEqual(mousePos.Y, AxisBottom, tol) &&
+        IsIn(mousePos.X, AxisLeft, AxisRight))
         state = state.Add(AdjustType.Bottom);
       return state;
     }
@@ -167,6 +171,9 @@ namespace CycWpfLibrary.Controls
       {
         IsAdjust = true;
         CaptureMouse();
+
+        // block other events
+        e.Handled = true;
       }
     }
 
