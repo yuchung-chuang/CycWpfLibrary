@@ -32,6 +32,10 @@ namespace CycWpfLibrary.Controls
   public static class AdjustTypeExtension
   {
     public static bool Contain(this AdjustType typeA, AdjustType typeB) => (typeA & typeB) == typeB;
+
+    public static AdjustType Add(this AdjustType typeA, AdjustType typeB) => typeA | typeB;
+
+    public static AdjustType Remove(this AdjustType typeA, AdjustType typeB) => typeA ^ typeB;
   }
 
   public partial class Axis : ViewModelUserControl
@@ -116,21 +120,13 @@ namespace CycWpfLibrary.Controls
     {
       var state = new AdjustType();
       if (ApproxEqual(mousePos.X, AxisLeft, tol))
-      {
-        state |= AdjustType.Left;
-      }
+        state = state.Add(AdjustType.Left);
       if (ApproxEqual(mousePos.Y, AxisTop, tol))
-      {
-        state |= AdjustType.Top;
-      }
+        state = state.Add(AdjustType.Top);
       if (ApproxEqual(mousePos.X, AxisRight, tol))
-      {
-        state |= AdjustType.Right;
-      }
+        state = state.Add(AdjustType.Right);
       if (ApproxEqual(mousePos.Y, AxisBottom, tol))
-      {
-        state |= AdjustType.Bottom;
-      }
+        state = state.Add(AdjustType.Bottom);
       return state;
     }
     private void UpdateCursor(AdjustType state)
