@@ -47,12 +47,15 @@ namespace CycWpfLibrary.Controls
         group.Children.Add(tt);
         child.RenderTransform = group;
         child.RenderTransformOrigin = new Point(0.0, 0.0);
-        this.MouseWheel += child_MouseWheel;
-        this.MouseLeftButtonDown += child_MouseLeftButtonDown;
-        this.MouseLeftButtonUp += child_MouseLeftButtonUp;
-        this.MouseMove += child_MouseMove;
-        this.PreviewMouseRightButtonDown += new MouseButtonEventHandler(
+        MouseWheel += child_MouseWheel;
+        MouseLeftButtonDown += child_MouseLeftButtonDown;
+        MouseLeftButtonUp += child_MouseLeftButtonUp;
+        MouseMove += child_MouseMove;
+        PreviewMouseRightButtonDown += new MouseButtonEventHandler(
           child_PreviewMouseRightButtonDown);
+
+        ClipToBounds = true;
+        Background = new SolidColorBrush(Colors.Transparent);
       }
     }
 
@@ -73,7 +76,6 @@ namespace CycWpfLibrary.Controls
     }
 
     #region Child Events
-
     private void child_MouseWheel(object sender, MouseWheelEventArgs e)
     {
       if (child != null)
