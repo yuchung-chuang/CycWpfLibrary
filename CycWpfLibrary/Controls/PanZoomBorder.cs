@@ -1,11 +1,8 @@
-﻿using CycWpfLibrary.Media;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Bitmap = System.Drawing.Bitmap;
 
 namespace CycWpfLibrary.Controls
 {
@@ -56,9 +53,6 @@ namespace CycWpfLibrary.Controls
         MouseMove += child_MouseMove;
         PreviewMouseRightButtonDown += new MouseButtonEventHandler(
           child_PreviewMouseRightButtonDown);
-
-        ClipToBounds = true;
-        Background = new SolidColorBrush(Colors.Transparent);
       }
     }
 
@@ -79,6 +73,7 @@ namespace CycWpfLibrary.Controls
     }
 
     #region Child Events
+
     private void child_MouseWheel(object sender, MouseWheelEventArgs e)
     {
       if (child != null)
@@ -128,7 +123,7 @@ namespace CycWpfLibrary.Controls
       }
     }
 
-    private void child_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    void child_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
     {
       this.Reset();
     }
