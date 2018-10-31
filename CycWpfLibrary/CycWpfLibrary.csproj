@@ -90,6 +90,9 @@
     <Compile Include="Controls\DropImageReceiver.xaml.cs">
       <DependentUpon>DropImageReceiver.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PanZoomBorder.cs" />
     <Compile Include="Media\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\ArrayExtensions.cs" />
@@ -166,12 +169,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ImageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Controls\Resources\cursor_drag.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Controls\Resources\cursor_drag.cur" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Controls\Resources\cursor.cur" />
