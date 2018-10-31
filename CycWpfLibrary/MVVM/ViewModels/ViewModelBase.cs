@@ -11,10 +11,6 @@ namespace CycWpfLibrary.MVVM
   public class ViewModelBase<ViewModelType> : INotifyPropertyChanged where ViewModelType : class, new()
   {
     /// <summary>
-    /// ViewModel的靜態實例，提供Xaml引用。
-    /// </summary>
-    public static ViewModelType Instance { get; private set; } = new ViewModelType();
-    /// <summary>
     /// 當其他屬性變更時觸發此事件。
     /// 請安裝Fody.PropertyChanged套件以自動呼叫此事件。
     /// </summary>
