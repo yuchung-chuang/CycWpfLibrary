@@ -122,6 +122,7 @@
     <Compile Include="NativeMethods\System.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
     <Compile Include="NAudio\WavePlayer.cs" />
+    <Compile Include="Threading\TaskQueue.cs" />
     <Compile Include="Xaml\MergedStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
