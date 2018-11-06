@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Test
 {
-  public class MainWindowViewModel : ViewModelBase
+  public class MainWindowViewModel : ViewModelBase<MainWindowViewModel>
   {
     public string Label { get; set; } = "0";
 
