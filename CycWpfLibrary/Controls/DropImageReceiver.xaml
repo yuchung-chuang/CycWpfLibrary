@@ -15,13 +15,28 @@
   </UserControl.Resources>
   <!--background color animation-->
   <Grid Name="grid"
+        Background="Transparent"
         AllowDrop="True"
-        Drop="grid_Drop"
-        DragEnter="grid_DragEnter"
-        DragLeave="grid_DragLeave"
-        MouseDown="grid_MouseDown">
-    <Image Name="image" />
-    <Border Name="border"
-            Background="Transparent" />
+        Drop="grid_Drop">
+    <Grid.Triggers>
+      <EventTrigger RoutedEvent="Grid.DragEnter">
+        <BeginStoryboard>
+          <Storyboard>
+            <ColorAnimation Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
+                            To="#9987CEFA"
+                            Duration="0:0:0.5" />
+          </Storyboard>
+        </BeginStoryboard>
+      </EventTrigger>
+      <EventTrigger RoutedEvent="Grid.DragLeave">
+        <BeginStoryboard>
+          <Storyboard>
+            <ColorAnimation Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
+                            To="Transparent"
+                            Duration="0:0:0.5" />
+          </Storyboard>
+        </BeginStoryboard>
+      </EventTrigger>
+    </Grid.Triggers>
   </Grid>
 </cycMVVM:ViewModelUserControl>

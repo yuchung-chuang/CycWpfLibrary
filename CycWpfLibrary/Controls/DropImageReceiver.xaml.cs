@@ -24,18 +24,12 @@ namespace CycWpfLibrary.Controls
   /// </summary>
   public partial class DropImageReceiver : ViewModelUserControl
   {
-    private readonly string brushResource = "ShadowBrush";
-    private SolidColorBrush ShadowBrush;
     public DropImageReceiver()
     {
       InitializeComponent();
-      ShadowBrush = FindResource(brushResource) as SolidColorBrush;
 
       grid.DataContext = this;
     }
-
-    // Can't be fired by OnPropertyChanged???
-    public BitmapSource DropImageSource => DropPixelBitmap?.ToBitmapSource();
 
     public static readonly DependencyProperty DropPixelBitmapProperty = DependencyProperty.Register(nameof(DropPixelBitmap), typeof(PixelBitmap), typeof(DropImageReceiver));
     public PixelBitmap DropPixelBitmap
@@ -61,30 +55,7 @@ namespace CycWpfLibrary.Controls
       {
         MessageBox.Show("Input file should be an image.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
       }
-
-      border.Background = new SolidColorBrush(Colors.Transparent);
-    }
-
-    private void grid_DragEnter(object sender, DragEventArgs e)
-    {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-        return;
-
-      // color animation
-      border.Background = ShadowBrush;
-    }
-
-    private void grid_DragLeave(object sender, DragEventArgs e)
-    {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-        return;
-
-      border.Background = new SolidColorBrush(Colors.Transparent);
-    }
-
-    private void grid_MouseDown(object sender, MouseButtonEventArgs e)
-    {
-
+      
     }
   }
 }
