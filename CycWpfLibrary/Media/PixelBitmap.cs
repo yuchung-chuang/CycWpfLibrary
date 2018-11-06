@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Windows.Threading;
 using Colors = System.Windows.Media.Colors;
 using DependencyObject = System.Windows.DependencyObject;
 using Grid = System.Windows.Controls.Grid;
@@ -158,8 +159,8 @@ namespace CycWpfLibrary.Media
           PixelToPixel3();
           break;
         case nameof(Pixel3):
-          PixelToBitmap();
           Pixel3ToPixel();
+          PixelToBitmap();
           break;
       }
     }
