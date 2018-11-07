@@ -123,7 +123,6 @@ namespace CycWpfLibrary.Controls
       }
     }
 
-    //private Bitmap cursorBitmap = Properties.Resources.cursor_drag;
     private void child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       if (HasContent)
@@ -131,7 +130,6 @@ namespace CycWpfLibrary.Controls
         var tt = GetTranslateTransform();
         start = e.GetPosition(this);
         origin = new Point(tt.X, tt.Y);
-        //Cursor = cursorBitmap.ToCursor(cursorBitmap.Width / 2, cursorBitmap.Height / 2);
         Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
         ContentElement.CaptureMouse();
       }
