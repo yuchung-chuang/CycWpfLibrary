@@ -11,25 +11,30 @@
              d:DesignHeight="600"
              d:DesignWidth="900">
   <UserControl.Resources>
-    <ControlTemplate x:Key="ButtonTemplate"
-                     TargetType="{x:Type ButtonBase}">
-      <Border x:Name="border"
-              BorderBrush="{TemplateBinding BorderBrush}"
-              BorderThickness="{TemplateBinding BorderThickness}"
-              Background="{TemplateBinding Background}"
-              SnapsToDevicePixels="True">
-        <ContentPresenter x:Name="contentPresenter"
-                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                          Content="{TemplateBinding Content}"
-                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                          Focusable="False"
-                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                          Margin="{TemplateBinding Padding}"
-                          RecognizesAccessKey="True"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-      </Border>
-    </ControlTemplate>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Styles/Fonts.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <ControlTemplate x:Key="ButtonTemplate"
+                       TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                Background="{TemplateBinding Background}"
+                SnapsToDevicePixels="True">
+          <ContentPresenter x:Name="contentPresenter"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Content="{TemplateBinding Content}"
+                            ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </Border>
+      </ControlTemplate>
+    </ResourceDictionary>
   </UserControl.Resources>
   <Grid Name="gridMain">
     <Grid.Resources>
@@ -84,7 +89,7 @@
            Grid.ColumnSpan="3"
            Name="frameMain"
            NavigationUIVisibility="Hidden"
-           Content="{Binding PageManager.CurrentPage}"/>
+           Content="{Binding PageManager.CurrentPage}" />
 
     <Button Name="BackButton"
             Grid.Column="0"
@@ -126,7 +131,7 @@
         </EventTrigger>
 
       </Button.Triggers>
-      
+
     </Button>
 
     <Button Name="NextButton"

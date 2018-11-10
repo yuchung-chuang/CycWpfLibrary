@@ -2,6 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CycWpfLibrary.Controls">
   <FontFamily x:Key="FontAwesome">
-    pack://application;,,,/Controls/Fonts/#FontAwesome
+    pack://application:,,,/CycWpfLibrary;component/Controls/Fonts/#FontAwesome
   </FontFamily>
 </ResourceDictionary>
