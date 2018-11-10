@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Threading;
 using Colors = System.Windows.Media.Colors;
 using DependencyObject = System.Windows.DependencyObject;
@@ -45,11 +47,15 @@ namespace CycWpfLibrary.Media
     {
       get
       {
+        Bitmap bitmap;
         lock (key) 
         {
-          return _Bitmap.Clone() as Bitmap;
+          //Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} Enter Lock");
+          bitmap = _Bitmap.Clone() as Bitmap;
 
         }
+        //Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} Leave Lock");
+        return bitmap;
       }
       set
       {

@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32.SafeHandles;
+﻿using Emgu.CV;
+using Emgu.CV.Structure;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,7 +17,7 @@ using Size = System.Drawing.Size;
 
 namespace CycWpfLibrary.Media
 {
-  public static class Converters
+  public static class ImageConverters
   {
     // BitmapImage
     public static Bitmap ToBitmap(this BitmapImage bitmapImage)
@@ -28,10 +30,7 @@ namespace CycWpfLibrary.Media
         return new Bitmap(outStream);
       }
     }
-    public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage)
-    {
-      return new PixelBitmap(bitmapImage.ToBitmap());
-    }
+    public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage) => bitmapImage.ToBitmap().ToPixelBitmap();
 
     // Bitmap
     [DllImport("gdi32.dll")]
@@ -56,10 +55,7 @@ namespace CycWpfLibrary.Media
 
       return retval;
     }
-    public static PixelBitmap ToPixelBitmap(this Bitmap bitmap)
-    {
-      return new PixelBitmap(bitmap);
-    }
+    public static PixelBitmap ToPixelBitmap(this Bitmap bitmap) => new PixelBitmap(bitmap);
 
     public struct IconInfo
     {
@@ -109,11 +105,30 @@ namespace CycWpfLibrary.Media
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
 
+    public static Image<TColor, TDepth> ToImage<TColor, TDepth>(this Bitmap bitmap) 
+      where TColor : struct, IColor 
+      where TDepth : new() 
+      => new Image<TColor, TDepth>(bitmap);
+    /// <summary>
+    /// 將<see cref="Bitmap"/>透過<see cref="Image"/>(<see cref="Bgr"/>,<see cref="byte"/>)轉換成<see cref="Mat"/>
+    /// </summary>
+    public static Mat ToMat(this Bitmap bitmap) => bitmap.ToImage<Bgr, byte>().Mat;
+
+
     // PixelBitamp
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap)
     {
       return pixelBitmap.Bitmap.ToBitmapSource();
     }
+
+    public static Mat ToMat(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToMat();
+
+    // Mat
+    public static BitmapSource ToBitmapSource(this Mat mat) => mat?.Bitmap?.ToBitmapSource();
+
+    public static Bitmap ToBitmap(this Mat mat) => mat?.Bitmap;
+
+    public static PixelBitmap ToPixelBitmap(this Mat mat) => mat?.Bitmap?.ToPixelBitmap();
 
     /// <summary>
     /// ???
