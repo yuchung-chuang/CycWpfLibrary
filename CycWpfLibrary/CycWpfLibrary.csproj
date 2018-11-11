@@ -106,6 +106,9 @@
     <Compile Include="Controls\PanZoomBorder.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
+    <Compile Include="MVVM\Converters\NumStrConverter.cs" />
+    <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
+    <Compile Include="MVVM\Validations\Validations.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
     <Compile Include="Media\BitmapExtensions.cs" />
@@ -124,7 +127,7 @@
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
-    <Compile Include="MVVM\Converters\ConverterBases\ConverterBase.cs" />
+    <Compile Include="MVVM\MvvmBases\XamlBase.cs" />
     <Compile Include="MVVM\Converters\MarginConverter.cs" />
     <Compile Include="MVVM\Converters\MathConverter.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />

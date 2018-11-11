@@ -13,7 +13,7 @@ namespace CycWpfLibrary.MVVM
   /// 提供具有<see cref="IMultiValueConverter"/>功能的類別。
   /// </summary>
   /// <typeparam name="MultiValueConverterType">要實作的MultiValueConverter類別。</typeparam>
-  public abstract class MultiValueConverterBase<MultiValueConverterType> : ConverterBase<MultiValueConverterType>, IMultiValueConverter 
+  public abstract class MultiValueConverterBase<MultiValueConverterType> : XamlBase<MultiValueConverterType>, IMultiValueConverter 
     where MultiValueConverterType : class, new()
   {
     public abstract object Convert(object[] values, System.Type targetType, object parameter, CultureInfo culture);
