@@ -104,6 +104,7 @@
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PanZoomBorder.cs" />
+    <Compile Include="CycWpfLibrary\Enumeration.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="MVVM\Converters\NumStrConverter.cs" />

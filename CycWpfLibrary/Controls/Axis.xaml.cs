@@ -1,6 +1,8 @@
-﻿using CycWpfLibrary.MVVM;
+﻿using CycWpfLibrary;
+using CycWpfLibrary.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +19,37 @@ using static CycWpfLibrary.Math;
 
 namespace CycWpfLibrary.Controls
 {
-  public enum AdjustType
+  //public enum AdjustType
+  //{
+  //  None = 0x0,
+  //  Left = 0x1,
+  //  Top = 0x2,
+  //  Right = 0x4,
+  //  Bottom = 0x8,
+  //  LeftTop = Left | Top,
+  //  RightTop = Right | Top,
+  //  LeftBottom = Left | Bottom,
+  //  RightBottom = Right | Bottom,
+  //}
+  public class AdjustType : Enumeration<AdjustType>
   {
-    None = 0x0,
-    Left = 0x1,
-    Top = 0x2,
-    Right = 0x4,
-    Bottom = 0x8,
-    LeftTop = Left | Top,
-    RightTop = Right | Top,
-    LeftBottom = Left | Bottom,
-    RightBottom = Right | Bottom,
+    public static readonly AdjustType None = new AdjustType(0, "None");
+    public static readonly AdjustType Left = new AdjustType(1, "Left");
+    public static readonly AdjustType Top = new AdjustType(2, "Top");
+    public static readonly AdjustType Right = new AdjustType(4, "Right");
+    public static readonly AdjustType Bottom = new AdjustType(8, "Bottom");
+    public static readonly AdjustType LeftTop = new AdjustType(Left, Top);
+    public static readonly AdjustType RightTop = new AdjustType(Right, Top);
+    public static readonly AdjustType LeftBottom = new AdjustType(Left, Bottom);
+    public static readonly AdjustType RightBottom = new AdjustType(Right, Bottom);
+
+    public AdjustType() : this(0, "None") { }
+    private AdjustType(int value, string displayName) : base(value, displayName) { }
+    private AdjustType(AdjustType typeA, AdjustType typeB)
+    {
+      Value = typeA.Value | typeB.Value;
+      DisplayName = typeA.DisplayName + typeB.DisplayName;
+    }
   }
   public static class AdjustTypeExtension
   {
@@ -120,44 +142,31 @@ namespace CycWpfLibrary.Controls
     {
       var state = new AdjustType();
       if (ApproxEqual(mousePos.X, AxisLeft, tol) &&
-        IsIn(mousePos.Y, AxisTop, AxisBottom))
+        IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
         state = state.Add(AdjustType.Left);
       if (ApproxEqual(mousePos.Y, AxisTop, tol) &&
-        IsIn(mousePos.X, AxisLeft, AxisRight))
+        IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
         state = state.Add(AdjustType.Top);
       if (ApproxEqual(mousePos.X, AxisRight, tol) &&
-        IsIn(mousePos.Y, AxisTop, AxisBottom))
+        IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
         state = state.Add(AdjustType.Right);
       if (ApproxEqual(mousePos.Y, AxisBottom, tol) &&
-        IsIn(mousePos.X, AxisLeft, AxisRight))
+        IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
         state = state.Add(AdjustType.Bottom);
       return state;
     }
     private void UpdateCursor(AdjustType state)
     {
-      switch (state)
-      {
-        default:
-        case AdjustType.None:
-          Cursor = Cursors.Arrow;
-          break;
-        case AdjustType.Right:
-        case AdjustType.Left:
-          Cursor = Cursors.SizeWE;
-          break;
-        case AdjustType.Top:
-        case AdjustType.Bottom:
-          Cursor = Cursors.SizeNS;
-          break;
-        case AdjustType.RightBottom:
-        case AdjustType.LeftTop:
-          Cursor = Cursors.SizeNWSE;
-          break;
-        case AdjustType.RightTop:
-        case AdjustType.LeftBottom:
-          Cursor = Cursors.SizeNESW;
-          break;
-      }
+      if (state == AdjustType.None)
+        Cursor = Cursors.Arrow;
+      else if (state == AdjustType.Right || state == AdjustType.Left)
+        Cursor = Cursors.SizeWE;
+      else if (state == AdjustType.Top || state == AdjustType.Bottom)
+        Cursor = Cursors.SizeNS;
+      else if (state == AdjustType.RightBottom || state == AdjustType.LeftTop)
+        Cursor = Cursors.SizeNWSE;
+      else if (state == AdjustType.RightTop || state == AdjustType.LeftBottom)
+        Cursor = Cursors.SizeNESW;
     }
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
@@ -167,7 +176,7 @@ namespace CycWpfLibrary.Controls
       UpdateCursor(State);
 
       // Initialize Adjust
-      if (State != AdjustType.None)
+      if (State != (AdjustType.None))
       {
         IsAdjust = true;
         CaptureMouse();
