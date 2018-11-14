@@ -70,9 +70,9 @@ namespace CycWpfLibrary.MVVM
     /// </summary>
     public bool CanExecute(object parameter = null)
     {
-      return (parameter == null) ? 
-        _canExecute == null || _canExecute() : 
-        _canExecuteInput == null || _canExecuteInput(parameter); 
+      return (parameter is null) ? 
+        _canExecute is null || _canExecute() : 
+        _canExecuteInput is null || _canExecuteInput(parameter); 
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ namespace CycWpfLibrary.MVVM
     /// </summary>
     public void Execute(object parameter = null)
     {
-      if (parameter == null)
+      if (parameter is null)
       {
         _execute();
       }

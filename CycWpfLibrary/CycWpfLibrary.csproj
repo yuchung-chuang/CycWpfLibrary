@@ -104,10 +104,13 @@
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PanZoomBorder.cs" />
-    <Compile Include="CycWpfLibrary\Enumeration.cs" />
+    <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Editors\PixelBitmapEditor.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Editors\Base\EditorBase.cs" />
     <Compile Include="MVVM\Converters\NumStrConverter.cs" />
+    <Compile Include="MVVM\MvvmBases\NotifyableObject.cs" />
     <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
     <Compile Include="MVVM\Validations\Validations.cs" />
     <Compile Include="WinForm\Converters.cs" />
