@@ -44,23 +44,11 @@
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\..\WpfPlotDigitizer\packages\CommonServiceLocator.2.0.2\lib\net45\CommonServiceLocator.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\..\WpfPlotDigitizer\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio, Version=1.8.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\practices\Audio_practice\packages\NAudio.1.8.4\lib\net35\NAudio.dll</HintPath>
+    <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\WpfPlotDigitizer\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

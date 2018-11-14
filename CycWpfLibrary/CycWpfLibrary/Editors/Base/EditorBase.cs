@@ -27,7 +27,7 @@ namespace CycWpfLibrary
     {
       UndoCommand = new RelayCommand(Undo, CanUndo);
       RedoCommand = new RelayCommand(Redo, CanRedo);
-      EditCommand = new RelayCommand(Edit, CanEdit);
+      EditCommand = new RelayCommand<object>(Edit, CanEdit);
     }
     protected EditorBase(EditObjectType initObj) : this()
     {
