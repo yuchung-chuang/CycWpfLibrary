@@ -13,7 +13,7 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// Convert double to string.
     /// </summary>
-    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value.ToString();
+    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value?.ToString();
 
     /// <summary>
     /// Convert number string to double.
