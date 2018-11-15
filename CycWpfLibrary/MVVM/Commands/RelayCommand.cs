@@ -46,7 +46,7 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// 執行封裝的方法。
     /// </summary>
-    public void Execute(object parameter = null) => Execute();
+    public void Execute(object parameter = null) => _execute();
   }
 
   /// <summary>

@@ -13,7 +13,7 @@
   <UserControl.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Styles/Fonts.xaml" />
+        <ResourceDictionary Source="../Styles/Fonts.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <ControlTemplate x:Key="ButtonTemplate"
                        TargetType="{x:Type ButtonBase}">

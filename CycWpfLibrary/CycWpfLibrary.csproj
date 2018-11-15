@@ -84,14 +84,16 @@
     <Compile Include="Controls\DropImageReceiver.xaml.cs">
       <DependentUpon>DropImageReceiver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FrameControl.xaml.cs">
+    <Compile Include="Controls\_FrameControl\FrameControl.xaml.cs">
       <DependentUpon>FrameControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IFrameControlPage.cs" />
+    <Compile Include="Controls\_FrameControl\IFrameControlPage.cs" />
     <Compile Include="Controls\ImageViewer.xaml.cs">
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\_EditorControl\MoveThumb.cs" />
     <Compile Include="Controls\PanZoomBorder.cs" />
+    <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
     <Compile Include="CycWpfLibrary\ObjectEditors\PixelBitmapEditor.cs" />
     <Compile Include="Emgu\Converters.cs" />
@@ -177,7 +179,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\FrameControl.xaml">
+    <Page Include="Controls\Styles\EditorControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Styles\PanZoomBorder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\_FrameControl\FrameControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
