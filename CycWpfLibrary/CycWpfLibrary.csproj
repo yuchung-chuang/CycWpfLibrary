@@ -50,6 +50,9 @@
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\WpfPlotDigitizer\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\WpfPlotDigitizer\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
@@ -77,6 +80,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\FileLogger.cs" />
+    <Compile Include="Logger\ILogManager.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logger\LogManager.cs" />
+    <Compile Include="Logger\ConsoleLogger.cs" />
     <Compile Include="Controls\Axis.xaml.cs">
       <DependentUpon>Axis.xaml</DependentUpon>
     </Compile>
@@ -96,9 +104,11 @@
     <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
     <Compile Include="CycWpfLibrary\ObjectEditors\PixelBitmapEditor.cs" />
+    <Compile Include="Logger\DebugLogger.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\ObjectEditors\Base\ObjectEditors.cs" />
+    <Compile Include="Logger\LogLevel.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\Converters\NumStrConverter.cs" />
@@ -122,7 +132,7 @@
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
-    <Compile Include="MVVM\MvvmBases\XamlBase.cs" />
+    <Compile Include="MVVM\MvvmBases\XamlMarkupObject.cs" />
     <Compile Include="MVVM\Converters\MarginConverter.cs" />
     <Compile Include="MVVM\Converters\MathConverter.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />
@@ -169,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MVVM\Animations\" />
+    <Folder Include="MVVM\IoC\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\Axis.xaml">

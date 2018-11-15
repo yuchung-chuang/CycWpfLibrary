@@ -12,7 +12,7 @@ namespace CycWpfLibrary.MVVM
   /// 提供具有<see cref="IValueConverter"/>以及<see cref="IMultiValueConverter"/>功能的類別。
   /// </summary>
   /// <typeparam name="ComboConverterType">要實作的ComboConverter類別。</typeparam>
-  public abstract class ComboConverterBase<ComboConverterType> : XamlBase<ComboConverterType>, IValueConverter, IMultiValueConverter where ComboConverterType : class, new()
+  public abstract class ComboConverterBase<ComboConverterType> : XamlMarkupObject<ComboConverterType>, IValueConverter, IMultiValueConverter where ComboConverterType : class, new()
   {
     public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
 

@@ -14,25 +14,39 @@ namespace CycWpfLibrary
       if (enumA.GetType() != enumB.GetType())
         throw new ArgumentException("Type Mismatch");
     }
+    private static (ulong a, ulong b) ConvertEnums(Enum enumA, Enum enumB) => (Convert.ToUInt64(enumA), Convert.ToUInt64(enumB));
 
     public static dynamic Add(this Enum enumA, Enum enumB)
     {
       CheckType(enumA, enumB);
-      return Convert.ToUInt64(enumA) | Convert.ToUInt64(enumB);
+      var (a, b) = ConvertEnums(enumA, enumB);
+      return a | b;
     }
 
     public static dynamic Remove(this Enum enumA, Enum enumB)
     {
       CheckType(enumA, enumB);
-      return Convert.ToUInt64(enumA) ^ Convert.ToUInt64(enumB);
+      var (a, b) = ConvertEnums(enumA, enumB);
+      return a ^ b;
     }
 
     public static bool Contain(this Enum enumA, Enum enumB)
     {
       CheckType(enumA, enumB);
-      var a = Convert.ToUInt64(enumA);
-      var b = Convert.ToUInt64(enumB);
+      var (a, b) = ConvertEnums(enumA, enumB);
       return (a & b) == b;
+    }
+
+    public static bool GreaterThan(this Enum enumA, Enum enumB)
+    {
+      var (a, b) = ConvertEnums(enumA, enumB);
+      return a > b;
+    }
+
+    public static bool LessThan(this Enum enumA, Enum enumB)
+    {
+      var (a, b) = ConvertEnums(enumA, enumB);
+      return a < b;
     }
   }
 }

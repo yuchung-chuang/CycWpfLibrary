@@ -10,7 +10,7 @@ namespace CycWpfLibrary.MVVM
   /// <summary>
   /// 提供實現了<see cref="INotifyPropertyChanged"/>的基底類別。
   /// </summary>
-  public class NotifyableObject : INotifyPropertyChanged
+  public abstract class NotifyableObject : INotifyPropertyChanged
   {
     /// <summary>
     /// 當其他屬性變更時觸發此事件。
