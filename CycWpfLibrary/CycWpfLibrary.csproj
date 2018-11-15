@@ -93,10 +93,12 @@
     </Compile>
     <Compile Include="Controls\PanZoomBorder.cs" />
     <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Editors\PixelBitmapEditor.cs" />
+    <Compile Include="CycWpfLibrary\ObjectEditors\PixelBitmapEditor.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Editors\Base\EditorBase.cs" />
+    <Compile Include="CycWpfLibrary\ObjectEditors\Base\ObjectEditors.cs" />
+    <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
+    <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\Converters\NumStrConverter.cs" />
     <Compile Include="MVVM\MvvmBases\NotifyableObject.cs" />
     <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
@@ -117,7 +119,6 @@
     <Compile Include="Media\PixelBitmap.cs" />
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
-    <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
     <Compile Include="MVVM\MvvmBases\XamlBase.cs" />
     <Compile Include="MVVM\Converters\MarginConverter.cs" />

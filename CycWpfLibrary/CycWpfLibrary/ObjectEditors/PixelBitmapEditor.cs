@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CycWpfLibrary
 {
-  public class PixelBitmapEditor : EditorBase<PixelBitmap>
+  public class PixelBitmapEditor : ObjectEditorBase<PixelBitmap>
   {
     public override bool CanEdit(object parameter) => true;
 
