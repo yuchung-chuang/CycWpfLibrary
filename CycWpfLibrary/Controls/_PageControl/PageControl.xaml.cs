@@ -19,9 +19,9 @@ namespace CycWpfLibrary.Controls
   /// <summary>
   /// FrameControl.xaml 的互動邏輯
   /// </summary>
-  public partial class FrameControl : UserControl
+  public partial class PageControl : UserControl
   {
-    public FrameControl()
+    public PageControl()
     {
       InitializeComponent();
 
@@ -29,10 +29,10 @@ namespace CycWpfLibrary.Controls
       
     }
 
-    public static readonly DependencyProperty CurrentPageProperty = DependencyProperty.Register(nameof(PageManager), typeof(IPageManager), typeof(FrameControl));
-    public IPageManager PageManager
+    public static readonly DependencyProperty CurrentPageProperty = DependencyProperty.Register(nameof(PageManager), typeof(PageManagerBase), typeof(PageControl));
+    public PageManagerBase PageManager
     {
-      get { return (IPageManager)GetValue(CurrentPageProperty); }
+      get { return (PageManagerBase)GetValue(CurrentPageProperty); }
       set { SetValue(CurrentPageProperty, value); }
     }
   }

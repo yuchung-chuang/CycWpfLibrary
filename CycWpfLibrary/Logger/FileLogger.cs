@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CycWpfLibrary.IO;
+using System;
 using System.IO;
 
 namespace CycWpfLibrary.Logger
@@ -15,7 +16,7 @@ namespace CycWpfLibrary.Logger
     public FileLogger(string filePath)
     {
       // Set the file path property
-      FilePath = filePath;
+      FilePath = filePath.NormalizePath().AbsolutePath();
     }
 
     public void Log(string message, LogLevel level)

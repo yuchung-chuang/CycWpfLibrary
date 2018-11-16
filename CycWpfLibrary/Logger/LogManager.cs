@@ -15,12 +15,12 @@ namespace CycWpfLibrary.Logger
     protected object mLoggersLock = new object();
 
     public LogOutputLevel LogOutputLevel { get; set; }
-    public bool IncludeLogPosition { get; set; }
+    public bool IsLogPosition { get; set; }
     public event Action<(string Message, LogLevel Level)> NewLog = (details) => { };
-    public LogManager(ILogger[] loggers = null, LogOutputLevel logOutputLevel = 0, bool includeLogPosition = true)
+    public LogManager(ILogger[] loggers = null, LogOutputLevel logOutputLevel = 0, bool isLogPosition = true)
     {
       LogOutputLevel = logOutputLevel;
-      IncludeLogPosition = includeLogPosition;
+      IsLogPosition = isLogPosition;
       // Add any others passed in
       if (loggers != null)
         foreach (var logger in loggers)
@@ -60,7 +60,7 @@ namespace CycWpfLibrary.Logger
         return;
 
       // If the user wants to know where the log originated from...
-      if (IncludeLogPosition)
+      if (IsLogPosition)
         message = $"{message} [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]";
 
       // Log to all loggers

@@ -9,7 +9,7 @@ namespace CycWpfLibrary.Logger
   public interface ILogManager
   {
     LogOutputLevel LogOutputLevel { get; set; }
-    bool IncludeLogPosition { get; set; }
+    bool IsLogPosition { get; set; }
 
     event Action<(string Message, LogLevel Level)> NewLog;
     void AddLogger(ILogger logger);

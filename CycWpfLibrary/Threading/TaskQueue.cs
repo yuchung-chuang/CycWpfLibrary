@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 namespace CycWpfLibrary.Threading
 {
   /// <summary>
-  /// 背景工作隊列物件，可動態加入背景工作並使工作依序執行
+  /// 背景工作隊列，可動態加入背景工作並使工作依序執行
   /// </summary>
   public class TaskQueue
   {
-    private Queue<Task> queue;
+    private Queue<Task> queue = new Queue<Task>();
+    
+    /// <summary>
+    /// 隊列中的工作數量上限
+    /// </summary>
     public int MaxTasks = 10;
+
     public TaskQueue()
     {
-      queue = new Queue<Task>();
+
     }
     public TaskQueue(int maxTasks) : this()
     {

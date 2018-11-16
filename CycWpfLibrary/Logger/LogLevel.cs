@@ -1,4 +1,6 @@
-﻿namespace CycWpfLibrary.Logger
+﻿using System;
+
+namespace CycWpfLibrary.Logger
 {
   public enum LogLevel
   {
