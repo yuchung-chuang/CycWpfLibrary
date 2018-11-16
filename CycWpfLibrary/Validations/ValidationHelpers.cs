@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace CycWpfLibrary.MVVM
+namespace CycWpfLibrary.Validations
 {
   public static class ValidationHelpers
   {

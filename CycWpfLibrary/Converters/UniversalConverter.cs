@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CycWpfLibrary.MVVM
+namespace CycWpfLibrary.Converters
 {
   public class UniversalConverter : ValueConverterBase<UniversalConverter>
   {
