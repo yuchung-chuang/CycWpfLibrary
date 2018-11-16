@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
 
-namespace CycWpfLibrary.MVVM
+namespace CycWpfLibrary.Xaml
 {
   /// <summary>
   /// 提供具有<see cref="MarkupExtension"/>功能的基底類別。
