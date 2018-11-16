@@ -83,12 +83,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\_PageControl\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\_PageControl\PageManagerBase.cs" />
     <Compile Include="IO\PathExtensions.cs" />
-    <Compile Include="Logger\FileLogger.cs" />
-    <Compile Include="Logger\interfaces\ILogManager.cs" />
-    <Compile Include="Logger\interfaces\ILogger.cs" />
-    <Compile Include="Logger\LogManager.cs" />
-    <Compile Include="Logger\ConsoleLogger.cs" />
+    <Compile Include="Diagnostics\FileLogger.cs" />
+    <Compile Include="Diagnostics\interfaces\ILogManager.cs" />
+    <Compile Include="Diagnostics\interfaces\ILogger.cs" />
+    <Compile Include="Diagnostics\LogManager.cs" />
+    <Compile Include="Diagnostics\ConsoleLogger.cs" />
     <Compile Include="Controls\Axis.xaml.cs">
       <DependentUpon>Axis.xaml</DependentUpon>
     </Compile>
@@ -96,10 +100,6 @@
     <Compile Include="Controls\DropImageReceiver.xaml.cs">
       <DependentUpon>DropImageReceiver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\_FrameControl\PageControl.xaml.cs">
-      <DependentUpon>PageControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\_FrameControl\PageManagerBase.cs" />
     <Compile Include="Controls\ImageViewer.xaml.cs">
       <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
@@ -108,17 +108,17 @@
     <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
     <Compile Include="CycWpfLibrary\ObjectEditors\PixelBitmapEditor.cs" />
-    <Compile Include="Logger\DebugLogger.cs" />
+    <Compile Include="Diagnostics\DebugLogger.cs" />
     <Compile Include="Emgu\Converters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\ObjectEditors\Base\ObjectEditors.cs" />
-    <Compile Include="Logger\LogLevel.cs" />
+    <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
-    <Compile Include="MVVM\Converters\NumStrConverter.cs" />
+    <Compile Include="Converters\NumStrConverter.cs" />
     <Compile Include="MVVM\MvvmBases\NotifyableObject.cs" />
-    <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
-    <Compile Include="MVVM\Validations\Validations.cs" />
+    <Compile Include="Validations\ValidationHelpers.cs" />
+    <Compile Include="Validations\Validations.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
@@ -136,15 +136,15 @@
     <Compile Include="Media\PixelBitmap.cs" />
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
-    <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
-    <Compile Include="MVVM\MvvmBases\XamlMarkupObject.cs" />
-    <Compile Include="MVVM\Converters\MarginConverter.cs" />
-    <Compile Include="MVVM\Converters\MathConverter.cs" />
-    <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />
-    <Compile Include="MVVM\Converters\ConverterBases\ValueConverterBase.cs" />
+    <Compile Include="Converters\ConverterBases\ComboConverterBase.cs" />
+    <Compile Include="Xaml\XamlMarkupObject.cs" />
+    <Compile Include="Converters\MarginConverter.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
+    <Compile Include="Converters\ConverterBases\MultiValueConverterBase .cs" />
+    <Compile Include="Converters\ConverterBases\ValueConverterBase.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
-    <Compile Include="MVVM\Converters\DebugConverter.cs" />
-    <Compile Include="MVVM\Converters\UniversalConverter.cs" />
+    <Compile Include="Converters\DebugConverter.cs" />
+    <Compile Include="Converters\UniversalConverter.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelUserControl.cs" />
     <Compile Include="NativeMethods\System.cs" />
@@ -203,10 +203,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\_FrameControl\PageControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\Styles\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -214,6 +210,10 @@
     <Page Include="Controls\ImageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\_PageControl\PageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

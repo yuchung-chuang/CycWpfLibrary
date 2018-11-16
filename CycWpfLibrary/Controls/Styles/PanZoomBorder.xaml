@@ -4,7 +4,7 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary>
       <Style x:Key="NormalPanZoomBorder"
-             TargetType="local:PanZoomBorder">
+             TargetType="{x:Type local:PanZoomBorder}">
         <Setter Property="ClipToBounds"
                 Value="True" />
         <Setter Property="Background">
