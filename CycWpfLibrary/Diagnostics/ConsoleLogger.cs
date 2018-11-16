@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CycWpfLibrary.Logger
+namespace CycWpfLibrary.Diagnostics
 {
   public class ConsoleLogger : ILogger
   {

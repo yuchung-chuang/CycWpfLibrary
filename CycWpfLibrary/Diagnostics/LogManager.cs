@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace CycWpfLibrary.Logger
+namespace CycWpfLibrary.Diagnostics
 {
   /// <summary>
   /// The standard log factory for Fasetto Word

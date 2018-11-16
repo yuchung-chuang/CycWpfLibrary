@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace CycWpfLibrary.Logger
+namespace CycWpfLibrary.Diagnostics
 {
   /// <summary>
   /// Logs to a specific file
