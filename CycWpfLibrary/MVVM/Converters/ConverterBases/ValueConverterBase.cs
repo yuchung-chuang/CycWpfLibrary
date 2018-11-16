@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
-using CycWpfLibrary.Xaml;
 
-namespace CycWpfLibrary.Converters
+namespace CycWpfLibrary.MVVM
 {
   /// <summary>
   /// 提供具有<see cref="IValueConverter"/>功能的類別。

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 
-namespace CycWpfLibrary.Converters
+namespace CycWpfLibrary.MVVM
 {
   public class MarginConverter : MultiValueConverterBase<MarginConverter>
   {

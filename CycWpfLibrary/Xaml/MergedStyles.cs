@@ -10,7 +10,8 @@ namespace CycWpfLibrary.Xaml
     public Style BasedOn { get; set; }
     public Style MergeStyle { get; set; }
 
-    public override object ProvideValue(IServiceProvider serviceProvider)
+    public override object ProvideValue(IServiceProvider
+                                        serviceProvider)
     {
       if (null == MergeStyle)
         return BasedOn;
@@ -23,7 +24,8 @@ namespace CycWpfLibrary.Xaml
       return newStyle;
     }
 
-    private static void MergeWithStyle(Style style, Style mergeStyle)
+    private static void MergeWithStyle(Style style,
+                                       Style mergeStyle)
     {
       // Recursively merge with any Styles this Style
       // might be BasedOn.

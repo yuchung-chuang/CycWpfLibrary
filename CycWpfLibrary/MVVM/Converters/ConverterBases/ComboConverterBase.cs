@@ -1,5 +1,4 @@
-﻿using CycWpfLibrary.Xaml;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace CycWpfLibrary.Converters
+namespace CycWpfLibrary.MVVM
 {
   /// <summary>
   /// 提供具有<see cref="IValueConverter"/>以及<see cref="IMultiValueConverter"/>功能的類別。

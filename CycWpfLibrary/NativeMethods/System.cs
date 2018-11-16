@@ -6,9 +6,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CycWpfLibrary
+namespace CycWpfLibrary.NativeMethods
 {
-  public static class NativeMethods
+  public static class System
   {
     /// <summary>
     /// 對<paramref name="action"/>計時。
@@ -29,6 +29,15 @@ namespace CycWpfLibrary
       sw.Stop();//碼錶停止
       string result = sw.Elapsed.TotalMilliseconds.ToString();
       Console.WriteLine(result);
+    }
+
+    /// <summary>
+    /// 取得<paramref name="path"/>之PackUri物件
+    /// </summary>
+    /// <param name="path">應用程式資料夾內之路徑</param>
+    public static Uri PackUri(this string path)
+    {
+      return new Uri($"pack://application:,,,/" + path);
     }
 
     /// <summary>
