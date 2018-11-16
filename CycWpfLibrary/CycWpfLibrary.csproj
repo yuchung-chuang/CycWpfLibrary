@@ -115,10 +115,17 @@
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
-    <Compile Include="Converters\NumStrConverter.cs" />
-    <Compile Include="MVVM\MvvmBases\NotifyableObject.cs" />
-    <Compile Include="Validations\ValidationHelpers.cs" />
-    <Compile Include="Validations\Validations.cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />
+    <Compile Include="MVVM\Converters\ConverterBases\ValueConverterBase.cs" />
+    <Compile Include="MVVM\Converters\DebugConverter.cs" />
+    <Compile Include="MVVM\Converters\MarginConverter.cs" />
+    <Compile Include="MVVM\Converters\MathConverter.cs" />
+    <Compile Include="MVVM\Converters\NumStrConverter.cs" />
+    <Compile Include="MVVM\Converters\UniversalConverter.cs" />
+    <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
+    <Compile Include="MVVM\Validations\Validations.cs" />
+    <Compile Include="MVVM\ViewModels\NotifyableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
@@ -136,15 +143,8 @@
     <Compile Include="Media\PixelBitmap.cs" />
     <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
-    <Compile Include="Converters\ConverterBases\ComboConverterBase.cs" />
     <Compile Include="Xaml\XamlMarkupObject.cs" />
-    <Compile Include="Converters\MarginConverter.cs" />
-    <Compile Include="Converters\MathConverter.cs" />
-    <Compile Include="Converters\ConverterBases\MultiValueConverterBase .cs" />
-    <Compile Include="Converters\ConverterBases\ValueConverterBase.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
-    <Compile Include="Converters\DebugConverter.cs" />
-    <Compile Include="Converters\UniversalConverter.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelUserControl.cs" />
     <Compile Include="NativeMethods\System.cs" />
@@ -183,7 +183,6 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MVVM\Animations\" />
     <Folder Include="MVVM\IoC\" />
   </ItemGroup>
   <ItemGroup>
