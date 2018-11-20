@@ -1,2 +1,0 @@
-# CycWpfLibrary
-aaaaaaaaa
