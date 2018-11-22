@@ -115,6 +115,7 @@
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
+    <Compile Include="MVVM\Commands\CommandBase\RelayCommandBase.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\ComboConverterBase.cs" />
     <Compile Include="MVVM\Converters\ConverterBases\MultiValueConverterBase .cs" />
     <Compile Include="MVVM\Converters\ConverterBases\ValueConverterBase.cs" />
@@ -147,7 +148,7 @@
     <Compile Include="MVVM\Commands\Interactivity.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelUserControl.cs" />
-    <Compile Include="NativeMethods\System.cs" />
+    <Compile Include="CycWpfLibrary\NativeMethod.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
     <Compile Include="NAudio\WavePlayer.cs" />
     <Compile Include="Threading\TaskQueue.cs" />

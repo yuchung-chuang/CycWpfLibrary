@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CycWpfLibrary.NativeMethods
+namespace CycWpfLibrary
 {
-  public static class System
+  public static class NativeMethod
   {
+    /// <summary>
+    /// 非同步執行<paramref name="action"/>，並使用<see cref="Cursors.Wait"/>。
+    /// </summary>
+    public static async Task CursorWaitForAsync(Action action)
+    {
+      Application.Current.MainWindow.Cursor = Cursors.Wait;
+      await Task.Run(action);
+      Application.Current.MainWindow.Cursor = Cursors.Arrow;
+    }
+
     /// <summary>
     /// 對<paramref name="action"/>計時。
     /// </summary>
@@ -19,7 +30,7 @@ namespace CycWpfLibrary.NativeMethods
     /// TimeIt( () => { string s = "Your Codes"; } );
     /// </code>
     /// </example>
-    public static void TimeIt(this Action action)
+    public static double TimeIt(Action action)
     {
       Stopwatch sw = new Stopwatch();//引用stopwatch物件
       sw.Restart();
@@ -27,8 +38,9 @@ namespace CycWpfLibrary.NativeMethods
       action.Invoke();
       //-----目標程式-----//
       sw.Stop();//碼錶停止
-      string result = sw.Elapsed.TotalMilliseconds.ToString();
-      Console.WriteLine(result);
+      var ms = sw.Elapsed.TotalMilliseconds;
+      Debug.WriteLine(ms.ToString());
+      return ms;
     }
 
     /// <summary>
