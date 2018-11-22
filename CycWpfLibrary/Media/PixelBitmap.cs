@@ -41,7 +41,7 @@ namespace CycWpfLibrary.Media
       }
     }
     /// <summary>
-    /// <seealso cref="System.Drawing.Bitmap"/>物件不可同時被多執行緒使用，需要使用互斥鎖<seealso cref="lock"/>，且getter需回傳副本。
+    /// <see cref="System.Drawing.Bitmap"/>物件不可同時被多執行緒使用，需要使用互斥鎖<see cref="lock"/>，且getter需回傳副本。
     /// </summary>
     public Bitmap Bitmap
     {
@@ -50,11 +50,8 @@ namespace CycWpfLibrary.Media
         Bitmap bitmap;
         lock (key) 
         {
-          //Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} Enter Lock");
           bitmap = _Bitmap.Clone() as Bitmap;
-
         }
-        //Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} Leave Lock");
         return bitmap;
       }
       set
@@ -62,58 +59,43 @@ namespace CycWpfLibrary.Media
         lock (key)
         {
           _Bitmap = value;
-          Sync(nameof(Bitmap));
+          BitmapToPixel();
         }
       }
     }
     private byte[] _Pixel;
     public byte[] Pixel
     {
-      get
-      {
-          return _Pixel;
-      }
+      get => _Pixel;
       set
       {
-          _Pixel = value;
-          Sync(nameof(Pixel));
-      }
-    }
-    private byte[,,] _Pixel3;
-    public byte[,,] Pixel3
-    {
-      get
-      {
-          return _Pixel3;
-      }
-
-      set
-      {
-          _Pixel3 = value;
-          Sync(nameof(Pixel3));
+        _Pixel = value;
+        PixelToBitmap();
       }
     }
 
-    #region Constructors
+    // Constructors
     public PixelBitmap()
     {
 
     }
     public PixelBitmap(Bitmap bitmap)
     {
-      //轉換PixelFormat
-      if (bitmap.PixelFormat != PixelImageFormat)
-      {
-        var bitmapFormatted = new Bitmap(bitmap.Width, bitmap.Height, PixelImageFormat);
-        using (Graphics g = Graphics.FromImage(bitmapFormatted))
-        {
-          g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
-        }
-        bitmap = bitmapFormatted;
-      }
+      NormalizeFormat();
+      Bitmap = new Bitmap(bitmap); //更新pixel
 
-      _Bitmap = new Bitmap(bitmap);
-      Sync(nameof(Bitmap)); //更新pixel
+      void NormalizeFormat()
+      {
+        if (bitmap.PixelFormat != PixelImageFormat)
+        {
+          var bitmapFormatted = new Bitmap(bitmap.Width, bitmap.Height, PixelImageFormat);
+          using (Graphics g = Graphics.FromImage(bitmapFormatted))
+          {
+            g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
+          }
+          bitmap = bitmapFormatted;
+        }
+      }
     }
     public PixelBitmap(Size size)
     {
@@ -122,16 +104,7 @@ namespace CycWpfLibrary.Media
     public PixelBitmap(byte[] pixel, Size size)
     {
       _Bitmap = new Bitmap(size.Width, size.Height, PixelImageFormat); //不更新pixel
-      _Pixel = pixel;
-      Sync(nameof(Pixel)); //更新bitmap
-    }
-    public PixelBitmap(byte[,,] pixel3)
-    {
-      var width = pixel3.GetLength(0);
-      var height = pixel3.GetLength(1);
-      _Pixel3 = pixel3;
-      _Bitmap = new Bitmap(width, height, PixelImageFormat); //不更新pixel
-      Sync(nameof(Pixel3));
+      Pixel = pixel; //更新bitmap
     }
     public object Clone()
     {
@@ -144,33 +117,11 @@ namespace CycWpfLibrary.Media
         var pixelbitmap = new PixelBitmap();
         pixelbitmap._Bitmap = Bitmap;
         pixelbitmap._Pixel = _Pixel.Clone() as byte[];
-        pixelbitmap._Pixel3 = _Pixel3.Clone() as byte[,,];
         return pixelbitmap;
       }
-    } //比new PixelIamge(bitmap)快
-    #endregion
+    } //比 new 一個物件快十倍
 
-    #region Public Methods
-    public void Sync(string property = null)
-    {
-      switch (property)
-      {
-        default:
-        case nameof(Pixel):
-          PixelToBitmap();
-          PixelToPixel3();
-          break;
-        case nameof(Bitmap):
-          BitmapToPixel();
-          PixelToPixel3();
-          break;
-        case nameof(Pixel3):
-          Pixel3ToPixel();
-          PixelToBitmap();
-          break;
-      }
-    }
-
+    // public methods
     public void ShowSnapShot()
     {
       var window = new Window
@@ -187,10 +138,8 @@ namespace CycWpfLibrary.Media
       image.Source = this.ToBitmapSource();
       window.ShowDialog();
     }
-    #endregion
 
-    #region Convert Methods
-    private void PixelToPixel3()
+    public byte[,,] GetPixel3()
     {
       var pixel = _Pixel.Clone() as byte[];
       var width = Width;
@@ -208,12 +157,11 @@ namespace CycWpfLibrary.Media
           pixel3[x, y, 0] = pixel[idx + 3]; //A
         }
       }
-      _Pixel3 = pixel3;
+      return pixel3;
     }
-
-    private void Pixel3ToPixel()
+    public void SetPixel(byte[,,] iptPixel3)
     {
-      var pixel3 = _Pixel3.Clone() as byte[,,];
+      var pixel3 = iptPixel3.Clone() as byte[,,];
       var width = pixel3.GetLength(0);
       var height = pixel3.GetLength(1);
       var depth = pixel3.GetLength(2);
@@ -230,9 +178,10 @@ namespace CycWpfLibrary.Media
           pixel[idx + 3] = pixel3[x, y, 0]; //A
         }
       }
-      _Pixel = pixel;
+      Pixel = pixel; // Update Bitmap
     }
 
+    // private methods
     private void PixelToBitmap()
     {
       //將image鎖定到系統內的記憶體的某個區塊中，並將這個結果交給BitmapData類別的imageData
@@ -247,7 +196,6 @@ namespace CycWpfLibrary.Media
       //解鎖
       bitmap.UnlockBits(bitmapData);
     }
-
     private void BitmapToPixel()
     {
       //將image鎖定到系統內的記憶體的某個區塊中，並將這個結果交給BitmapData類別的imageData
@@ -266,6 +214,5 @@ namespace CycWpfLibrary.Media
       bitmap.UnlockBits(bitmapData); //其他地方正在使用物件.....
 
     }
-    #endregion
   }
 }
