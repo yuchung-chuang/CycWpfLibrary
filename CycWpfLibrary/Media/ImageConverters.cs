@@ -1,22 +1,50 @@
-﻿using Emgu.CV;
-using Emgu.CV.Structure;
-using Microsoft.Win32.SafeHandles;
+﻿using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Size = System.Drawing.Size;
+using PointWinForm = System.Drawing.Point;
+using PixelFormatsWpf = System.Windows.Media.PixelFormats;
+using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
+using System.Drawing.Imaging;
 
 namespace CycWpfLibrary.Media
 {
+  #region Helper classes
+  internal struct IconInfo
+  {
+    public bool fIcon;
+    public int xHotspot;
+    public int yHotspot;
+    public IntPtr hbmMask;
+    public IntPtr hbmColor;
+  }
+  internal class SafeIconHandle : SafeHandleZeroOrMinusOneIsInvalid
+  {
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static extern bool DestroyIcon([In] IntPtr hIcon);
+    private SafeIconHandle()
+        : base(true)
+    {
+    }
+    public SafeIconHandle(IntPtr hIcon)
+        : base(true)
+    {
+      this.SetHandle(hIcon);
+    }
+    protected override bool ReleaseHandle()
+    {
+      return DestroyIcon(this.handle);
+    }
+  }
+  #endregion
+
   public static class ImageConverters
   {
     // BitmapImage
@@ -33,8 +61,6 @@ namespace CycWpfLibrary.Media
     public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage) => bitmapImage.ToBitmap().ToPixelBitmap();
 
     // Bitmap
-    [DllImport("gdi32.dll")]
-    public static extern bool DeleteObject(IntPtr hObject);
     public static BitmapSource ToBitmapSource(this Bitmap bitmap)
     {
       IntPtr hBitmap = bitmap.GetHbitmap();
@@ -56,39 +82,6 @@ namespace CycWpfLibrary.Media
       return retval;
     }
     public static PixelBitmap ToPixelBitmap(this Bitmap bitmap) => new PixelBitmap(bitmap);
-
-    public struct IconInfo
-    {
-      public bool fIcon;
-      public int xHotspot;
-      public int yHotspot;
-      public IntPtr hbmMask;
-      public IntPtr hbmColor;
-    }
-    [DllImport("user32.dll")]
-    static extern IntPtr CreateIconIndirect(ref IconInfo piconinfo);
-    [DllImport("user32.dll")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo piconinfo);
-    class SafeIconHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-      [DllImport("user32.dll", SetLastError = true)]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool DestroyIcon([In] IntPtr hIcon);
-      private SafeIconHandle()
-          : base(true)
-      {
-      }
-      public SafeIconHandle(IntPtr hIcon)
-          : base(true)
-      {
-        this.SetHandle(hIcon);
-      }
-      protected override bool ReleaseHandle()
-      {
-        return DestroyIcon(this.handle);
-      }
-    }
     public static Cursor ToCursor(this Bitmap b, int x, int y)
     {
       /// get icon from input bitmap
@@ -105,36 +98,42 @@ namespace CycWpfLibrary.Media
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
 
-    public static Image<TColor, TDepth> ToImage<TColor, TDepth>(this Bitmap bitmap) 
-      where TColor : struct, IColor 
-      where TDepth : new() 
-      => new Image<TColor, TDepth>(bitmap);
-    /// <summary>
-    /// 將<see cref="Bitmap"/>透過<see cref="Image"/>(<see cref="Bgr"/>,<see cref="byte"/>)轉換成<see cref="Mat"/>
-    /// </summary>
-    public static Mat ToMat(this Bitmap bitmap) => bitmap.ToImage<Bgr, byte>().Mat;
-
-
     // PixelBitamp
-    public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap)
+    public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToBitmapSource();
+
+    // BitmapSource
+    public static Bitmap ToBitmap(this BitmapSource bitmapsource)
     {
-      return pixelBitmap.Bitmap.ToBitmapSource();
+      //convert image format
+      var src = new FormatConvertedBitmap();
+      src.BeginInit();
+      src.Source = bitmapsource;
+      src.DestinationFormat = PixelFormatsWpf.Bgra32;
+      src.EndInit();
+
+      //copy to bitmap
+      Bitmap bitmap = new Bitmap(src.PixelWidth, src.PixelHeight, PixelFormatWinForm.Format32bppArgb);
+      var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppArgb);
+      src.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
+      bitmap.UnlockBits(data);
+
+      return bitmap;
     }
 
-    public static Mat ToMat(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToMat();
 
-    // Mat
-    public static BitmapSource ToBitmapSource(this Mat mat) => mat?.Bitmap?.ToBitmapSource();
+    #region Helper methods
+    [DllImport("gdi32.dll")]
+    public static extern bool DeleteObject(IntPtr hObject);
+    [DllImport("user32.dll")]
+    private static extern IntPtr CreateIconIndirect(ref IconInfo piconinfo);
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo piconinfo);
+    #endregion
 
-    public static Bitmap ToBitmap(this Mat mat) => mat?.Bitmap;
-
-    public static PixelBitmap ToPixelBitmap(this Mat mat) => mat?.Bitmap?.ToPixelBitmap();
-
-    /// <summary>
-    /// ???
-    /// </summary>
+    #region Deprecated methods
     [Obsolete("Need to be fixed.", true)]
-    private static PixelBitmap ToPixelBitmap(this BitmapSource bitmapSource)
+    public static PixelBitmap ToPixelBitmap(this BitmapSource bitmapSource)
     {
       var encoder = new BmpBitmapEncoder();
       var memoryStream = new MemoryStream();
@@ -162,5 +161,6 @@ namespace CycWpfLibrary.Media
 
       return bImg;
     }
+    #endregion
   }
 }
