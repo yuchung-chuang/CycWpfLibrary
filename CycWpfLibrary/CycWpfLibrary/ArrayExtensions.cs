@@ -115,7 +115,17 @@ namespace CycWpfLibrary
       return output;
     }
 
-    public static bool IsEqual<T>(this T[,] array1, T[,] array2) 
+    public static bool IsEqual<T>(this T[] array1, T[] array2)
+    {
+      var length = array1.GetLength(0);
+      if (length != array2.GetLength(0))
+        return false;
+      for (int i = 0; i < length; i++)
+        if (!array1[i].Equals(array2[i]))
+          return false;
+      return true;
+    }
+    public static bool IsEqual<T>(this T[,] array1, T[,] array2)
     {
       var rowN = array1.GetLength(0);
       var colN = array1.GetLength(1);
@@ -128,7 +138,7 @@ namespace CycWpfLibrary
           if (!array1[row, col].Equals(array2[row, col]))
             return false;
       return true;
-      
+
     }
   }
 }

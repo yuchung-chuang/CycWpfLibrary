@@ -46,7 +46,7 @@ namespace CycWpfLibrary.Controls
       // Note that you can have more than one file.
       string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-      if (ImageExtensions.List.Contains(Path.GetExtension(files[0])))
+      if (ImageExts.List.Contains(Path.GetExtension(files[0])))
       {
         // Only care about the first file
         DropPixelBitmap = new BitmapImage(new Uri(files[0])).ToPixelBitmap();

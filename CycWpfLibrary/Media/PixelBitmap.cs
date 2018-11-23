@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 using Colors = System.Windows.Media.Colors;
 using DependencyObject = System.Windows.DependencyObject;
 using Grid = System.Windows.Controls.Grid;
 using Image = System.Windows.Controls.Image;
-using Size = System.Drawing.Size;
+using SizeWinForm = System.Drawing.Size;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 using Window = System.Windows.Window;
 
@@ -24,7 +21,7 @@ namespace CycWpfLibrary.Media
 
     public int Width { get; private set; }
     public int Height { get; private set; }
-    public Size Size { get; private set; }
+    public SizeWinForm Size { get; private set; }
     public int Stride { get; private set; }  //根據Format32bppArgb
 
     private Bitmap bitmap;
@@ -89,22 +86,14 @@ namespace CycWpfLibrary.Media
         bitmap = bitmap.SetPixelFormat(PixelFormat);
       Bitmap = new Bitmap(bitmap); //更新pixel
     }
-    public PixelBitmap(Size size)
+    public PixelBitmap(SizeWinForm sizeWinForm)
     {
-      _Bitmap = new Bitmap(size.Width, size.Height, PixelFormat); //不更新pixel
+      _Bitmap = new Bitmap(sizeWinForm.Width, sizeWinForm.Height, PixelFormat); //不更新pixel
     }
-    public PixelBitmap(byte[] pixel, Size size)
+    public PixelBitmap(byte[] pixel, SizeWinForm size)
     {
       _Bitmap = new Bitmap(size.Width, size.Height, PixelFormat); //不更新pixel
       Pixel = pixel; //更新bitmap
-    }
-    /// <summary>
-    /// 將Emgu.Image.Data設定至PixelBitmap.Pixel
-    /// </summary>
-    /// <param name="bgraData"><see cref="Emgu"/>.<see cref="Image"/>.Data</param>
-    public PixelBitmap(byte[,,] bgraData)
-    {
-      SetPixel(bgraData);
     }
     public object Clone()
     {
@@ -161,30 +150,6 @@ namespace CycWpfLibrary.Media
           pixel3[x, y, 0] = pixel[idx + 3]; //A
         }
       return pixel3;
-    }
-    /// <summary>
-    /// 以三維陣列設定圖像像素陣列，像素深度按B,G,R,A排列
-    /// </summary>
-    public void SetPixel(byte[,,] bgraData)
-    {
-      var pixel3 = bgraData.Clone() as byte[,,];
-      var height = pixel3.GetLength(0);
-      var width = pixel3.GetLength(1);
-      var depth = pixel3.GetLength(2); //iptImage depth
-      var stride = depth * width; //iptImage stride
-      _Bitmap = new Bitmap(width, height, PixelFormat); //不更新pixel
-      var pixel = new byte[width * height * Depth];
-      int idx;
-      for (int row = 0; row < height; row++)
-        for (int col = 0; col < width; col++)
-        {
-          idx = col * Depth + row * Stride;
-          pixel[idx + 0] = pixel3[row, col, 0]; //B
-          pixel[idx + 1] = pixel3[row, col, 1]; //G
-          pixel[idx + 2] = pixel3[row, col, 2]; //R
-          pixel[idx + 3] = pixel3[row, col, 3]; //A
-        }
-      Pixel = pixel; // Update Bitmap
     }
 
     // private methods

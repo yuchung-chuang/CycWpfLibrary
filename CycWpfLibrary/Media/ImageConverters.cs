@@ -58,7 +58,25 @@ namespace CycWpfLibrary.Media
         return new Bitmap(outStream);
       }
     }
-    public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage) => bitmapImage.ToBitmap().ToPixelBitmap();
+    
+    // BitmapSource
+    public static Bitmap ToBitmap(this BitmapSource bitmapsource)
+    {
+      //convert image format
+      var src = new FormatConvertedBitmap();
+      src.BeginInit();
+      src.Source = bitmapsource;
+      src.DestinationFormat = PixelFormatsWpf.Bgra32;
+      src.EndInit();
+
+      //copy to bitmap
+      Bitmap bitmap = new Bitmap(src.PixelWidth, src.PixelHeight, PixelFormatWinForm.Format32bppArgb);
+      var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppArgb);
+      src.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
+      bitmap.UnlockBits(data);
+
+      return bitmap;
+    }
 
     // Bitmap
     public static BitmapSource ToBitmapSource(this Bitmap bitmap)
@@ -98,28 +116,11 @@ namespace CycWpfLibrary.Media
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
 
-    // PixelBitamp
+
+    // Not straight forward
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToBitmapSource();
-
-    // BitmapSource
-    public static Bitmap ToBitmap(this BitmapSource bitmapsource)
-    {
-      //convert image format
-      var src = new FormatConvertedBitmap();
-      src.BeginInit();
-      src.Source = bitmapsource;
-      src.DestinationFormat = PixelFormatsWpf.Bgra32;
-      src.EndInit();
-
-      //copy to bitmap
-      Bitmap bitmap = new Bitmap(src.PixelWidth, src.PixelHeight, PixelFormatWinForm.Format32bppArgb);
-      var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppArgb);
-      src.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
-      bitmap.UnlockBits(data);
-
-      return bitmap;
-    }
-
+    public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage) => bitmapImage.ToBitmap().ToPixelBitmap();
+    public static PixelBitmap ToPixelBitmap(this BitmapSource bitmapSource) => new PixelBitmap(bitmapSource.ToBitmap());
 
     #region Helper methods
     [DllImport("gdi32.dll")]
@@ -129,38 +130,6 @@ namespace CycWpfLibrary.Media
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo piconinfo);
-    #endregion
-
-    #region Deprecated methods
-    [Obsolete("Need to be fixed.", true)]
-    public static PixelBitmap ToPixelBitmap(this BitmapSource bitmapSource)
-    {
-      var encoder = new BmpBitmapEncoder();
-      var memoryStream = new MemoryStream();
-      encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-      encoder.Save(memoryStream);
-      var pixel = memoryStream.GetBuffer();
-      return new PixelBitmap(pixel, new Size((int)bitmapSource.Width, (int)bitmapSource.Height));
-    }
-    [Obsolete("Need to be fixed.", true)]
-    public static BitmapImage ToBitmapImage(this BitmapSource bitmapSource)
-    {
-      BmpBitmapEncoder encoder = new BmpBitmapEncoder();
-      MemoryStream memoryStream = new MemoryStream();
-      BitmapImage bImg = new BitmapImage();
-
-      encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-      encoder.Save(memoryStream);
-
-      memoryStream.Position = 0;
-      bImg.BeginInit();
-      bImg.StreamSource = memoryStream;
-      bImg.EndInit();
-
-      memoryStream.Close();
-
-      return bImg;
-    }
     #endregion
   }
 }
