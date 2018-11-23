@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CycWpfLibrary.Media
 {
-  public static class ImageExtensions
+  public static class ImageExts
   {
     public static string String => "*" + string.Join(";*", List);
 
