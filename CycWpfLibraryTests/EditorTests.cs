@@ -13,7 +13,7 @@ namespace CycWpfLibrary.Tests
     {
       var PB1 = new Bitmap(@"C:\Users\alex\Desktop\WPF\WpfPlotDigitizer\WpfPlotDigitizerTests\data.png").ToPixelBitmap();
       var PB2 = new Bitmap(@"C:\Users\alex\Desktop\WPF\WpfPlotDigitizer\WpfPlotDigitizer\images\ocr.png").ToPixelBitmap();
-      var editor = new ObjectEditor();
+      var editor = new EditManager();
       editor.Init(PB1);
       editor.Edit(PB2);
       Assert.AreEqual(PB2, editor.Object);

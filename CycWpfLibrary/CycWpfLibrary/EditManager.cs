@@ -6,10 +6,10 @@ using System.Windows.Input;
 namespace CycWpfLibrary
 {
   /// <summary>
-  /// 提供物件編輯功能的基底類別。
+  /// 提供物件編輯功能的類別。
   /// </summary>
   /// <typeparam name="EditObjectType">要編輯的物件類</typeparam>
-  public abstract class EditorBase
+  public class EditManager
   {
     protected List<object> objList = new List<object>();
     protected int listIndex;
@@ -26,7 +26,7 @@ namespace CycWpfLibrary
     /// <summary>
     /// 初始化執行個體
     /// </summary>
-    protected EditorBase()
+    public EditManager()
     {
       UndoCommand = new RelayCommand(Undo, CanUndo);
       RedoCommand = new RelayCommand(Redo, CanRedo);
