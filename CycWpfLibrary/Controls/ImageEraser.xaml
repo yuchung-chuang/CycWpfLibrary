@@ -1,0 +1,37 @@
+﻿<cycMvvm:ViewModelUserControl x:Class="CycWpfLibrary.Controls.ImageEraser"
+                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                              xmlns:local="clr-namespace:CycWpfLibrary.Controls"
+                              xmlns:cycMvvm="clr-namespace:CycWpfLibrary.MVVM"
+                              mc:Ignorable="d"
+                              d:DesignHeight="450"
+                              d:DesignWidth="800">
+  <Grid Name="mainGrid">
+    <local:PanZoomBorder x:Name="panZoom">
+      <Viewbox>
+        <Grid>
+          <Image Name="image"
+                 Source="{Binding ImageSource}"
+                 MouseEnter="image_MouseEnter"
+                 MouseLeave="image_MouseLeave"
+                 MouseRightButtonDown="image_MouseRightButtonDown"
+                 MouseMove="image_MouseMove"
+                 MouseRightButtonUp="image_MouseRightButtonUp"
+                 MouseWheel="image_MouseWheel"/>
+          <Canvas>
+            <Rectangle Name="rectCursor"
+                       Width="10"
+                       Height="10"
+                       Fill="#7F00FFFF"
+                       Canvas.Left="0"
+                       Canvas.Top="0"
+                       IsHitTestVisible="False"
+                       Visibility="Collapsed"/>
+          </Canvas>
+        </Grid>
+      </Viewbox>
+    </local:PanZoomBorder>
+  </Grid>
+</cycMvvm:ViewModelUserControl>

@@ -89,13 +89,7 @@ namespace CycWpfLibrary
     public static Point GetAbsolutePosition(this MouseEventArgs e, UIElement element)
     {
       var transformsTemplate = (element.RenderTransform as TransformGroup).Children;
-      var transformsIdentity = new TransformCollection()
-      {
-        new TranslateTransform(),
-        new ScaleTransform(),
-        new RotateTransform(),
-        new SkewTransform(),
-      };
+      var transformsIdentity = new TransformCollection();
       // 重設UIElement的transforms
       (element.RenderTransform as TransformGroup).Children = transformsIdentity;
       // 取得座標

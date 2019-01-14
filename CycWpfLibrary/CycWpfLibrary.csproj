@@ -83,14 +83,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ImageEditor.xaml.cs">
-      <DependentUpon>ImageEditor.xaml</DependentUpon>
+    <Compile Include="Controls\ImageEraser.xaml.cs">
+      <DependentUpon>ImageEraser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\_PageControl\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\_PageControl\PageManagerBase.cs" />
-    <Compile Include="CycWpfLibrary\ObjectEditors\ObjectEditor.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
@@ -115,7 +114,7 @@
     <Compile Include="Diagnostics\DebugLogger.cs" />
     <Compile Include="Emgu\ImageConverters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
-    <Compile Include="CycWpfLibrary\ObjectEditors\Base\EditorBase.cs" />
+    <Compile Include="CycWpfLibrary\EditManager.cs" />
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\TransformExtensions.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
@@ -200,7 +199,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ImageEditor.xaml">
+    <Page Include="Controls\ImageEraser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

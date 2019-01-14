@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace CycWpfLibrary.Controls
 {
@@ -13,8 +14,10 @@ namespace CycWpfLibrary.Controls
     private Point origin;
     private Point start;
 
-    public TranslateTransform tt;
-    public ScaleTransform st;
+    public TranslateTransform translate { get; set; }
+    public ScaleTransform scale { get; set; }
+    public bool IsEnableWheel { get; set; } = true;
+    public bool IsEnableDrag { get; set; } = true;
 
     public override UIElement Child
     {
@@ -33,29 +36,29 @@ namespace CycWpfLibrary.Controls
       if (child != null)
       {
         TransformGroup group = new TransformGroup();
-        st = new ScaleTransform();
-        group.Children.Add(st);
-        tt = new TranslateTransform();
-        group.Children.Add(tt);
+        // 必須是scale先，translate後
+        scale = new ScaleTransform();
+        group.Children.Add(scale);
+        translate = new TranslateTransform();
+        group.Children.Add(translate);
         child.RenderTransform = group;
         child.RenderTransformOrigin = new Point(0, 0);
         MouseWheel += child_MouseWheel;
         MouseLeftButtonDown += child_MouseLeftButtonDown;
         MouseLeftButtonUp += child_MouseLeftButtonUp;
         MouseMove += child_MouseMove;
-        PreviewMouseRightButtonDown += new MouseButtonEventHandler(
-          child_PreviewMouseRightButtonDown);
       }
     }
+
 
     public void Reset()
     {
       if (child != null)
       {
-        st.ScaleX = 1.0;
-        st.ScaleY = 1.0;
-        tt.X = 0.0;
-        tt.Y = 0.0;
+        scale.ScaleX = 1.0;
+        scale.ScaleY = 1.0;
+        translate.X = 0.0;
+        translate.Y = 0.0;
       }
     }
 
@@ -63,29 +66,29 @@ namespace CycWpfLibrary.Controls
 
     private void child_MouseWheel(object sender, MouseWheelEventArgs e)
     {
-      if (child != null)
+      if (child != null && IsEnableWheel && !isDraging)
       {
         double zoom = e.Delta > 0 ? .2 : -.2;
-        if (!(e.Delta > 0) && (st.ScaleX < .4 || st.ScaleY < .4))
+        if (!(e.Delta > 0) && (scale.ScaleX < .4 || scale.ScaleY < .4))
           return;
 
         var relative = e.GetPosition(child);
         var absolute = e.GetAbsolutePosition(child);
-        
-        st.ScaleX += zoom;
-        st.ScaleY += zoom;
-
-        tt.X = absolute.X - relative.X * st.ScaleX;
-        tt.Y = absolute.Y - relative.Y * st.ScaleY;
+        //必須是scale先，translate後
+        scale.ScaleX += zoom;
+        scale.ScaleY += zoom;
+        translate.X = absolute.X - relative.X * scale.ScaleX;
+        translate.Y = absolute.Y - relative.Y * scale.ScaleY;
       }
     }
 
+    private bool isDraging = false;
     private void child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       if (child != null)
       {
         start = e.GetPosition(this);
-        origin = new Point(tt.X, tt.Y);
+        origin = new Point(translate.X, translate.Y);
         Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
         child.CaptureMouse();
       }
@@ -100,23 +103,16 @@ namespace CycWpfLibrary.Controls
       }
     }
 
-    void child_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
-    {
-      this.Reset();
-    }
-
     private void child_MouseMove(object sender, MouseEventArgs e)
     {
-      if (child != null)
+      if (child != null && child.IsMouseCaptured && e.LeftButton == MouseButtonState.Pressed)
       {
-        if (child.IsMouseCaptured)
-        {
-          Vector v = e.GetPosition(this) - start;
-          tt.X = origin.X + v.X;
-          tt.Y = origin.Y + v.Y;
-          
-        }
+        e.Handled = true;
+        Vector v = e.GetPosition(this) - start;
+        translate.X = origin.X + v.X;
+        translate.Y = origin.Y + v.Y;
       }
+      
     }
 
     #endregion
