@@ -9,21 +9,12 @@ namespace CycWpfLibrary.Controls
 {
   public class PanZoomBorder : Border
   {
-    private UIElement child = null;
+    private FrameworkElement child = null;
     private Point origin;
     private Point start;
 
-    private TranslateTransform GetTranslateTransform(UIElement element)
-    {
-      return (TranslateTransform)((TransformGroup)element.RenderTransform)
-        .Children.First(tr => tr is TranslateTransform);
-    }
-
-    private ScaleTransform GetScaleTransform(UIElement element)
-    {
-      return (ScaleTransform)((TransformGroup)element.RenderTransform)
-        .Children.First(tr => tr is ScaleTransform);
-    }
+    public TranslateTransform tt;
+    public ScaleTransform st;
 
     public override UIElement Child
     {
@@ -38,16 +29,16 @@ namespace CycWpfLibrary.Controls
 
     public void Initialize(UIElement element)
     {
-      this.child = element;
+      this.child = element as FrameworkElement;
       if (child != null)
       {
         TransformGroup group = new TransformGroup();
-        ScaleTransform st = new ScaleTransform();
+        st = new ScaleTransform();
         group.Children.Add(st);
-        TranslateTransform tt = new TranslateTransform();
+        tt = new TranslateTransform();
         group.Children.Add(tt);
         child.RenderTransform = group;
-        child.RenderTransformOrigin = new Point(0.0, 0.0);
+        child.RenderTransformOrigin = new Point(0, 0);
         MouseWheel += child_MouseWheel;
         MouseLeftButtonDown += child_MouseLeftButtonDown;
         MouseLeftButtonUp += child_MouseLeftButtonUp;
@@ -61,13 +52,8 @@ namespace CycWpfLibrary.Controls
     {
       if (child != null)
       {
-        // reset zoom
-        var st = GetScaleTransform(child);
         st.ScaleX = 1.0;
         st.ScaleY = 1.0;
-
-        // reset pan
-        var tt = GetTranslateTransform(child);
         tt.X = 0.0;
         tt.Y = 0.0;
       }
@@ -79,37 +65,27 @@ namespace CycWpfLibrary.Controls
     {
       if (child != null)
       {
-        var st = GetScaleTransform(child);
-        var tt = GetTranslateTransform(child);
-
         double zoom = e.Delta > 0 ? .2 : -.2;
         if (!(e.Delta > 0) && (st.ScaleX < .4 || st.ScaleY < .4))
           return;
 
-        Point relative = e.GetPosition(child);
-        double abosuluteX;
-        double abosuluteY;
-
-        abosuluteX = relative.X * st.ScaleX + tt.X;
-        abosuluteY = relative.Y * st.ScaleY + tt.Y;
-
+        var relative = e.GetPosition(child);
+        var absolute = e.GetAbsolutePosition(child);
+        
         st.ScaleX += zoom;
         st.ScaleY += zoom;
 
-        tt.X = abosuluteX - relative.X * st.ScaleX;
-        tt.Y = abosuluteY - relative.Y * st.ScaleY;
+        tt.X = absolute.X - relative.X * st.ScaleX;
+        tt.Y = absolute.Y - relative.Y * st.ScaleY;
       }
     }
 
-    //private Bitmap cursorBitmap = Properties.Resources.cursor_drag;
     private void child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       if (child != null)
       {
-        var tt = GetTranslateTransform(child);
         start = e.GetPosition(this);
         origin = new Point(tt.X, tt.Y);
-        //Cursor = cursorBitmap.ToCursor(cursorBitmap.Width / 2, cursorBitmap.Height / 2);
         Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
         child.CaptureMouse();
       }
@@ -135,10 +111,10 @@ namespace CycWpfLibrary.Controls
       {
         if (child.IsMouseCaptured)
         {
-          var tt = GetTranslateTransform(child);
-          Vector v = start - e.GetPosition(this);
-          tt.X = origin.X - v.X;
-          tt.Y = origin.Y - v.Y;
+          Vector v = e.GetPosition(this) - start;
+          tt.X = origin.X + v.X;
+          tt.Y = origin.Y + v.Y;
+          
         }
       }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
+using static CycWpfLibrary.NativeMethod;
 
 namespace CycWpfLibrary
 {
@@ -44,8 +45,6 @@ namespace CycWpfLibrary
       else
         return value;
     }
-
-    public static void Swap<T>(ref T x, ref T y) => (x, y) = (y, x);
 
     /// <summary>
     /// 判斷<paramref name="value"/>是否位於閉區間[<paramref name="Max"/>,<paramref name="Min"/>]中。

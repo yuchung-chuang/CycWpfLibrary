@@ -83,10 +83,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ImageEditor.xaml.cs">
+      <DependentUpon>ImageEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\_PageControl\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\_PageControl\PageManagerBase.cs" />
+    <Compile Include="CycWpfLibrary\ObjectEditors\ObjectEditor.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
@@ -108,12 +112,12 @@
     <Compile Include="Controls\PanZoomBorder.cs" />
     <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="CycWpfLibrary\EnumExtensions.cs" />
-    <Compile Include="CycWpfLibrary\ObjectEditors\PixelBitmapEditor.cs" />
     <Compile Include="Diagnostics\DebugLogger.cs" />
     <Compile Include="Emgu\ImageConverters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
-    <Compile Include="CycWpfLibrary\ObjectEditors\Base\ObjectEditors.cs" />
+    <Compile Include="CycWpfLibrary\ObjectEditors\Base\EditorBase.cs" />
     <Compile Include="Diagnostics\LogLevel.cs" />
+    <Compile Include="Media\TransformExtensions.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\Commands\CommandBase\RelayCommandBase.cs" />
@@ -193,6 +197,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DropImageReceiver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
