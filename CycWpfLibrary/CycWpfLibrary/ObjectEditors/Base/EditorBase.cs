@@ -9,11 +9,11 @@ namespace CycWpfLibrary
   /// 提供物件編輯功能的基底類別。
   /// </summary>
   /// <typeparam name="EditObjectType">要編輯的物件類</typeparam>
-  public abstract class ObjectEditorBase<EditObjectType> where EditObjectType : class
+  public abstract class EditorBase
   {
-    private List<EditObjectType> objList = new List<EditObjectType>();
-    private int listIndex;
-    private int ListIndex
+    protected List<object> objList = new List<object>();
+    protected int listIndex;
+    protected int ListIndex
     {
       get => listIndex;
       set
@@ -23,33 +23,44 @@ namespace CycWpfLibrary
       }
     }
 
-    protected ObjectEditorBase()
+    /// <summary>
+    /// 初始化執行個體
+    /// </summary>
+    protected EditorBase()
     {
       UndoCommand = new RelayCommand(Undo, CanUndo);
       RedoCommand = new RelayCommand(Redo, CanRedo);
       EditCommand = new RelayCommand<object>(Edit, CanEdit);
     }
-    protected ObjectEditorBase(EditObjectType initObj) : this()
+
+    /// <summary>
+    /// 設定編輯物件
+    /// </summary>
+    public void Init(object iniObj)
     {
-      objList.Add(initObj);
+      objList.Clear();
+      objList.Add(iniObj);
       ListIndex = 0;
+      IsInitialized = true;
     }
 
-    public EditObjectType Object { get; private set; }
+    public bool IsInitialized { get; private set; } = false;
+
+    public object Object { get; private set; }
     public ICommand UndoCommand { get; set; }
     public ICommand RedoCommand { get; set; }
     public ICommand EditCommand { get; set; }
 
     public void Undo() => ListIndex--;
-    public bool CanUndo() => ListIndex > 0;
+    public bool CanUndo() => IsInitialized && ListIndex > 0;
     public void Redo() => ListIndex++;
-    public bool CanRedo() => ListIndex < objList.Count - 1;
+    public bool CanRedo() => IsInitialized && ListIndex < objList.Count - 1;
     public void Edit(object newObj)
     {
       objList.RemoveRange(listIndex + 1, objList.Count - listIndex - 1);
-      objList.Add(newObj as EditObjectType);
+      objList.Add(newObj);
       ListIndex++;
     }
-    public abstract bool CanEdit(object parameter);
+    public virtual bool CanEdit(object parameter) => IsInitialized;
   }
 }

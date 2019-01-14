@@ -13,13 +13,14 @@ namespace CycWpfLibrary.Tests
     {
       var PB1 = new Bitmap(@"C:\Users\alex\Desktop\WPF\WpfPlotDigitizer\WpfPlotDigitizerTests\data.png").ToPixelBitmap();
       var PB2 = new Bitmap(@"C:\Users\alex\Desktop\WPF\WpfPlotDigitizer\WpfPlotDigitizer\images\ocr.png").ToPixelBitmap();
-      var manager = new PixelBitmapEditor(PB1);
-      manager.Edit(PB2);
-      Assert.AreEqual(PB2, manager.Object);
-      manager.Undo();
-      Assert.AreEqual(PB1, manager.Object);
-      manager.Redo();
-      Assert.AreEqual(PB2, manager.Object);
+      var editor = new ObjectEditor();
+      editor.Init(PB1);
+      editor.Edit(PB2);
+      Assert.AreEqual(PB2, editor.Object);
+      editor.Undo();
+      Assert.AreEqual(PB1, editor.Object);
+      editor.Redo();
+      Assert.AreEqual(PB2, editor.Object);
     }
   }
 }
