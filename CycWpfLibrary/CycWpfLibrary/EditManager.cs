@@ -1,6 +1,8 @@
 ﻿using CycWpfLibrary.Media;
 using CycWpfLibrary.MVVM;
+using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CycWpfLibrary
@@ -23,6 +25,12 @@ namespace CycWpfLibrary
       }
     }
 
+    public event Action ObjectChanged;
+    public void OnObjgectChanged()
+    {
+      ObjectChanged?.Invoke();
+    }
+
     /// <summary>
     /// 初始化執行個體
     /// </summary>
@@ -30,23 +38,32 @@ namespace CycWpfLibrary
     {
       UndoCommand = new RelayCommand(Undo, CanUndo);
       RedoCommand = new RelayCommand(Redo, CanRedo);
-      EditCommand = new RelayCommand<object>(Edit, CanEdit);
+      EditCommand = new RelayCommand<ICloneable>(Edit, CanEdit);
     }
 
     /// <summary>
     /// 設定編輯物件
     /// </summary>
-    public void Init(object iniObj)
+    public void Init(ICloneable iniObj)
     {
       objList.Clear();
-      objList.Add(iniObj);
+      objList.Add(iniObj.Clone());
       ListIndex = 0;
       IsInitialized = true;
     }
 
     public bool IsInitialized { get; private set; } = false;
 
-    public object Object { get; private set; }
+    private object mObject;
+    public object Object
+    {
+      get => mObject;
+      private set
+      {
+        mObject = value;
+        OnObjgectChanged();
+      }
+    }
     public ICommand UndoCommand { get; set; }
     public ICommand RedoCommand { get; set; }
     public ICommand EditCommand { get; set; }
@@ -55,11 +72,11 @@ namespace CycWpfLibrary
     public bool CanUndo() => IsInitialized && ListIndex > 0;
     public void Redo() => ListIndex++;
     public bool CanRedo() => IsInitialized && ListIndex < objList.Count - 1;
-    public void Edit(object newObj)
+    public void Edit(ICloneable newObj)
     {
       objList.RemoveRange(listIndex + 1, objList.Count - listIndex - 1);
-      objList.Add(newObj);
-      ListIndex++;
+      objList.Add(newObj.Clone());
+      ListIndex++; // Update Object
     }
     public virtual bool CanEdit(object parameter) => IsInitialized;
   }
