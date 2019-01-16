@@ -13,9 +13,9 @@ namespace CycWpfLibrary
   /// <typeparam name="EditObjectType">要編輯的物件類</typeparam>
   public class EditManager
   {
-    protected List<object> objList = new List<object>();
-    protected int listIndex;
-    protected int ListIndex
+    private List<object> objList = new List<object>();
+    private int listIndex;
+    public int ListIndex
     {
       get => listIndex;
       set
@@ -30,6 +30,19 @@ namespace CycWpfLibrary
     {
       ObjectChanged?.Invoke();
     }
+
+    private object mObject;
+    public object Object
+    {
+      get => mObject;
+      private set
+      {
+        mObject = value;
+        OnObjgectChanged();
+      }
+    }
+
+    public bool IsInitialized { get; private set; } = false;
 
     /// <summary>
     /// 初始化執行個體
@@ -52,18 +65,6 @@ namespace CycWpfLibrary
       IsInitialized = true;
     }
 
-    public bool IsInitialized { get; private set; } = false;
-
-    private object mObject;
-    public object Object
-    {
-      get => mObject;
-      private set
-      {
-        mObject = value;
-        OnObjgectChanged();
-      }
-    }
     public ICommand UndoCommand { get; set; }
     public ICommand RedoCommand { get; set; }
     public ICommand EditCommand { get; set; }

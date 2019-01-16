@@ -2,6 +2,7 @@
 using CycWpfLibrary.MVVM;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,10 @@ namespace CycWpfLibrary.Controls
       grid.DataContext = this;
     }
 
-    public static readonly DependencyProperty DropPixelBitmapProperty = DependencyProperty.Register(nameof(DropPixelBitmap), typeof(PixelBitmap), typeof(DropImageReceiver));
+    public static readonly DependencyProperty DropPixelBitmapProperty = DependencyProperty.Register(
+      nameof(DropPixelBitmap), 
+      typeof(PixelBitmap), 
+      typeof(DropImageReceiver));
     public PixelBitmap DropPixelBitmap
     {
       get => (PixelBitmap)GetValue(DropPixelBitmapProperty);
