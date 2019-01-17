@@ -12,7 +12,7 @@ namespace CycWpfLibrary.MVVM
   /// 提供實現了<see cref="INotifyPropertyChanged"/>介面的基底類別。
   /// 請將<see cref="UserControl"/>繼承自此類別，並使用Fody.PropertyChanged以自動實作<see cref="PropertyChanged"/>
   /// </summary>
-  public class ViewModelUserControl : UserControl, INotifyPropertyChanged
+  public class NotifyableUserControl : UserControl, INotifyPropertyChanged
   {
     /// <summary>
     /// 當其他屬性變更時觸發此事件。

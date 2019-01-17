@@ -31,7 +31,7 @@ namespace CycWpfLibrary.Controls
     LeftBottom = Left | Bottom,
     RightBottom = Right | Bottom,
   }
-  public partial class Axis : ViewModelUserControl
+  public partial class Axis : NotifyableUserControl
   {
     public Axis()
     {

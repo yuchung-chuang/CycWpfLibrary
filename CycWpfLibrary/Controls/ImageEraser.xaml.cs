@@ -16,7 +16,7 @@ namespace CycWpfLibrary.Controls
   /// <summary>
   /// ImageEditor.xaml 的互動邏輯
   /// </summary>
-  public partial class ImageEraser : ViewModelUserControl
+  public partial class ImageEraser : NotifyableUserControl
   {
     public ImageEraser()
     {
@@ -82,8 +82,9 @@ namespace CycWpfLibrary.Controls
       mousePos = e.GetPosition(image);
       if (e.RightButton == MouseButtonState.Pressed && image.IsMouseCaptured)
       {
-        // Erase Image
-        CvInvoke.Rectangle(Image, new Rect(mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)), new Vector(eraserSize, eraserSize)).ToWinForm(), Color.FromArgb(0, 0, 0, 0).ToMCvScalar(), -1);
+        Image.EraseImage(new Rect(
+          mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)), 
+          new Vector(eraserSize, eraserSize)));
         OnPropertyChanged(nameof(ImageSource));
         isEdit = true;
       }
