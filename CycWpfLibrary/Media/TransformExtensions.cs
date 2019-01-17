@@ -3,12 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace CycWpfLibrary.Media
 {
   public static class TransformExtensions
   {
+    public static void EnsureTransforms(this UIElement element)
+    {
+      element.RenderTransform = new TransformGroup
+      {
+        Children = new TransformCollection
+        {
+          // 必須是scale先，translate後
+          new ScaleTransform(),
+          new TranslateTransform(),
+          new RotateTransform(),
+          new SkewTransform(),
+        },
+      };
+      element.RenderTransformOrigin = new Point(0, 0);
+    }
+
     public static (TranslateTransform, ScaleTransform, RotateTransform, SkewTransform) SplitTransforms(this TransformCollection transforms) => (GetTranslate(transforms), 
       GetScale(transforms), 
       GetRotate(transforms), 

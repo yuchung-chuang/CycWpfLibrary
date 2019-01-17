@@ -9,6 +9,9 @@ using static System.Math;
 
 namespace CycWpfLibrary.MVVM
 {
+  /// <summary>
+  /// 提供縮放相依屬性的靜態類別。
+  /// </summary>
   public static class Zoom
   {
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
@@ -18,35 +21,31 @@ namespace CycWpfLibrary.MVVM
         new PropertyMetadata(OnIsEnabledChanged));
 
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
-    public static bool GetIsEnabled(UIElement obj)
-    {
-      return (bool)obj.GetValue(IsEnabledProperty);
-    }
-    public static void SetIsEnabled(UIElement obj, bool value)
-    {
-      obj.SetValue(IsEnabledProperty, value);
-    }
+    public static bool GetIsEnabled(UIElement element) 
+      => (bool)element.GetValue(IsEnabledProperty);
+    public static void SetIsEnabled(UIElement element, bool value) 
+      => element.SetValue(IsEnabledProperty, value);
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
-        throw new NotSupportedException("Can only set the Zoom.EnableMouseWheel attached behavior on a UIElement.");
+        throw new NotSupportedException($"Can only set the {IsEnabledProperty} attached behavior on a UIElement.");
 
       if ((bool)e.NewValue)
       {
-        element.PreviewMouseWheel += OnMouseWheel;
-        EnsureRenderTransform(element);
+        element.PreviewMouseWheel += Element_PreviewMouseWheel;
+        element.EnsureTransforms();
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
       }
       else
       {
-        element.PreviewMouseWheel -= OnMouseWheel;
+        element.PreviewMouseWheel -= Element_PreviewMouseWheel;
 
       }
     }
 
-    private static void OnMouseWheel(object sender, MouseWheelEventArgs e)
+    private static void Element_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
       var element = sender as UIElement;
       var transforms = (element.RenderTransform as TransformGroup).Children;
@@ -66,20 +65,6 @@ namespace CycWpfLibrary.MVVM
         translate.X = absolute.X - relative.X * scale.ScaleX;
         translate.Y = absolute.Y - relative.Y * scale.ScaleY;
       }
-    }
-
-    private static void EnsureRenderTransform(UIElement element)
-    {
-      element.RenderTransform = new TransformGroup
-      {
-        Children = new TransformCollection
-        {
-          // 必須是scale先，translate後
-          new ScaleTransform(),
-          new TranslateTransform(),
-        },
-      };
-      element.RenderTransformOrigin = new Point(0, 0);
     }
   }
 }

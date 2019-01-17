@@ -120,6 +120,7 @@
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\TransformExtensions.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
+    <Compile Include="MVVM\AttachedProperties\Pan.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\AttachedProperties\Zoom.cs" />
     <Compile Include="MVVM\Commands\CommandBase\RelayCommandBase.cs" />
@@ -134,7 +135,7 @@
     <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
     <Compile Include="MVVM\Validations\Validations.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
-    <Compile Include="MVVM\ViewModels\NotifyableObject.cs" />
+    <Compile Include="MVVM\ViewModels\ObservableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="Xaml\XamlMarkupObject.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
-    <Compile Include="MVVM\ViewModels\NotifyableUserControl.cs" />
+    <Compile Include="MVVM\ViewModels\ObservableUserControl.cs" />
     <Compile Include="CycWpfLibrary\NativeMethod.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
     <Compile Include="NAudio\WavePlayer.cs" />
