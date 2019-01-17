@@ -1,4 +1,4 @@
-﻿<cycMVVM:NotifyableUserControl x:Class="CycWpfLibrary.Controls.DropImageReceiver"
+﻿<cycMVVM:ObservableUserControl x:Class="CycWpfLibrary.Controls.DropImageReceiver"
                               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -43,4 +43,4 @@
       </EventTrigger>
     </Grid.Triggers>
   </Grid>
-</cycMVVM:NotifyableUserControl>
+</cycMVVM:ObservableUserControl>

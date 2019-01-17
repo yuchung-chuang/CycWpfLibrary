@@ -23,7 +23,7 @@ namespace CycWpfLibrary.Controls
   /// <summary>
   /// DropImageReceiver.xaml 的互動邏輯
   /// </summary>
-  public partial class DropImageReceiver : NotifyableUserControl
+  public partial class DropImageReceiver : ObservableUserControl
   {
     public DropImageReceiver()
     {

@@ -16,7 +16,7 @@ namespace CycWpfLibrary.Controls
   /// <summary>
   /// ImageEditor.xaml 的互動邏輯
   /// </summary>
-  public partial class ImageEraser : NotifyableUserControl
+  public partial class ImageEraser : ObservableUserControl
   {
     public ImageEraser()
     {

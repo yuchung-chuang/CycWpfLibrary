@@ -27,7 +27,7 @@ namespace CycWpfLibrary.MVVM
     public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value", typeof(PropertyType), typeof(AttachedPropertyBase<AttachedPropertyType, PropertyType>), new FrameworkPropertyMetadata(
       default(PropertyType),
       new PropertyChangedCallback(OnValuePropertyChanged),
-      new CoerceValueCallback(OnValuePropertyUpdated)));
+      new CoerceValueCallback(OnValuePropertyCoerced)));
 
     /// <summary>
     /// 取得相依屬性的值。
@@ -62,13 +62,14 @@ namespace CycWpfLibrary.MVVM
     /// <param name="d"></param>
     /// <param name="baseValue"></param>
     /// <returns></returns>
-    private static object OnValuePropertyUpdated(DependencyObject sender, object baseValue)
+    private static object OnValuePropertyCoerced(DependencyObject sender, object baseValue)
     {
-      //觸發屬性改變事件。
-      Instance.ValueUpdated?.Invoke(sender, baseValue);
-
       //觸發父類別屬性改變的覆寫方法。
       Instance.OnValueUpdated(sender, baseValue);
+      //觸發重新評估屬性的覆寫方法。
+      baseValue = Instance.OnValueCoerced(sender, baseValue);
+      //觸發屬性改變事件。
+      baseValue = Instance.CoerceValue?.Invoke(sender, baseValue);
 
       return baseValue;
     }
@@ -83,7 +84,7 @@ namespace CycWpfLibrary.MVVM
     /// <summary>
     /// 當屬性被設定時(即便設定的數值一樣)，提供給外界註冊、觸發的事件。
     /// </summary>
-    public event Action<DependencyObject, object> ValueUpdated;
+    public event Func<DependencyObject, object, object> CoerceValue;
 
     /// <summary>
     /// 當屬性改變時，提供給外界覆寫的方法。
@@ -96,11 +97,19 @@ namespace CycWpfLibrary.MVVM
     }
 
     /// <summary>
-    /// 當屬性被設定時(即便設定的數值一樣)，提供改外界覆寫的方法。
+    /// 當屬性被設定時(即便設定的數值一樣)，提供給外界覆寫的方法。
     /// </summary>
     public virtual void OnValueUpdated(DependencyObject sender, object baseValue)
     {
 
+    }
+
+    /// <summary>
+    /// 當需要重新評估屬性時，提供給外界覆寫的方法。
+    /// </summary>
+    public virtual object OnValueCoerced(DependencyObject sender, object baseValue)
+    {
+      return baseValue;
     }
     #endregion
   }

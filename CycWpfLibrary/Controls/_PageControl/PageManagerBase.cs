@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace CycWpfLibrary.Controls
 {
-  public abstract class PageManagerBase : NotifyableObject
+  public abstract class PageManagerBase : ObservableObject
   {
     public virtual int Index { get; set; }
     
