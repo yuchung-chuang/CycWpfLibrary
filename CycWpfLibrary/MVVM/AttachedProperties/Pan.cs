@@ -22,9 +22,9 @@ namespace CycWpfLibrary.MVVM
       typeof(Pan),
       new PropertyMetadata(default(bool), OnIsEnabledChanged));
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
-    public static bool GetIsEnabled(UIElement element) 
+    public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
-    public static void SetIsEnabled(UIElement element, bool value) 
+    public static void SetIsEnabled(UIElement element, bool value)
       => element.SetValue(IsEnabledProperty, value);
 
     public static readonly DependencyProperty MouseButtonProperty = DependencyProperty.RegisterAttached(
@@ -83,23 +83,27 @@ namespace CycWpfLibrary.MVVM
     private static void Element_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      var transforms = (element.RenderTransform as TransformGroup).Children;
-      var translate = transforms.GetTranslate();
-      SetMouseAnchor(element, e.GetAbsolutePosition(element));
-      SetTranslateAnchor(element, new Point(translate.X, translate.Y));
-      element.Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
-      element.CaptureMouse();
+      if (IsMouseButtonPressed(element, e))
+      {
+        var transforms = (element.RenderTransform as TransformGroup).Children;
+        var translate = transforms.GetTranslate();
+        SetMouseAnchor(element, e.GetAbsolutePosition(element));
+        SetTranslateAnchor(element, new Point(translate.X, translate.Y));
+        element.Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
+        element.CaptureMouse();
+
+      }
     }
     private static void Element_PreviewMouseUp(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
       element.ReleaseMouseCapture();
-      element.Cursor = Cursors.Arrow;
+      element.Cursor = Cursors.AppStarting;
     }
     private static void Element_PreviewMouseMove(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (element.IsMouseCaptured && IsMouseButtonPressed())
+      if (element.IsMouseCaptured && IsMouseButtonPressed(element, e))
       {
         Vector v = e.GetAbsolutePosition(element) - GetMouseAnchor(element);
         var transforms = (element.RenderTransform as TransformGroup).Children;
@@ -109,26 +113,26 @@ namespace CycWpfLibrary.MVVM
         translate.Y = translateAnchor.Y + v.Y;
       }
 
-      bool IsMouseButtonPressed()
+    }
+
+    private static bool IsMouseButtonPressed(UIElement element, MouseEventArgs e)
+    {
+      switch (GetMouseButton(element))
       {
-        switch (GetMouseButton(element))
-        {
-          case MouseButton.Left:
-            return e.LeftButton == MouseButtonState.Pressed;
-          case MouseButton.Middle:
-            return e.MiddleButton == MouseButtonState.Pressed;
-          case MouseButton.Right:
-            return e.RightButton == MouseButtonState.Pressed;
-          case MouseButton.XButton1:
-            return e.XButton1 == MouseButtonState.Pressed;
-          case MouseButton.XButton2:
-            return e.XButton2 == MouseButtonState.Pressed;
-          default:
-            return false;
-        }
+        case MouseButton.Left:
+          return e.LeftButton == MouseButtonState.Pressed;
+        case MouseButton.Middle:
+          return e.MiddleButton == MouseButtonState.Pressed;
+        case MouseButton.Right:
+          return e.RightButton == MouseButtonState.Pressed;
+        case MouseButton.XButton1:
+          return e.XButton1 == MouseButtonState.Pressed;
+        case MouseButton.XButton2:
+          return e.XButton2 == MouseButtonState.Pressed;
+        default:
+          return false;
       }
     }
 
-    
   }
 }

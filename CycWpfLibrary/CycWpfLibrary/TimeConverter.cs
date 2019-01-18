@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using static CycWpfLibrary.Math;
 
 namespace CycWpfLibrary

@@ -118,6 +118,7 @@
     <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\EditManager.cs" />
     <Compile Include="Diagnostics\LogLevel.cs" />
+    <Compile Include="Media\AnimationExtensions.cs" />
     <Compile Include="Media\TransformExtensions.cs" />
     <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\Pan.cs" />
