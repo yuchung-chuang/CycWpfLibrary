@@ -143,7 +143,7 @@
     <Compile Include="Media\BitmapExtensions.cs" />
     <Compile Include="Media\ImageExts.cs" />
     <Compile Include="CycWpfLibrary\ArrayExtensions.cs" />
-    <Compile Include="Geometry\PointExtensions.cs" />
+    <Compile Include="Media\PointExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions.cs" />
     <Compile Include="Linq\Expressions\ExpressionExtensions.cs" />
     <Compile Include="Media\ColorExtensions.cs" />

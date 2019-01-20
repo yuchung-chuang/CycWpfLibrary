@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -39,6 +40,20 @@ namespace CycWpfLibrary.MVVM
         element.EnsureTransforms();
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
+        if (element.Parent is Panel panel)
+        {
+          panel.Background = new DrawingBrush
+          {
+            TileMode = TileMode.Tile,
+            Viewport = new Rect(0, 0, 32, 32),
+            ViewportUnits = BrushMappingMode.Absolute,
+            Drawing = new GeometryDrawing
+            {
+              Brush = Brushes.LightGray,
+              Geometry = Geometry.Parse("M0,0 H16 V16 H32 V32 H16 V16 H0Z"),
+            }
+          };
+        }
       }
       else
       {
