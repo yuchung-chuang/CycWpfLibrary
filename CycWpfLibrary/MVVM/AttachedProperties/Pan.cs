@@ -58,6 +58,17 @@ namespace CycWpfLibrary.MVVM
     private static void SetTranslateAnchor(UIElement element, Point value)
       => element.SetValue(TranslateAnchorProperty, value);
 
+    public static readonly DependencyProperty TranslateProperty = DependencyProperty.RegisterAttached(
+      "Translate",
+      typeof(TranslateTransform),
+      typeof(Pan),
+      new PropertyMetadata(default(TranslateTransform)));
+
+    private static TranslateTransform GetTranslate(UIElement element)
+      => (TranslateTransform)element.GetValue(TranslateProperty);
+    private static void SetTranslate(UIElement element, TranslateTransform value) 
+      => element.SetValue(TranslateProperty, value);
+
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
@@ -87,6 +98,7 @@ namespace CycWpfLibrary.MVVM
       {
         var transforms = (element.RenderTransform as TransformGroup).Children;
         var translate = transforms.GetTranslate();
+        SetTranslate(element, translate);
         SetMouseAnchor(element, e.GetAbsolutePosition(element));
         SetTranslateAnchor(element, new Point(translate.X, translate.Y));
         element.Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
@@ -105,12 +117,14 @@ namespace CycWpfLibrary.MVVM
       var element = sender as FrameworkElement;
       if (element.IsMouseCaptured && IsMouseButtonPressed(element, e))
       {
-        Vector v = e.GetAbsolutePosition(element) - GetMouseAnchor(element);
-        var transforms = (element.RenderTransform as TransformGroup).Children;
-        var translate = transforms.GetTranslate();
+        var delta = e.GetAbsolutePosition(element) - GetMouseAnchor(element);
+        var scale = (element.RenderTransform as TransformGroup).Children.GetScale();
+        var translate = GetTranslate(element);
         var translateAnchor = GetTranslateAnchor(element);
-        translate.X = translateAnchor.X + v.X;
-        translate.Y = translateAnchor.Y + v.Y;
+        var toX = Math.Clamp(translateAnchor.X + delta.X, 0, element.ActualWidth * (1 - scale.ScaleX));
+        var toY = Math.Clamp(translateAnchor.Y + delta.Y, 0, element.ActualHeight * (1 - scale.ScaleY));
+        translate.AnimateTo(TranslateTransform.XProperty, toX, 0);
+        translate.AnimateTo(TranslateTransform.YProperty, toY, 0);
       }
 
     }

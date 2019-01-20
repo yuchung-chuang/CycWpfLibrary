@@ -59,9 +59,6 @@ namespace CycWpfLibrary.MVVM
       translate.AnimateTo(TranslateTransform.YProperty, 1d, LeaveTime);
       scale.AnimateTo(ScaleTransform.ScaleXProperty, 1d, LeaveTime);
       scale.AnimateTo(ScaleTransform.ScaleYProperty, 1d, LeaveTime);
-
-      //translate.X = translate.Y = scale.ScaleX = scale.ScaleY = 1;
-      //Animation
     }
 
     private static double WheelTime = 0.1;
@@ -73,14 +70,15 @@ namespace CycWpfLibrary.MVVM
       var translate = transforms.GetTranslate();
       var scale = transforms.GetScale();
 
+      //ZoomSpeed
       double zoom = e.Delta > 0 ? .2 : -.2;
 
       var relative = e.GetPosition(element);
       var absolute = e.GetAbsolutePosition(element);
       //必須是scale先，translate後
       var ToScale = Math.Clamp(scale.ScaleX + zoom, GetMaximum(element), 1);
-      var ToX = Math.Clamp(absolute.X - relative.X * ToScale, 0, parent.ActualWidth - element.ActualWidth * ToScale);
-      var ToY = Math.Clamp(absolute.Y - relative.Y * ToScale, 0, parent.ActualHeight - element.ActualHeight * ToScale);
+      var ToX = Math.Clamp(absolute.X - relative.X * ToScale, 0, element.ActualWidth * (1 - ToScale));
+      var ToY = Math.Clamp(absolute.Y - relative.Y * ToScale, 0, element.ActualHeight * (1 - ToScale));
       scale.AnimateTo(ScaleTransform.ScaleXProperty, ToScale, WheelTime);
       scale.AnimateTo(ScaleTransform.ScaleYProperty, ToScale, WheelTime);
       translate.AnimateTo(TranslateTransform.XProperty, ToX, WheelTime);
