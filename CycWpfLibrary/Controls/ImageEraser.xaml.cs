@@ -44,7 +44,7 @@ namespace CycWpfLibrary.Controls
     public BitmapSource ImageSource => Image?.ToBitmapSource();
 
     private Point mousePos;
-    private ScaleTransform scale => panZoom.scale;
+    private ScaleTransform scale => panZoom.Scale;
     private double eraserSize => 20 / scale.ScaleX;
     private bool isEdit;
 
