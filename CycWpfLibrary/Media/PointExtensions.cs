@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using static System.Math;
 
-namespace CycWpfLibrary.Geometry
+namespace CycWpfLibrary.Media
 {
   public static class PointExtensions
   {
