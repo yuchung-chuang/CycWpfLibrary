@@ -21,11 +21,21 @@ namespace CycWpfLibrary.Controls
       get => translate;
       set
       {
-        translate.X = Math.Clamp(value.X, 0, child.ActualWidth * (1 - scale.ScaleX));
-        translate.Y = Math.Clamp(value.Y, 0, child.ActualHeight * (1 - scale.ScaleY));
+        translate.X = Math.Clamp(value.X, 0, child.ActualWidth * (1 - Scale.ScaleX));
+        translate.Y = Math.Clamp(value.Y, 0, child.ActualHeight * (1 - Scale.ScaleY));
       }
     }
-    public ScaleTransform scale { get; set; }
+    public double MaximumScale { get; set; } = 10;
+    private ScaleTransform scale;
+    public ScaleTransform Scale
+    {
+      get => scale;
+      set
+      {
+        scale.ScaleX = Math.Clamp(value.ScaleX, MaximumScale, 1);
+        scale.ScaleY = Math.Clamp(value.ScaleY, MaximumScale, 1);
+      }
+    }
     public bool IsEnableWheel { get; set; } = true;
     public bool IsEnableDrag { get; set; } = true;
 
@@ -39,7 +49,6 @@ namespace CycWpfLibrary.Controls
         base.Child = value;
       }
     }
-
 
     public void Initialize(UIElement element)
     {
@@ -61,8 +70,8 @@ namespace CycWpfLibrary.Controls
     {
       if (child != null)
       {
-        scale.ScaleX = 1.0;
-        scale.ScaleY = 1.0;
+        Scale.ScaleX = 1.0;
+        Scale.ScaleY = 1.0;
         Translate.X = 0.0;
         Translate.Y = 0.0;
       }
@@ -75,18 +84,22 @@ namespace CycWpfLibrary.Controls
       if (child != null && IsEnableWheel && !isDraging)
       {
         double zoom = e.Delta > 0 ? .2 : -.2;
-        if (!(e.Delta > 0) && (scale.ScaleX < .4 || scale.ScaleY < .4))
+        if (!(e.Delta > 0) && (Scale.ScaleX < .4 || Scale.ScaleY < .4))
           return;
 
         var relative = e.GetPosition(child);
         var absolute = e.GetAbsolutePosition(child);
         //必須是scale先，translate後
-        scale.ScaleX += zoom;
-        scale.ScaleY += zoom;
+        var scale = new ScaleTransform
+        {
+          ScaleX = Scale.ScaleX + zoom,
+          ScaleY = Scale.ScaleY + zoom,
+        };
+        Scale = scale;
         var translate = new TranslateTransform
         {
-          X = absolute.X - relative.X * scale.ScaleX,
-          Y = absolute.Y - relative.Y * scale.ScaleY,
+          X = absolute.X - relative.X * Scale.ScaleX,
+          Y = absolute.Y - relative.Y * Scale.ScaleY,
         };
         Translate = translate;
       }
