@@ -55,7 +55,6 @@ namespace CycWpfLibrary.MVVM
       var translate = transforms.GetTranslate();
       var scale = transforms.GetScale();
       translate.AnimateTo(TranslateTransform.XProperty, 1d, LeaveTime);
-      translate.AnimateTo(TranslateTransform.XProperty, 1d, LeaveTime);
       translate.AnimateTo(TranslateTransform.YProperty, 1d, LeaveTime);
       scale.AnimateTo(ScaleTransform.ScaleXProperty, 1d, LeaveTime);
       scale.AnimateTo(ScaleTransform.ScaleYProperty, 1d, LeaveTime);

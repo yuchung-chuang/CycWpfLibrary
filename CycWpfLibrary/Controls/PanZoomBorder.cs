@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using CycWpfLibrary.Media;
 
 namespace CycWpfLibrary.Controls
 {
@@ -14,7 +15,16 @@ namespace CycWpfLibrary.Controls
     private Point origin;
     private Point start;
 
-    public TranslateTransform translate { get; set; }
+    private TranslateTransform translate;
+    public TranslateTransform Translate
+    {
+      get => translate;
+      set
+      {
+        translate.X = Math.Clamp(value.X, 0, child.ActualWidth * (1 - scale.ScaleX));
+        translate.Y = Math.Clamp(value.Y, 0, child.ActualHeight * (1 - scale.ScaleY));
+      }
+    }
     public ScaleTransform scale { get; set; }
     public bool IsEnableWheel { get; set; } = true;
     public bool IsEnableDrag { get; set; } = true;
@@ -30,19 +40,16 @@ namespace CycWpfLibrary.Controls
       }
     }
 
+
     public void Initialize(UIElement element)
     {
-      this.child = element as FrameworkElement;
+      child = element as FrameworkElement;
       if (child != null)
       {
-        TransformGroup group = new TransformGroup();
-        // 必須是scale先，translate後
-        scale = new ScaleTransform();
-        group.Children.Add(scale);
-        translate = new TranslateTransform();
-        group.Children.Add(translate);
-        child.RenderTransform = group;
-        child.RenderTransformOrigin = new Point(0, 0);
+        child.EnsureTransforms();
+        var transforms = (child.RenderTransform as TransformGroup).Children;
+        translate = transforms.GetTranslate();
+        scale = transforms.GetScale();
         MouseWheel += child_MouseWheel;
         MouseLeftButtonDown += child_MouseLeftButtonDown;
         MouseLeftButtonUp += child_MouseLeftButtonUp;
@@ -50,15 +57,14 @@ namespace CycWpfLibrary.Controls
       }
     }
 
-
     public void Reset()
     {
       if (child != null)
       {
         scale.ScaleX = 1.0;
         scale.ScaleY = 1.0;
-        translate.X = 0.0;
-        translate.Y = 0.0;
+        Translate.X = 0.0;
+        Translate.Y = 0.0;
       }
     }
 
@@ -77,8 +83,12 @@ namespace CycWpfLibrary.Controls
         //必須是scale先，translate後
         scale.ScaleX += zoom;
         scale.ScaleY += zoom;
-        translate.X = absolute.X - relative.X * scale.ScaleX;
-        translate.Y = absolute.Y - relative.Y * scale.ScaleY;
+        var translate = new TranslateTransform
+        {
+          X = absolute.X - relative.X * scale.ScaleX,
+          Y = absolute.Y - relative.Y * scale.ScaleY,
+        };
+        Translate = translate;
       }
     }
 
@@ -88,7 +98,7 @@ namespace CycWpfLibrary.Controls
       if (child != null)
       {
         start = e.GetPosition(this);
-        origin = new Point(translate.X, translate.Y);
+        origin = new Point(Translate.X, Translate.Y);
         Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
         child.CaptureMouse();
       }
@@ -109,8 +119,12 @@ namespace CycWpfLibrary.Controls
       {
         e.Handled = true;
         Vector v = e.GetPosition(this) - start;
-        translate.X = origin.X + v.X;
-        translate.Y = origin.Y + v.Y;
+        var translate = new TranslateTransform
+        {
+          X = origin.X + v.X,
+          Y = origin.Y + v.Y,
+        };
+        Translate = translate;
       }
       
     }

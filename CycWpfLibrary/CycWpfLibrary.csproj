@@ -120,7 +120,7 @@
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\AnimationExtensions.cs" />
     <Compile Include="Media\TransformExtensions.cs" />
-    <Compile Include="MVVM\AttachedProperties\IsObserveSize.cs" />
+    <Compile Include="MVVM\AttachedProperties\obsolete\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\Pan.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
     <Compile Include="MVVM\AttachedProperties\Zoom.cs" />
@@ -152,7 +152,7 @@
     <Compile Include="Media\ImageConverters.cs" />
     <Compile Include="Media\Drawing.cs" />
     <Compile Include="Media\PixelBitmap.cs" />
-    <Compile Include="MVVM\AttachedProperties\AttachedPropertyBase.cs" />
+    <Compile Include="MVVM\AttachedProperties\obsolete\AttachedPropertyBase.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="Xaml\XamlMarkupObject.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
@@ -192,9 +192,7 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MVVM\IoC\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Controls\Axis.xaml">
       <Generator>MSBuild:Compile</Generator>
