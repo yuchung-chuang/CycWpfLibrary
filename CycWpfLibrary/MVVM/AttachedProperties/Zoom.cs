@@ -36,7 +36,10 @@ namespace CycWpfLibrary.MVVM
       if ((bool)e.NewValue)
       {
         element.PreviewMouseWheel += Element_PreviewMouseWheel;
-        element.MouseLeave += Element_MouseLeave;
+        if (GetIsLeaveReset(element))
+        {
+          element.MouseLeave += Element_MouseLeave;
+        }
         element.EnsureTransforms();
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
@@ -97,9 +100,19 @@ namespace CycWpfLibrary.MVVM
       scale.AnimateTo(ScaleTransform.ScaleYProperty, ToScale, WheelTime);
       translate.AnimateTo(TranslateTransform.XProperty, ToX, WheelTime);
       translate.AnimateTo(TranslateTransform.YProperty, ToY, WheelTime);
-      
+
     }
 
+    public static readonly DependencyProperty IsLeaveResetProperty = DependencyProperty.RegisterAttached(
+      "IsLeaveReset",
+      typeof(bool),
+      typeof(Zoom),
+      new PropertyMetadata(default(bool)));
+    [AttachedPropertyBrowsableForType(typeof(UIElement))]
+    public static bool GetIsLeaveReset(UIElement element)
+      => (bool)element.GetValue(IsLeaveResetProperty);
+    public static void SetIsLeaveReset(UIElement element, bool value)
+      => element.SetValue(IsLeaveResetProperty, value);
 
     public static readonly DependencyProperty MaximumProperty = DependencyProperty.RegisterAttached(
       "Maximum",
