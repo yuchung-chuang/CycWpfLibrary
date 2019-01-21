@@ -106,13 +106,14 @@ namespace CycWpfLibrary.Controls
     }
 
     private bool isDraging = false;
+    private Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
     private void child_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
       if (child != null)
       {
         start = e.GetPosition(this);
         origin = new Point(Translate.X, Translate.Y);
-        Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
+        Cursor = panCursor;
         child.CaptureMouse();
       }
     }

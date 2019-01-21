@@ -63,11 +63,30 @@ namespace CycWpfLibrary.MVVM
       typeof(TranslateTransform),
       typeof(Pan),
       new PropertyMetadata(default(TranslateTransform)));
-
     private static TranslateTransform GetTranslate(UIElement element)
       => (TranslateTransform)element.GetValue(TranslateProperty);
-    private static void SetTranslate(UIElement element, TranslateTransform value) 
+    private static void SetTranslate(UIElement element, TranslateTransform value)
       => element.SetValue(TranslateProperty, value);
+
+    public static readonly DependencyProperty IsPanningProperty = DependencyProperty.RegisterAttached(
+      "IsPanning",
+      typeof(bool),
+      typeof(Pan),
+      new PropertyMetadata(default(bool)));
+    private static bool GetIsPanning(UIElement element)
+      => (bool)element.GetValue(IsPanningProperty);
+    private static void SetIsPanning(UIElement element, bool value)
+      => element.SetValue(IsPanningProperty, value);
+
+    public static readonly DependencyProperty CursorCacheProperty = DependencyProperty.RegisterAttached(
+      "CursorCache",
+      typeof(Cursor),
+      typeof(Pan),
+      new PropertyMetadata(default(Cursor)));
+    private static Cursor GetCursorCache(UIElement element)
+      => (Cursor)element.GetValue(CursorCacheProperty);
+    private static void SetCursorCache(UIElement element, Cursor value)
+      => element.SetValue(CursorCacheProperty, value);
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -91,6 +110,8 @@ namespace CycWpfLibrary.MVVM
       }
     }
 
+    private static Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
+
     private static void Element_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
@@ -101,16 +122,20 @@ namespace CycWpfLibrary.MVVM
         SetTranslate(element, translate);
         SetMouseAnchor(element, e.GetAbsolutePosition(element));
         SetTranslateAnchor(element, new Point(translate.X, translate.Y));
-        element.Cursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/cursor.cur", UriKind.RelativeOrAbsolute)).Stream);
+        SetCursorCache(element, element.Cursor);
+        element.Cursor = panCursor;
         element.CaptureMouse();
-
+        SetIsPanning(element, true);
       }
     }
     private static void Element_PreviewMouseUp(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      element.ReleaseMouseCapture();
-      element.Cursor = Cursors.AppStarting;
+      if (GetIsPanning(element))
+      {
+        element.ReleaseMouseCapture();
+        element.Cursor = GetCursorCache(element);
+      }
     }
     private static void Element_PreviewMouseMove(object sender, MouseEventArgs e)
     {

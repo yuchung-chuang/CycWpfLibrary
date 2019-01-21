@@ -121,6 +121,7 @@
     <Compile Include="Media\Animation\AnimationExtensions.cs" />
     <Compile Include="Media\Geometry\RectExtensions.cs" />
     <Compile Include="Media\Geometry\TransformExtensions.cs" />
+    <Compile Include="MVVM\AttachedProperties\Eraser.cs" />
     <Compile Include="MVVM\AttachedProperties\obsolete\IsObserveSize.cs" />
     <Compile Include="MVVM\AttachedProperties\Pan.cs" />
     <Compile Include="MVVM\AttachedProperties\SizeObserver.cs" />
@@ -193,7 +194,9 @@
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Controls\Resources\eraser.cur" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\Axis.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -232,7 +235,7 @@
     <Resource Include="Controls\Resources\cursor_drag.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Controls\Resources\cursor.cur" />
+    <Resource Include="Controls\Resources\pan.cur" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="License-LGPL.txt" />

@@ -50,12 +50,10 @@ namespace CycWpfLibrary.Controls
 
     private void image_MouseEnter(object sender, MouseEventArgs e)
     {
-      image.Cursor = null;
       rectCursor.Visibility = Visibility.Visible;
     }
     private void image_MouseLeave(object sender, MouseEventArgs e)
     {
-      Cursor = Cursors.Arrow;
       rectCursor.Visibility = Visibility.Collapsed;
     }
     private void image_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -95,6 +93,7 @@ namespace CycWpfLibrary.Controls
     {
       rectCursor.Width = eraserSize;
       rectCursor.Height = eraserSize;
+      rectCursor.StrokeThickness = eraserSize / 10;
       Canvas.SetLeft(rectCursor, mousePos.X - eraserSize / 2);
       Canvas.SetTop(rectCursor, mousePos.Y - eraserSize / 2);
     }

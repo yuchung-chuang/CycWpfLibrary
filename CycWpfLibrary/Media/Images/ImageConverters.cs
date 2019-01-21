@@ -9,9 +9,12 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using Size = System.Drawing.Size;
 using PointWinForm = System.Drawing.Point;
+using PointWpf = System.Windows.Point;
+using ColorWinForm = System.Drawing.Color;
 using PixelFormatsWpf = System.Windows.Media.PixelFormats;
 using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
 using System.Drawing.Imaging;
+using System.Windows.Media;
 
 namespace CycWpfLibrary.Media
 {
@@ -116,6 +119,22 @@ namespace CycWpfLibrary.Media
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
 
+    /// <summary>
+    /// Need to be modified.
+    /// </summary>
+    public static Cursor ToCursor(this FrameworkElement element, PointWpf hotSpot)
+    {
+      int width = (int)element.Width;
+      int height = (int)element.Height;
+
+      // Render to a bitmapSource
+      var bitmapSource = new RenderTargetBitmap(width, height, 96, 96, PixelFormatsWpf.Pbgra32);
+      bitmapSource.Render(element);
+
+      //bitmapSource.ToPixelBitmap().Show();
+      var bitmap = bitmapSource.ToBitmap();
+      return bitmap.ToCursor((int)hotSpot.X, (int)hotSpot.Y);
+    }
 
     // Not straight forward
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToBitmapSource();

@@ -19,12 +19,15 @@
                  MouseRightButtonDown="image_MouseRightButtonDown"
                  MouseMove="image_MouseMove"
                  MouseRightButtonUp="image_MouseRightButtonUp"
-                 MouseWheel="image_MouseWheel"/>
+                 MouseWheel="image_MouseWheel"
+                 Cursor="None"/>
           <Canvas>
             <Rectangle Name="rectCursor"
-                       Width="10"
-                       Height="10"
+                       Width="20"
+                       Height="20"
                        Fill="#7F00FFFF"
+                       Stroke="Black"
+                       StrokeThickness="2"
                        Canvas.Left="0"
                        Canvas.Top="0"
                        IsHitTestVisible="False"
