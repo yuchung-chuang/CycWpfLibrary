@@ -21,18 +21,24 @@ namespace CycWpfLibrary.Controls
     public ICommand TurnNextCommand { get; set; }
     public ICommand TurnBackCommand { get; set; }
 
-    public event Action TurnNextEvent;
-    public event Action TurnBackEvent;
+    public event EventHandler TurnNextEvent;
+    public event EventHandler TurnBackEvent;
+    public event EventHandler<int> TurnToEvent;
 
     public virtual void TurnNext()
     {
-      TurnNextEvent?.Invoke();
+      TurnNextEvent?.Invoke(this, null);
       Index++;
     }
     public virtual void TurnBack()
     {
-      TurnBackEvent?.Invoke();
+      TurnBackEvent?.Invoke(this, null);
       Index--;
+    }
+    public virtual void TurnTo(int index)
+    {
+      TurnToEvent?.Invoke(this, index);
+      Index = index;
     }
     /// <summary>
     /// 判斷<see cref="Index"/>是否小於頁面總數
