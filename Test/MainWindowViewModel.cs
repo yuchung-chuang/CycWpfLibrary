@@ -8,12 +8,12 @@ using System.Windows.Input;
 
 namespace Test
 {
-  public class MainWindowViewModel : ViewModelBase<MainWindowViewModel>
+  public class MainWindowViewModel : ViewModelBase
   {
     public string Label { get; set; } = "0";
 
     int num = 0;
-    public RelayCommand ChangeLabelCommand { get; set; }
+    public RelayCommand<object> ChangeLabelCommand { get; set; }
     private void ChangeLabel(object param)
     {
       Label = (++num).ToString();
@@ -27,7 +27,7 @@ namespace Test
 
     public MainWindowViewModel()
     {
-      ChangeLabelCommand = new RelayCommand(ChangeLabel, CanChangeLabel);
+      ChangeLabelCommand = new RelayCommand<object>(ChangeLabel, CanChangeLabel);
 
       InputGestureCollection inputs = new InputGestureCollection();
       inputs.Add(new KeyGesture(Key.R, ModifierKeys.Control, "Ctrl+R"));
