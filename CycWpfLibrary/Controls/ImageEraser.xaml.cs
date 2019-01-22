@@ -22,6 +22,7 @@ namespace CycWpfLibrary.Controls
     {
       InitializeComponent();
       mainGrid.DataContext = this;
+      scale = (panZoom.RenderTransform as TransformGroup).Children.GetScale();
     }
 
     public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
@@ -29,22 +30,21 @@ namespace CycWpfLibrary.Controls
       typeof(Image<Bgra, byte>), 
       typeof(ImageEraser),
       new PropertyMetadata(ImageChanged));
-
-    private static void ImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-      (d as ImageEraser).OnPropertyChanged(nameof(ImageSource));
-    }
-
     public Image<Bgra, byte> Image
     {
       get => GetValue(ImageProperty) as Image<Bgra, byte>;
       set => SetValue(ImageProperty, value);
     }
 
+    private static void ImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      (d as ImageEraser).OnPropertyChanged(nameof(ImageSource));
+    }
+
     public BitmapSource ImageSource => Image?.ToBitmapSource();
 
     private Point mousePos;
-    private ScaleTransform scale => panZoom.Scale;
+    private ScaleTransform scale;
     private double eraserSize => 20 / scale.ScaleX;
     private bool isEdit;
 
