@@ -16,6 +16,7 @@ namespace CycWpfLibrary.MVVM
   /// </summary>
   public static class Pan
   {
+    #region Dependency Properties
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
       "IsEnabled",
       typeof(bool),
@@ -37,58 +38,14 @@ namespace CycWpfLibrary.MVVM
       => (MouseButton)element.GetValue(MouseButtonProperty);
     public static void SetMouseButton(UIElement element, MouseButton value)
       => element.SetValue(MouseButtonProperty, value);
+    #endregion
 
-    public static readonly DependencyProperty MouseAnchorProperty = DependencyProperty.RegisterAttached(
-      "MouseAnchor",
-      typeof(Point),
-      typeof(Pan),
-      new PropertyMetadata(default(Point)));
-    private static Point GetMouseAnchor(UIElement element)
-      => (Point)element.GetValue(MouseAnchorProperty);
-    private static void SetMouseAnchor(UIElement element, Point value)
-      => element.SetValue(MouseAnchorProperty, value);
-
-    public static readonly DependencyProperty TranslateAnchorProperty = DependencyProperty.RegisterAttached(
-      "TranslateAnchor",
-      typeof(Point),
-      typeof(Pan),
-      new PropertyMetadata(default(Point)));
-    private static Point GetTranslateAnchor(UIElement element)
-      => (Point)element.GetValue(TranslateAnchorProperty);
-    private static void SetTranslateAnchor(UIElement element, Point value)
-      => element.SetValue(TranslateAnchorProperty, value);
-
-    public static readonly DependencyProperty TranslateProperty = DependencyProperty.RegisterAttached(
-      "Translate",
-      typeof(TranslateTransform),
-      typeof(Pan),
-      new PropertyMetadata(default(TranslateTransform)));
-    private static TranslateTransform GetTranslate(UIElement element)
-      => (TranslateTransform)element.GetValue(TranslateProperty);
-    private static void SetTranslate(UIElement element, TranslateTransform value)
-      => element.SetValue(TranslateProperty, value);
-
-    public static readonly DependencyProperty IsPanningProperty = DependencyProperty.RegisterAttached(
-      "IsPanning",
-      typeof(bool),
-      typeof(Pan),
-      new PropertyMetadata(default(bool)));
-    private static bool GetIsPanning(UIElement element)
-      => (bool)element.GetValue(IsPanningProperty);
-    private static void SetIsPanning(UIElement element, bool value)
-      => element.SetValue(IsPanningProperty, value);
-
-    public static readonly DependencyProperty CursorCacheProperty = DependencyProperty.RegisterAttached(
-      "CursorCache",
-      typeof(Cursor),
-      typeof(Pan),
-      new PropertyMetadata(default(Cursor)));
-    private static Cursor GetCursorCache(UIElement element)
-      => (Cursor)element.GetValue(CursorCacheProperty);
-    private static void SetCursorCache(UIElement element, Cursor value)
-      => element.SetValue(CursorCacheProperty, value);
-
-    private static Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
+    private static readonly Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
+    private static Cursor cursorCache;
+    private static bool isPanning;
+    private static Point mouseAnchor;
+    private static TranslateTransform translate;
+    private static Point translateAnchor;
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -117,23 +74,22 @@ namespace CycWpfLibrary.MVVM
       if (IsMouseButtonPressed(element, e))
       {
         var transforms = (element.RenderTransform as TransformGroup).Children;
-        var translate = transforms.GetTranslate();
-        SetTranslate(element, translate);
-        SetMouseAnchor(element, e.GetAbsolutePosition(element));
-        SetTranslateAnchor(element, new Point(translate.X, translate.Y));
-        SetCursorCache(element, element.Cursor);
+        translate = transforms.GetTranslate();
+        mouseAnchor = e.GetAbsolutePosition(element);
+        translateAnchor = new Point(translate.X, translate.Y);
+        cursorCache = element.Cursor;
+        isPanning = true;
         element.Cursor = panCursor;
         element.CaptureMouse();
-        SetIsPanning(element, true);
       }
     }
     private static void Element_MouseUp(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (GetIsPanning(element))
+      if (isPanning)
       {
         element.ReleaseMouseCapture();
-        element.Cursor = GetCursorCache(element);
+        element.Cursor = cursorCache;
       }
     }
     private static void Element_MouseMove(object sender, MouseEventArgs e)
@@ -141,10 +97,8 @@ namespace CycWpfLibrary.MVVM
       var element = sender as FrameworkElement;
       if (element.IsMouseCaptured && IsMouseButtonPressed(element, e))
       {
-        var delta = e.GetAbsolutePosition(element) - GetMouseAnchor(element);
+        var delta = e.GetAbsolutePosition(element) - mouseAnchor;
         var scale = (element.RenderTransform as TransformGroup).Children.GetScale();
-        var translate = GetTranslate(element);
-        var translateAnchor = GetTranslateAnchor(element);
         var toX = Math.Clamp(translateAnchor.X + delta.X, 0, element.ActualWidth * (1 - scale.ScaleX));
         var toY = Math.Clamp(translateAnchor.Y + delta.Y, 0, element.ActualHeight * (1 - scale.ScaleY));
         translate.AnimateTo(TranslateTransform.XProperty, toX, 0);

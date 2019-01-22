@@ -4,6 +4,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace CycWpfLibrary.MVVM
 {
   public static class Eraser
   {
+    #region Dependency Properties
     public static DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
       "IsEnabled",
       typeof(bool),
@@ -28,6 +30,29 @@ namespace CycWpfLibrary.MVVM
       => (bool)element.GetValue(IsEnabledProperty);
     public static void SetIsEnabled(UIElement element, bool value)
       => element.SetValue(IsEnabledProperty, value);
+
+    public static DependencyProperty MouseButtonProperty = DependencyProperty.RegisterAttached(
+      "MouseButton",
+      typeof(MouseButton),
+      typeof(Eraser),
+      new PropertyMetadata(default(MouseButton)));
+    [AttachedPropertyBrowsableForType(typeof(Image))]
+    public static MouseButton GetMouseButton(UIElement element)
+      => (MouseButton)element.GetValue(MouseButtonProperty);
+    public static void SetMouseButton(UIElement element, MouseButton value)
+      => element.SetValue(MouseButtonProperty, value);
+
+    public static DependencyProperty EraserSizeProperty = DependencyProperty.RegisterAttached(
+      "EraserSize",
+      typeof(double),
+      typeof(Eraser),
+      new PropertyMetadata(10d));
+    [AttachedPropertyBrowsableForType(typeof(Image))]
+    public static double GetEraserSize(UIElement element)
+      => (double)element.GetValue(EraserSizeProperty);
+    public static void SetEraserSzie(UIElement element, double value)
+      => element.SetValue(EraserSizeProperty, value);
+    #endregion
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -54,49 +79,37 @@ namespace CycWpfLibrary.MVVM
       }
     }
 
-    public static DependencyProperty MouseButtonProperty = DependencyProperty.RegisterAttached(
-      "MouseButton",
-      typeof(MouseButton),
-      typeof(Eraser),
-      new PropertyMetadata(default(MouseButton)));
-    [AttachedPropertyBrowsableForType(typeof(Image))]
-    public static MouseButton GetMouseButton(UIElement element)
-      => (MouseButton)element.GetValue(MouseButtonProperty);
-    public static void SetMouseButton(UIElement element, MouseButton value)
-      => element.SetValue(MouseButtonProperty, value);
-
-    public static DependencyProperty EraserSizeProperty = DependencyProperty.RegisterAttached(
-      "EraserSize",
-      typeof(double),
-      typeof(Eraser),
-      new PropertyMetadata(10d));
-    [AttachedPropertyBrowsableForType(typeof(Image))]
-    public static double GetEraserSize(UIElement element)
-      => (double)element.GetValue(EraserSizeProperty);
-    public static void SetEraserSzie(UIElement element, double value)
-      => element.SetValue(EraserSizeProperty, value);
-
-    public static readonly DependencyProperty CursorCacheProperty = DependencyProperty.RegisterAttached(
-      "CursorCache",
-      typeof(Cursor),
-      typeof(Eraser),
-      new PropertyMetadata(default(Cursor)));
-    private static Cursor GetCursorCache(UIElement element)
-      => (Cursor)element.GetValue(CursorCacheProperty);
-    private static void SetCursorCache(UIElement element, Cursor value)
-      => element.SetValue(CursorCacheProperty, value);
-
-    private static Cursor eraseCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/eraser.cur", UriKind.RelativeOrAbsolute)).Stream);
+    private static Cursor cursorCache;
+    private static Rectangle rectCursor = new Rectangle
+    {
+      Fill = new SolidColorBrush(Color.FromArgb(50, 0, 255, 255)),
+      Stroke = new SolidColorBrush(Colors.Black),
+      IsHitTestVisible = false,
+    };
     private static void Element_MouseEnter(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      SetCursorCache(element, element.Cursor);
-      element.Cursor = eraseCursor;
+      cursorCache = element.Cursor;
+      UpdateCursor(element);
+      Debug.WriteLine("!!");
     }
     private static void Element_MouseLeave(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      element.Cursor = GetCursorCache(element);
+      element.Cursor = cursorCache;
+    }
+    private static void Element_MouseWheel(object sender, MouseWheelEventArgs e)
+    {
+      var element = sender as FrameworkElement;
+      UpdateCursor(element);
+    }
+    private static void UpdateCursor(FrameworkElement element)
+    {
+      var size = GetEraserSize(element);
+      rectCursor.Width = size;
+      rectCursor.Height = size;
+      rectCursor.StrokeThickness = size / 10;
+      element.Cursor = rectCursor.ToCursor(new Point(0.5, 0.5));
     }
 
     private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
@@ -138,12 +151,6 @@ namespace CycWpfLibrary.MVVM
             return false;
         }
       }
-    }
-
-    private static void Element_MouseWheel(object sender, MouseWheelEventArgs e)
-    {
-      var element = sender as FrameworkElement;
-      
     }
   }
 }

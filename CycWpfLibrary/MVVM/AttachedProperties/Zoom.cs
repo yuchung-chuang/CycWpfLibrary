@@ -17,6 +17,7 @@ namespace CycWpfLibrary.MVVM
   /// </summary>
   public static class Zoom
   {
+    #region Dependency Properties
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
       "IsEnabled",
       typeof(bool),
@@ -49,6 +50,7 @@ namespace CycWpfLibrary.MVVM
       => (double)element.GetValue(MaximumProperty);
     public static void SetMaximum(UIElement element, double value)
       => element.SetValue(MaximumProperty, value);
+    #endregion
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -86,6 +88,8 @@ namespace CycWpfLibrary.MVVM
     }
 
     private static double LeaveTime = 1;
+    private static double WheelTime = 0.1;
+
     private static void Element_MouseLeave(object sender, MouseEventArgs e)
     {
       var element = sender as UIElement;
@@ -97,8 +101,6 @@ namespace CycWpfLibrary.MVVM
       scale.AnimateTo(ScaleTransform.ScaleXProperty, 1d, LeaveTime);
       scale.AnimateTo(ScaleTransform.ScaleYProperty, 1d, LeaveTime);
     }
-
-    private static double WheelTime = 0.1;
     private static void Element_MouseWheel(object sender, MouseWheelEventArgs e)
     {
       var element = sender as FrameworkElement;
@@ -122,7 +124,6 @@ namespace CycWpfLibrary.MVVM
       translate.AnimateTo(TranslateTransform.YProperty, ToY, WheelTime);
 
     }
-
     private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       var value = (double)e.NewValue;
@@ -131,6 +132,5 @@ namespace CycWpfLibrary.MVVM
         throw new InvalidOperationException($"{MaximumProperty} must be greater than inital scale (1).");
       }
     }
-
   }
 }
