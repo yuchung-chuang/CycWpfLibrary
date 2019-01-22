@@ -29,14 +29,15 @@ namespace CycWpfLibrary.Controls
       
     }
 
-    public static readonly DependencyProperty CurrentPageProperty = DependencyProperty.Register(
+    public static readonly DependencyProperty PageManagerProperty = DependencyProperty.Register(
       nameof(PageManager), 
       typeof(PageManagerBase), 
       typeof(PageControl));
+
     public PageManagerBase PageManager
     {
-      get => (PageManagerBase)GetValue(CurrentPageProperty);
-      set => SetValue(CurrentPageProperty, value);
+      get => (PageManagerBase)GetValue(PageManagerProperty);
+      set => SetValue(PageManagerProperty, value);
     }
   }
 }
