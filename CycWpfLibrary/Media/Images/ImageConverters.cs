@@ -7,7 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using Size = System.Drawing.Size;
+using SizeWinForm = System.Drawing.Size;
+using SizeWpf = System.Windows.Size;
 using PointWinForm = System.Drawing.Point;
 using PointWpf = System.Windows.Point;
 using ColorWinForm = System.Drawing.Color;
@@ -63,7 +64,8 @@ namespace CycWpfLibrary.Media
     }
     
     // BitmapSource
-    public static Bitmap ToBitmap(this BitmapSource bitmapsource)
+    [Obsolete]
+    public static Bitmap ToBitmapOld(this BitmapSource bitmapsource)
     {
       //convert image format
       var src = new FormatConvertedBitmap();
@@ -78,6 +80,15 @@ namespace CycWpfLibrary.Media
       src.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
       bitmap.UnlockBits(data);
 
+      return bitmap;
+    }
+
+    public static Bitmap ToBitmap(this BitmapSource bitmapSource)
+    {
+      var bitmap = new Bitmap(bitmapSource.PixelWidth, bitmapSource.PixelHeight, PixelFormatWinForm.Format32bppPArgb);
+      var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppPArgb);
+      bitmapSource.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
+      bitmap.UnlockBits(data);
       return bitmap;
     }
 
@@ -103,15 +114,15 @@ namespace CycWpfLibrary.Media
       return retval;
     }
     public static PixelBitmap ToPixelBitmap(this Bitmap bitmap) => new PixelBitmap(bitmap);
-    public static Cursor ToCursor(this Bitmap b, int x, int y)
+    public static Cursor ToCursor(this Bitmap bitmap, PointWpf hotSpot)
     {
       /// get icon from input bitmap
       IconInfo ico = new IconInfo();
-      GetIconInfo(b.GetHicon(), ref ico);
+      GetIconInfo(bitmap.GetHicon(), ref ico);
 
       /// set the hotspot
-      ico.xHotspot = x;
-      ico.yHotspot = y;
+      ico.xHotspot = (int)(hotSpot.X * bitmap.Width);
+      ico.yHotspot = (int)(hotSpot.Y * bitmap.Height);
       ico.fIcon = false;
 
       /// create a cursor from iconinfo
@@ -124,16 +135,16 @@ namespace CycWpfLibrary.Media
     /// </summary>
     public static Cursor ToCursor(this FrameworkElement element, PointWpf hotSpot)
     {
-      int width = (int)element.Width;
-      int height = (int)element.Height;
-
+      var width = element.Width;
+      var height = element.Height;
+      element.Arrange(new Rect(new SizeWpf(width, height)));
+      
       // Render to a bitmapSource
-      var bitmapSource = new RenderTargetBitmap(width, height, 96, 96, PixelFormatsWpf.Pbgra32);
+      var bitmapSource = new RenderTargetBitmap((int)width, (int)height, 96, 96, PixelFormatsWpf.Pbgra32);
       bitmapSource.Render(element);
 
-      //bitmapSource.ToPixelBitmap().Show();
       var bitmap = bitmapSource.ToBitmap();
-      return bitmap.ToCursor((int)hotSpot.X, (int)hotSpot.Y);
+      return bitmap.ToCursor(hotSpot);
     }
 
     // Not straight forward
