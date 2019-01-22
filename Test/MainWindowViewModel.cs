@@ -10,10 +10,18 @@ namespace Test
 {
   public class MainWindowViewModel : ViewModelBase
   {
-    public string Label { get; set; } = "0";
+    public MainWindowViewModel()
+    {
+      ChangeLabelCommand = new RelayCommand<object>(ChangeLabel, CanChangeLabel);
+      RequeryCommand = DataCommands.Requery;
+    }
 
+    public string Label { get; set; } = "0";
     int num = 0;
-    public RelayCommand<object> ChangeLabelCommand { get; set; }
+
+    public static ICommand ChangeLabelCommand { get; set; }
+    public static ICommand RequeryCommand { get; set; }
+
     private void ChangeLabel(object param)
     {
       Label = (++num).ToString();
@@ -21,17 +29,6 @@ namespace Test
     private bool CanChangeLabel(object param)
     {
       return num < 10;
-    }
-
-    public static RoutedUICommand Requery { get; set; } = new RoutedUICommand();
-
-    public MainWindowViewModel()
-    {
-      ChangeLabelCommand = new RelayCommand<object>(ChangeLabel, CanChangeLabel);
-
-      InputGestureCollection inputs = new InputGestureCollection();
-      inputs.Add(new KeyGesture(Key.R, ModifierKeys.Control, "Ctrl+R"));
-      Requery = new RoutedUICommand("Requery", "Requery", typeof(DataCommands), inputs);
     }
 
   }

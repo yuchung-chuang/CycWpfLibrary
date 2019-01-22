@@ -13,7 +13,7 @@
     <local:MainWindowViewModel />
   </Window.DataContext>
   <Window.CommandBindings>
-    <CommandBinding Command="{x:Static local:MainWindowViewModel.Requery}"
+    <CommandBinding Command="{x:Static local:MainWindowViewModel.RequeryCommand}"
                     Executed="Requery_Executed"/>
   </Window.CommandBindings>
   <Grid>
@@ -21,10 +21,19 @@
       <Label Name="label1"
              Content="{Binding Label}" />
       <Button Content="Command Button"
-              Command="{Binding ChangeLabelCommand}"/>
+              Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"/>
       <Button Content="RoutedCommand Button"
-              Command="{x:Static local:MainWindowViewModel.Requery}" />
+              Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
       <custom:NumericTextBox />
+      <Button Content="Change Cursor"
+              Click="Button_Click" />
+      <Rectangle Name="rectCursor"
+                 Width="20"
+                 Height="20"
+                 Fill="#7F00FFFF"
+                 Stroke="Black"
+                 StrokeThickness="2"
+                 IsHitTestVisible="False" />
     </StackPanel>
 
   </Grid>
