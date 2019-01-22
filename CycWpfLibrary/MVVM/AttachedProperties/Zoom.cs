@@ -28,6 +28,28 @@ namespace CycWpfLibrary.MVVM
     public static void SetIsEnabled(UIElement element, bool value)
       => element.SetValue(IsEnabledProperty, value);
 
+    public static readonly DependencyProperty IsLeaveResetProperty = DependencyProperty.RegisterAttached(
+      "IsLeaveReset",
+      typeof(bool),
+      typeof(Zoom),
+      new PropertyMetadata(default(bool)));
+    [AttachedPropertyBrowsableForType(typeof(UIElement))]
+    public static bool GetIsLeaveReset(UIElement element)
+      => (bool)element.GetValue(IsLeaveResetProperty);
+    public static void SetIsLeaveReset(UIElement element, bool value)
+      => element.SetValue(IsLeaveResetProperty, value);
+
+    public static readonly DependencyProperty MaximumProperty = DependencyProperty.RegisterAttached(
+      "Maximum",
+      typeof(double),
+      typeof(Zoom),
+      new PropertyMetadata(5d, OnMaximumChanged));
+    [AttachedPropertyBrowsableForType(typeof(UIElement))]
+    public static double GetMaximum(UIElement element)
+      => (double)element.GetValue(MaximumProperty);
+    public static void SetMaximum(UIElement element, double value)
+      => element.SetValue(MaximumProperty, value);
+
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
@@ -35,11 +57,9 @@ namespace CycWpfLibrary.MVVM
 
       if ((bool)e.NewValue)
       {
-        element.PreviewMouseWheel += Element_PreviewMouseWheel;
+        element.MouseWheel += Element_MouseWheel;
         if (GetIsLeaveReset(element))
-        {
           element.MouseLeave += Element_MouseLeave;
-        }
         element.EnsureTransforms();
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
@@ -60,7 +80,7 @@ namespace CycWpfLibrary.MVVM
       }
       else
       {
-        element.PreviewMouseWheel -= Element_PreviewMouseWheel;
+        element.MouseWheel -= Element_MouseWheel;
         element.MouseLeave -= Element_MouseLeave;
       }
     }
@@ -79,7 +99,7 @@ namespace CycWpfLibrary.MVVM
     }
 
     private static double WheelTime = 0.1;
-    private static void Element_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    private static void Element_MouseWheel(object sender, MouseWheelEventArgs e)
     {
       var element = sender as FrameworkElement;
       var parent = element.Parent as FrameworkElement;
@@ -102,28 +122,6 @@ namespace CycWpfLibrary.MVVM
       translate.AnimateTo(TranslateTransform.YProperty, ToY, WheelTime);
 
     }
-
-    public static readonly DependencyProperty IsLeaveResetProperty = DependencyProperty.RegisterAttached(
-      "IsLeaveReset",
-      typeof(bool),
-      typeof(Zoom),
-      new PropertyMetadata(default(bool)));
-    [AttachedPropertyBrowsableForType(typeof(UIElement))]
-    public static bool GetIsLeaveReset(UIElement element)
-      => (bool)element.GetValue(IsLeaveResetProperty);
-    public static void SetIsLeaveReset(UIElement element, bool value)
-      => element.SetValue(IsLeaveResetProperty, value);
-
-    public static readonly DependencyProperty MaximumProperty = DependencyProperty.RegisterAttached(
-      "Maximum",
-      typeof(double),
-      typeof(Zoom),
-      new PropertyMetadata(5d, OnMaximumChanged));
-    [AttachedPropertyBrowsableForType(typeof(UIElement))]
-    public static double GetMaximum(UIElement element)
-      => (double)element.GetValue(MaximumProperty);
-    public static void SetMaximum(UIElement element, double value)
-      => element.SetValue(MaximumProperty, value);
 
     private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {

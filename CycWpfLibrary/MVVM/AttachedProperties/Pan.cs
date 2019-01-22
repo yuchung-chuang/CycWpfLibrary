@@ -88,6 +88,8 @@ namespace CycWpfLibrary.MVVM
     private static void SetCursorCache(UIElement element, Cursor value)
       => element.SetValue(CursorCacheProperty, value);
 
+    private static Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
+
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
@@ -95,24 +97,21 @@ namespace CycWpfLibrary.MVVM
 
       if ((bool)e.NewValue)
       {
-        element.PreviewMouseDown += Element_PreviewMouseDown;
-        element.PreviewMouseUp += Element_PreviewMouseUp;
-        element.PreviewMouseMove += Element_PreviewMouseMove;
+        element.MouseDown += Element_MouseDown;
+        element.MouseUp += Element_MouseUp;
+        element.MouseMove += Element_MouseMove;
         element.EnsureTransforms();
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
       }
       else
       {
-        element.PreviewMouseDown -= Element_PreviewMouseDown;
-        element.PreviewMouseUp -= Element_PreviewMouseUp;
-        element.PreviewMouseMove -= Element_PreviewMouseMove;
-
+        element.MouseDown -= Element_MouseDown;
+        element.MouseUp -= Element_MouseUp;
+        element.MouseMove -= Element_MouseMove;
       }
     }
 
-    private static Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
-
-    private static void Element_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
       if (IsMouseButtonPressed(element, e))
@@ -128,7 +127,7 @@ namespace CycWpfLibrary.MVVM
         SetIsPanning(element, true);
       }
     }
-    private static void Element_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+    private static void Element_MouseUp(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
       if (GetIsPanning(element))
@@ -137,7 +136,7 @@ namespace CycWpfLibrary.MVVM
         element.Cursor = GetCursorCache(element);
       }
     }
-    private static void Element_PreviewMouseMove(object sender, MouseEventArgs e)
+    private static void Element_MouseMove(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
       if (element.IsMouseCaptured && IsMouseButtonPressed(element, e))
