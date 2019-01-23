@@ -12,7 +12,7 @@ namespace CycWpfLibrary
   public abstract class PageManagerBase : ObservableObject
   {
     public virtual int Index { get; set; }
-    
+
     /// <summary>
     /// 根據<see cref="Index"/>來取得當前頁面。
     /// </summary>
@@ -21,29 +21,41 @@ namespace CycWpfLibrary
     public ICommand TurnNextCommand { get; set; }
     public ICommand TurnBackCommand { get; set; }
 
-    public event EventHandler TurnNextEvent;
-    public event EventHandler TurnBackEvent;
-    public event EventHandler<int> TurnToEvent;
+    public event Func<object, EventArgs, bool> TurnNextEvent;
+    public event Func<object, EventArgs, bool> TurnBackEvent;
+    public event Func<object, int, bool> TurnToEvent;
 
-    public virtual void TurnNext()
+    public virtual bool TurnNext(object param = null)
     {
-      TurnNextEvent?.Invoke(this, null);
-      Index++;
+      if (TurnNextEvent == null)
+        return false;
+      var isCanceled = TurnNextEvent.Invoke(this, null);
+      if (!isCanceled)
+        Index++;
+      return isCanceled;
     }
-    public virtual void TurnBack()
+    public virtual bool TurnBack(object param = null)
     {
-      TurnBackEvent?.Invoke(this, null);
-      Index--;
+      if (TurnBackEvent == null)
+        return false;
+      var isCanceled = TurnBackEvent.Invoke(this, null);
+      if (!isCanceled)
+        Index--;
+      return isCanceled;
     }
-    public virtual void TurnTo(int index)
+    public virtual bool TurnTo(int index)
     {
-      TurnToEvent?.Invoke(this, index);
-      Index = index;
+      if (TurnToEvent == null)
+        return false;
+      var isCanceled = TurnToEvent.Invoke(this, index);
+      if (!isCanceled)
+        Index = index;
+      return isCanceled;
     }
     /// <summary>
     /// 判斷<see cref="Index"/>是否小於頁面總數
     /// </summary>
-    public virtual bool CanTurnNext() => true;
-    public virtual bool CanTurnBack() => Index > 0;
+    public virtual bool CanTurnNext(object param = null) => true;
+    public virtual bool CanTurnBack(object param = null) => Index > 0;
   }
 }
