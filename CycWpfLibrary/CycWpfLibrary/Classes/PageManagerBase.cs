@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CycWpfLibrary
 {
+
   public abstract class PageManagerBase : ObservableObject
   {
     public virtual int Index { get; set; }
@@ -25,32 +27,36 @@ namespace CycWpfLibrary
     public event Func<object, EventArgs, bool> TurnBackEvent;
     public event Func<object, int, bool> TurnToEvent;
 
+    public static bool IsSuccess(bool? turnResult) => turnResult == null || turnResult == true;
+    /// <summary>
+    /// Turn to next page. If this action is successful, return true. Otherwise, return false.
+    /// </summary>
     public virtual bool TurnNext(object param = null)
     {
-      if (TurnNextEvent == null)
-        return false;
-      var isCanceled = TurnNextEvent.Invoke(this, null);
-      if (!isCanceled)
+      bool turnResult = IsSuccess(TurnNextEvent?.Invoke(this, null));
+      if (turnResult)
         Index++;
-      return isCanceled;
+      return turnResult;
     }
+    /// <summary>
+    /// Turn to previous page. If this action is successful, return true. Otherwise, return false.
+    /// </summary>
     public virtual bool TurnBack(object param = null)
     {
-      if (TurnBackEvent == null)
-        return false;
-      var isCanceled = TurnBackEvent.Invoke(this, null);
-      if (!isCanceled)
+      bool turnResult = IsSuccess(TurnBackEvent?.Invoke(this, null));
+      if (turnResult)
         Index--;
-      return isCanceled;
+      return turnResult;
     }
+    /// <summary>
+    /// Turn to <paramref name="index"/> page. If this action is successful, return true. Otherwise, return false.
+    /// </summary>
     public virtual bool TurnTo(int index)
     {
-      if (TurnToEvent == null)
-        return false;
-      var isCanceled = TurnToEvent.Invoke(this, index);
-      if (!isCanceled)
+      bool turnResult = IsSuccess( TurnToEvent?.Invoke(this, index));
+      if (turnResult)
         Index = index;
-      return isCanceled;
+      return turnResult;
     }
     /// <summary>
     /// 判斷<see cref="Index"/>是否小於頁面總數
