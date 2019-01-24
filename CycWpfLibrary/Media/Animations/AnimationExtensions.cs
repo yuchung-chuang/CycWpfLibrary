@@ -43,7 +43,7 @@ namespace CycWpfLibrary.Media
     }
 
     private static readonly double decelerationRatio = 0.9;
-    public static void AddPageSlide(this Storyboard storyboard, AnimatablePage page)
+    public static void AddPageSlide(this Storyboard storyboard, AnimatedPage page)
     {
       var (fromThickness, toThickness) = page.FromToPairs[(page.SlideType, page.TransitionType)];
 
@@ -51,7 +51,7 @@ namespace CycWpfLibrary.Media
       {
         From = fromThickness,
         To = toThickness,
-        Duration = TimeSpan.FromSeconds(page.AnimationTime),
+        Duration = TimeSpan.FromSeconds(page.AnimationSeconds),
         DecelerationRatio = decelerationRatio,
       };
 
@@ -59,7 +59,7 @@ namespace CycWpfLibrary.Media
       storyboard.Children.Add(animation);
     }
 
-    public static void AddPageFade(this Storyboard storyboard, AnimatablePage page)
+    public static void AddPageFade(this Storyboard storyboard, AnimatedPage page)
     {
       double from = 0, to = 0;
       switch (page.TransitionType)
@@ -80,7 +80,7 @@ namespace CycWpfLibrary.Media
       {
         From = from,
         To = to,
-        Duration = TimeSpan.FromSeconds(page.AnimationTime),
+        Duration = TimeSpan.FromSeconds(page.AnimationSeconds),
         DecelerationRatio = decelerationRatio,
       };
 
@@ -88,7 +88,7 @@ namespace CycWpfLibrary.Media
       storyboard.Children.Add(animation);
     }
 
-    public static void AddPageAnimation(this Storyboard storyboard, AnimatablePage page)
+    public static void AddPageAnimation(this Storyboard storyboard, AnimatedPage page)
     {
       if (page.AnimationType.Contain(PageAnimationType.Fade))
         AddPageFade(storyboard, page);

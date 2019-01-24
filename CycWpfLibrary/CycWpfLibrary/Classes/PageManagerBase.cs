@@ -18,7 +18,7 @@ namespace CycWpfLibrary
     /// <summary>
     /// 根據<see cref="Index"/>來取得當前頁面。
     /// </summary>
-    public abstract Page CurrentPage { get; }
+    public abstract FrameworkElement CurrentPage { get; }
 
     public ICommand TurnNextCommand { get; set; }
     public ICommand TurnBackCommand { get; set; }

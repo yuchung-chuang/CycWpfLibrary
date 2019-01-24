@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CycWpfLibrary.Media;
 
 namespace CycWpfLibrary.UserControls
 {
@@ -25,20 +26,56 @@ namespace CycWpfLibrary.UserControls
     public PageControl()
     {
       InitializeComponent();
-
       gridMain.DataContext = this;
-      
     }
 
-    public static readonly DependencyProperty PageManagerProperty = DependencyProperty.Register(
-      nameof(PageManager), 
-      typeof(PageManagerBase), 
-      typeof(PageControl));
-
-    public PageManagerBase PageManager
+    public FrameworkElement CurrentPage
     {
-      get => (PageManagerBase)GetValue(PageManagerProperty);
-      set => SetValue(PageManagerProperty, value);
+      get => (FrameworkElement)GetValue(CurrentPageProperty);
+      set => SetValue(CurrentPageProperty, value);
+    }
+    public static readonly DependencyProperty CurrentPageProperty =
+        DependencyProperty.Register(
+          nameof(CurrentPage), 
+          typeof(FrameworkElement), 
+          typeof(PageControl), 
+          new PropertyMetadata(OnCurrentPageChanged));
+
+    public ICommand TurnBackCommand
+    {
+      get => (ICommand)GetValue(TurnBackCommandProperty);
+      set => SetValue(TurnBackCommandProperty, value);
+    }
+    public static readonly DependencyProperty TurnBackCommandProperty = DependencyProperty.Register(
+        nameof(TurnBackCommand),
+        typeof(ICommand),
+        typeof(PageControl),
+        new PropertyMetadata(default(ICommand)));
+
+    public ICommand TurnNextCommand
+    {
+      get => (ICommand)GetValue(TurnNextCommandProperty);
+      set => SetValue(TurnNextCommandProperty, value);
+    }
+    public static readonly DependencyProperty TurnNextCommandProperty = DependencyProperty.Register(
+        nameof(TurnNextCommand),
+        typeof(ICommand),
+        typeof(PageControl),
+        new PropertyMetadata(default(ICommand)));
+
+    private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var pageControl = d as PageControl;
+      var oldPageFrame = pageControl.oldPageFrame;
+      var newPageFrame = pageControl.newPageFrame;
+
+      var oldPage = e.OldValue;
+      var newPage = e.NewValue;
+      newPageFrame.Content = null;
+      oldPageFrame.Content = oldPage;
+      if (oldPage is AnimatedPage animatedPage)
+        animatedPage.PageAnimation();
+      newPageFrame.Content = newPage;
     }
   }
 }
