@@ -86,7 +86,7 @@
     <Compile Include="Controls\ImageEraser.xaml.cs">
       <DependentUpon>ImageEraser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\_PageControl\PageControl.xaml.cs">
+    <Compile Include="Controls\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="CycWpfLibrary\Classes\PageManagerBase.cs" />
@@ -110,7 +110,8 @@
     <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="CycWpfLibrary\Classes\EditManager.cs" />
     <Compile Include="Diagnostics\LogLevel.cs" />
-    <Compile Include="Media\Animation\AnimationExtensions.cs" />
+    <Compile Include="Media\Animations\AnimatablePage.cs" />
+    <Compile Include="Media\Animations\AnimationExtensions.cs" />
     <Compile Include="Media\Geometry\RectExtensions.cs" />
     <Compile Include="Media\Geometry\TransformExtensions.cs" />
     <Compile Include="MVVM\AttachedProperties\Eraser.cs" />
@@ -206,7 +207,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\_PageControl\PageControl.xaml">
+    <Page Include="Controls\PageControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

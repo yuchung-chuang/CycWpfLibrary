@@ -24,16 +24,13 @@ namespace CycWpfLibrary.Controls
     public PageControl()
     {
       InitializeComponent();
-
       gridMain.DataContext = this;
-      
     }
 
     public static readonly DependencyProperty PageManagerProperty = DependencyProperty.Register(
       nameof(PageManager), 
       typeof(PageManagerBase), 
       typeof(PageControl));
-
     public PageManagerBase PageManager
     {
       get => (PageManagerBase)GetValue(PageManagerProperty);

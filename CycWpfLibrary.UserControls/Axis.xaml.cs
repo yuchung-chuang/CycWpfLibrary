@@ -99,16 +99,16 @@ namespace CycWpfLibrary.UserControls
     {
       var state = new AdjustType();
       if (ApproxEqual(mousePos.X, AxisLeft, tol) &&
-        IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
+          IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
         state = (AdjustType)state.Add(AdjustType.Left);
       if (ApproxEqual(mousePos.Y, AxisTop, tol) &&
-        IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
+          IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
         state = (AdjustType)state.Add(AdjustType.Top);
       if (ApproxEqual(mousePos.X, AxisRight, tol) &&
-        IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
+          IsIn(mousePos.Y, AxisBottom + tol, AxisTop - tol))
         state = (AdjustType)state.Add(AdjustType.Right);
       if (ApproxEqual(mousePos.Y, AxisBottom, tol) &&
-        IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
+          IsIn(mousePos.X, AxisRight + tol, AxisLeft - tol))
         state = (AdjustType)state.Add(AdjustType.Bottom);
       return state;
     }
