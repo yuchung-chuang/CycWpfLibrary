@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using static CycWpfLibrary.Math;
 
-namespace CycWpfLibrary.Controls
+namespace CycWpfLibrary.UserControls
 {
   public enum AdjustType
   {
@@ -18,9 +18,9 @@ namespace CycWpfLibrary.Controls
     LeftBottom = Left | Bottom,
     RightBottom = Right | Bottom,
   }
-  public partial class Axis : ObservableUserControl
+  public partial class Axis2 : ObservableUserControl
   {
-    public Axis()
+    public Axis2()
     {
       InitializeComponent();
 
@@ -31,9 +31,9 @@ namespace CycWpfLibrary.Controls
     public string ShadowBrush { get; set; }
 
     #region AxisProperties
-    public static readonly DependencyProperty AxisLeftProperty = DependencyProperty.Register(nameof(AxisLeft), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
+    public static readonly DependencyProperty AxisLeftProperty = DependencyProperty.Register(nameof(AxisLeft), typeof(double), typeof(Axis2), new PropertyMetadata((d, e) =>
     {
-      var sender = d as Axis;
+      var sender = d as Axis2;
       sender.OnPropertyChanged(nameof(AxisMargin));
     }));
     public double AxisLeft
@@ -41,9 +41,9 @@ namespace CycWpfLibrary.Controls
       get => (double)GetValue(AxisLeftProperty);
       set => SetValue(AxisLeftProperty, Clamp(value, AxisRight - tol, 0));
     }
-    public static readonly DependencyProperty AxisTopProperty = DependencyProperty.Register(nameof(AxisTop), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
+    public static readonly DependencyProperty AxisTopProperty = DependencyProperty.Register(nameof(AxisTop), typeof(double), typeof(Axis2), new PropertyMetadata((d, e) =>
     {
-      var sender = d as Axis;
+      var sender = d as Axis2;
       sender.OnPropertyChanged(nameof(AxisMargin));
       sender.OnPropertyChanged(nameof(AxisRight));
       sender.OnPropertyChanged(nameof(TopBorderMargin));
@@ -54,9 +54,9 @@ namespace CycWpfLibrary.Controls
       get => (double)GetValue(AxisTopProperty);
       set => SetValue(AxisTopProperty, Clamp(value, AxisBottom - tol, 0));
     }
-    public static readonly DependencyProperty AxisWidthProperty = DependencyProperty.Register(nameof(AxisWidth), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
+    public static readonly DependencyProperty AxisWidthProperty = DependencyProperty.Register(nameof(AxisWidth), typeof(double), typeof(Axis2), new PropertyMetadata((d, e) =>
     {
-      var sender = d as Axis;
+      var sender = d as Axis2;
       sender.AxisRight = -1; //fire OnPropertyChanged
     }));
     public double AxisWidth
@@ -64,9 +64,9 @@ namespace CycWpfLibrary.Controls
       get => (double)GetValue(AxisWidthProperty);
       set => SetValue(AxisWidthProperty, Clamp(value, double.MaxValue, tol));
     }
-    public static readonly DependencyProperty AxisHeightProperty = DependencyProperty.Register(nameof(AxisHeight), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
+    public static readonly DependencyProperty AxisHeightProperty = DependencyProperty.Register(nameof(AxisHeight), typeof(double), typeof(Axis2), new PropertyMetadata((d, e) =>
     {
-      var sender = d as Axis;
+      var sender = d as Axis2;
       sender.AxisBottom = -1; //fire OnPropertyChanged
     }));
     public double AxisHeight
@@ -143,7 +143,7 @@ namespace CycWpfLibrary.Controls
     {
       base.OnMouseDown(e);
       var mousePos = e.GetPosition(gridMain);
-      Debug.WriteLine($"{typeof(Axis)}.{nameof(mousePos)}:{mousePos}");
+      Debug.WriteLine($"{typeof(Axis2)}.{nameof(mousePos)}:{mousePos}");
       State = GetState(mousePos);
       UpdateCursor(State);
 

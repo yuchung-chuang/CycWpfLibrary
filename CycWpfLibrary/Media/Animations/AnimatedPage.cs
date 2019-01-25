@@ -51,33 +51,36 @@ namespace CycWpfLibrary.Media
 
     public void PageAnimation()
     {
+      var width = ActualWidth;
+      var height = ActualHeight;
       if (FromToPairs.Count == 0)
-        SetFromToPairs();
+        if (width != 0 && height != 0)
+          SetFromToPairs();
+        else
+          return;
       var storyboard = new Storyboard();
       storyboard.AddPageAnimation(this);
       storyboard.Begin(this);
-    }
 
-    private void SetFromToPairs()
-    {
-      var width = ActualWidth;
-      var height = ActualHeight;
-      FromToPairs[(PageSlideType.Left, PageTransitionType.In)] =
-        (new Thickness(-width, 0, width, 0), new Thickness(0));
-      FromToPairs[(PageSlideType.Right, PageTransitionType.In)] =
-        (new Thickness(width, 0, -width, 0), new Thickness(0));
-      FromToPairs[(PageSlideType.Top, PageTransitionType.In)] =
-        (new Thickness(0, -height, 0, height), new Thickness(0));
-      FromToPairs[(PageSlideType.Bottom, PageTransitionType.In)] =
-        (new Thickness(0, height, 0, -height), new Thickness(0));
-      FromToPairs[(PageSlideType.Left, PageTransitionType.Out)] =
-        (new Thickness(0), new Thickness(-width, 0, width, 0));
-      FromToPairs[(PageSlideType.Right, PageTransitionType.Out)] =
-        (new Thickness(0), new Thickness(width, 0, -width, 0));
-      FromToPairs[(PageSlideType.Top, PageTransitionType.Out)] =
-        (new Thickness(0), new Thickness(0, -height, 0, height));
-      FromToPairs[(PageSlideType.Bottom, PageTransitionType.Out)] =
-        (new Thickness(0), new Thickness(0, height, 0, -height));
+      void SetFromToPairs()
+      {
+        FromToPairs[(PageSlideType.Left, PageTransitionType.In)] =
+          (new Thickness(-width, 0, width, 0), new Thickness(0));
+        FromToPairs[(PageSlideType.Right, PageTransitionType.In)] =
+          (new Thickness(width, 0, -width, 0), new Thickness(0));
+        FromToPairs[(PageSlideType.Top, PageTransitionType.In)] =
+          (new Thickness(0, -height, 0, height), new Thickness(0));
+        FromToPairs[(PageSlideType.Bottom, PageTransitionType.In)] =
+          (new Thickness(0, height, 0, -height), new Thickness(0));
+        FromToPairs[(PageSlideType.Left, PageTransitionType.Out)] =
+          (new Thickness(0), new Thickness(-width, 0, width, 0));
+        FromToPairs[(PageSlideType.Right, PageTransitionType.Out)] =
+          (new Thickness(0), new Thickness(width, 0, -width, 0));
+        FromToPairs[(PageSlideType.Top, PageTransitionType.Out)] =
+          (new Thickness(0), new Thickness(0, -height, 0, height));
+        FromToPairs[(PageSlideType.Bottom, PageTransitionType.Out)] =
+          (new Thickness(0), new Thickness(0, height, 0, -height));
+      }
     }
 
     private void AnimatedPage_Loaded(object sender, RoutedEventArgs e)

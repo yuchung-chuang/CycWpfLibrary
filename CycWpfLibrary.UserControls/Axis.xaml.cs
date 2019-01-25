@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using static CycWpfLibrary.Math;
 
-namespace CycWpfLibrary.UserControls
+namespace CycWpfLibrary.UserControls.aaa
 {
   public enum AdjustType
   {

@@ -40,7 +40,7 @@ namespace CycWpfLibrary.MVVM
       => element.SetValue(MouseButtonProperty, value);
     #endregion
 
-    private static readonly Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Controls/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
+    private static readonly Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"/CycWpfLibrary;component/Resources/pan.cur", UriKind.RelativeOrAbsolute)).Stream);
     private static Cursor cursorCache;
     private static bool isPanning;
     private static Point mouseAnchor;

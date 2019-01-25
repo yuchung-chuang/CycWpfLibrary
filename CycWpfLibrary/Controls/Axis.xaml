@@ -1,19 +1,17 @@
-﻿<cycMVVM:ObservableUserControl x:Class="CycWpfLibrary.Controls.Axis"
-                              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                              xmlns:local="clr-namespace:CycWpfLibrary.Controls"
-                              xmlns:cycMVVM="clr-namespace:CycWpfLibrary.MVVM"
-                              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                              mc:Ignorable="d"
-                              d:DesignHeight="450"
-                              d:DesignWidth="800">
+﻿<mvvm:ObservableUserControl x:Class="CycWpfLibrary.Controls.Axis"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM"
+                            mc:Ignorable="d"
+                            d:DesignHeight="450"
+                            d:DesignWidth="800">
   <Grid Name="gridMain"
         Background="Transparent">
     <Rectangle HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Stroke="{Binding AxisBrush, Converter={cycMVVM:UniversalConverter}}"
+               Stroke="{Binding AxisBrush, Converter={mvvm:UniversalConverter}}"
                Fill="Transparent"
                StrokeThickness="3"
                Width="{Binding AxisWidth}"
@@ -24,7 +22,7 @@
       <Grid.Resources>
         <Style TargetType="Border">
           <Setter Property="Background"
-                  Value="{Binding ShadowBrush, Converter={cycMVVM:UniversalConverter}}" />
+                  Value="{Binding ShadowBrush, Converter={mvvm:UniversalConverter}}" />
           <Setter Property="HorizontalAlignment"
                   Value="Left" />
           <Setter Property="VerticalAlignment"
@@ -39,7 +37,7 @@
       <Border Width="{Binding ElementName=gridShadow, Path=ActualWidth}"
               Margin="{Binding BottomBorderMargin}">
         <Border.Height>
-          <MultiBinding Converter="{cycMVVM:MathConverter}"
+          <MultiBinding Converter="{mvvm:MathConverter}"
                         ConverterParameter="x - y">
             <Binding Path="ActualHeight"
                      ElementName="gridShadow" />
@@ -50,7 +48,7 @@
       <Border Height="{Binding AxisHeight}"
               Margin="{Binding RightBorderMargin}">
         <Border.Width>
-          <MultiBinding Converter="{cycMVVM:MathConverter}"
+          <MultiBinding Converter="{mvvm:MathConverter}"
                         ConverterParameter="x - y">
             <Binding Path="ActualWidth"
                      ElementName="gridShadow" />
@@ -60,4 +58,4 @@
       </Border>
     </Grid>
   </Grid>
-</cycMVVM:ObservableUserControl>
+</mvvm:ObservableUserControl>
