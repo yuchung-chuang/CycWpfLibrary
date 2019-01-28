@@ -2,6 +2,7 @@
 using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace CycWpfLibrary.MVVM
       typeof(bool),
       typeof(Pan),
       new PropertyMetadata(default(bool), OnIsEnabledChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
@@ -34,6 +36,7 @@ namespace CycWpfLibrary.MVVM
       typeof(MouseButton),
       typeof(Pan),
       new PropertyMetadata(default(MouseButton)));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static MouseButton GetMouseButton(UIElement element)
       => (MouseButton)element.GetValue(MouseButtonProperty);

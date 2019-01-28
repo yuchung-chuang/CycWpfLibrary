@@ -2,7 +2,10 @@
 using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,17 +27,19 @@ namespace CycWpfLibrary.MVVM
       typeof(bool),
       typeof(Zoom),
       new PropertyMetadata(OnIsEnabledChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
     public static void SetIsEnabled(UIElement element, bool value)
       => element.SetValue(IsEnabledProperty, value);
-
+    
     public static readonly DependencyProperty IsLeaveResetProperty = DependencyProperty.RegisterAttached(
       "IsLeaveReset",
       typeof(bool),
       typeof(Zoom),
       new PropertyMetadata(default(bool)));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsLeaveReset(UIElement element)
       => (bool)element.GetValue(IsLeaveResetProperty);
@@ -46,6 +51,7 @@ namespace CycWpfLibrary.MVVM
       typeof(double),
       typeof(Zoom),
       new PropertyMetadata(5d, OnMaximumChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static double GetMaximum(UIElement element)
       => (double)element.GetValue(MaximumProperty);

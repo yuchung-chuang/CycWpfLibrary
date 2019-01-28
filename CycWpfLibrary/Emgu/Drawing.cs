@@ -24,14 +24,14 @@ namespace CycWpfLibrary.Emgu
 
     public static Image<Bgra, byte> EraseImage(this Image<Bgra, byte> image, Rect rect)
     {
-      var optImage = image.Copy();
+      var optImage = image.CopyBlank();
       CvInvoke.Rectangle(optImage, rect.ToWinForm(), Bgras.Transparent.MCvScalar, -1);
       return optImage;
     }
 
     public async static Task<Image<Bgra, byte>> EraseImageAsync(this Image<Bgra, byte> image, Rect rect)
     {
-      var optImage = new Image<Bgra, byte>(image.Size);
+      var optImage = image.CopyBlank();
       await Task.Run(() => optImage = image.EraseImage(rect));
       return optImage;
     }

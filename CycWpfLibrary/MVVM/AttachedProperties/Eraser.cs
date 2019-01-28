@@ -3,6 +3,7 @@ using CycWpfLibrary.Media;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,6 +46,7 @@ namespace CycWpfLibrary.MVVM
       typeof(bool),
       typeof(Eraser),
       new PropertyMetadata(default(bool), OnIsEnabledChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
@@ -56,6 +58,7 @@ namespace CycWpfLibrary.MVVM
       typeof(MouseButton),
       typeof(Eraser),
       new PropertyMetadata(default(MouseButton)));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static MouseButton GetMouseButton(UIElement element)
       => (MouseButton)element.GetValue(MouseButtonProperty);
@@ -67,6 +70,7 @@ namespace CycWpfLibrary.MVVM
       typeof(double),
       typeof(Eraser),
       new PropertyMetadata(10d));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static double GetEraserSize(UIElement element)
       => (double)element.GetValue(EraserSizeProperty);
@@ -78,33 +82,37 @@ namespace CycWpfLibrary.MVVM
         typeof(Image<Bgra, byte>),
         typeof(Eraser),
         new PropertyMetadata(default(Image<Bgra, byte>), OnImageChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static Image<Bgra, byte> GetImage(DependencyObject obj)
         => (Image<Bgra, byte>)obj.GetValue(ImageProperty);
     public static void SetImage(DependencyObject obj, Image<Bgra, byte> value)
         => obj.SetValue(ImageProperty, value);
 
-    public static readonly DependencyProperty MouseDownCommandProperty = DependencyProperty.RegisterAttached(
-        "MouseDownCommand",
-        typeof(ICommand),
-        typeof(Eraser),
-        new PropertyMetadata(default(ICommand)));
-    [AttachedPropertyBrowsableForType(typeof(ImageControl))]
-    public static ICommand GetMouseDownCommand(DependencyObject obj)
-        => (ICommand)obj.GetValue(MouseDownCommandProperty);
-    public static void SetMouseDownCommand(DependencyObject obj, ICommand value)
-        => obj.SetValue(MouseDownCommandProperty, value);
-
     public static readonly DependencyProperty CursorProperty = DependencyProperty.RegisterAttached(
         "Cursor",
         typeof(FrameworkElement),
         typeof(Eraser),
         new PropertyMetadata(default(FrameworkElement), OnCursorChanged));
+    [Category(AppNames.MVVM)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static FrameworkElement GetCursor(DependencyObject obj)
         => (FrameworkElement)obj.GetValue(CursorProperty);
     public static void SetCursor(DependencyObject obj, FrameworkElement value)
         => obj.SetValue(CursorProperty, value);
+
+    [Obsolete("Not implemented")]
+    public static readonly DependencyProperty MouseDownCommandProperty = DependencyProperty.RegisterAttached(
+        "MouseDownCommand",
+        typeof(ICommand),
+        typeof(Eraser),
+        new PropertyMetadata(default(ICommand)));
+    [Category(AppNames.MVVM)]
+    [AttachedPropertyBrowsableForType(typeof(ImageControl))]
+    public static ICommand GetMouseDownCommand(DependencyObject obj)
+        => (ICommand)obj.GetValue(MouseDownCommandProperty);
+    public static void SetMouseDownCommand(DependencyObject obj, ICommand value)
+        => obj.SetValue(MouseDownCommandProperty, value);
     #endregion
 
     #region Private Dependency Properties

@@ -73,7 +73,7 @@ namespace CycWpfLibrary.UserControls
     /// 不要直接將BitmapSource綁定到DependencyProperty上，會多呼叫GetValue()而降低效率
     /// 因此這裡使用一個public property來當作中間層
     /// </summary>
-    public BitmapSource ImageSource => ImageDisplay?.ToBitmapSource();
+    public BitmapSource ImageSource => imageDisplay?.ToBitmapSource();
 
     private Point mousePos;
     private ScaleTransform scale;
@@ -102,7 +102,7 @@ namespace CycWpfLibrary.UserControls
     {
       imageControl.ReleaseMouseCapture();
       if (isEdit)
-        Image = Image; //invoke Image.set -> two-way binding 
+        Image = imageDisplay; //invoke Image.set -> two-way binding 
     }
 
     private async void image_MouseMove(object sender, MouseEventArgs e)
@@ -110,7 +110,7 @@ namespace CycWpfLibrary.UserControls
       mousePos = e.GetPosition(imageControl);
       if (e.IsMouseButtonPressed(MouseButton))
       {
-        ImageDisplay = await ImageDisplay.EraseImageAsync(new Rect(
+        ImageDisplay = await imageDisplay.EraseImageAsync(new Rect(
           mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)),
           new Vector(eraserSize, eraserSize)));
         isEdit = true;
