@@ -12,9 +12,28 @@ namespace CycWpfLibrary.Emgu
 {
   public static class Drawing
   {
-    public static void EraseImage(this Image<Bgra, byte> image, Rect rect)
+    public static void EraseImageSelf(this Image<Bgra, byte> image, Rect rect)
     {
       CvInvoke.Rectangle(image, rect.ToWinForm(), Bgras.Transparent.MCvScalar, -1);
+    }
+
+    public async static Task EraseImageSelfAsync(this Image<Bgra, byte> image, Rect rect)
+    {
+      await Task.Run(() => CvInvoke.Rectangle(image, rect.ToWinForm(), Bgras.Transparent.MCvScalar, -1));
+    }
+
+    public static Image<Bgra, byte> EraseImage(this Image<Bgra, byte> image, Rect rect)
+    {
+      var optImage = image.Copy();
+      CvInvoke.Rectangle(optImage, rect.ToWinForm(), Bgras.Transparent.MCvScalar, -1);
+      return optImage;
+    }
+
+    public async static Task<Image<Bgra, byte>> EraseImageAsync(this Image<Bgra, byte> image, Rect rect)
+    {
+      var optImage = new Image<Bgra, byte>(image.Size);
+      await Task.Run(() => optImage = image.EraseImage(rect));
+      return optImage;
     }
   }
 }

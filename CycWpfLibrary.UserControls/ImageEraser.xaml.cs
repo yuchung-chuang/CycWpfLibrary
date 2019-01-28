@@ -1,15 +1,17 @@
 ﻿using CycWpfLibrary.Emgu;
+using CycWpfLibrary.Input;
+using CycWpfLibrary.Media;
 using CycWpfLibrary.MVVM;
+using CycWpfLibrary.WinForm;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using CycWpfLibrary.WinForm;
-using System;
-using CycWpfLibrary.Media;
 
 namespace CycWpfLibrary.UserControls
 {
@@ -22,26 +24,56 @@ namespace CycWpfLibrary.UserControls
     {
       InitializeComponent();
       mainGrid.DataContext = this;
-      scale = (panZoom.RenderTransform as TransformGroup).Children.GetScale();
+      this.EnsureTransforms();
+      scale = (RenderTransform as TransformGroup).Children.GetScale();
     }
 
-    public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
-      nameof(Image), 
-      typeof(Image<Bgra, byte>), 
-      typeof(ImageEraser),
-      new PropertyMetadata(ImageChanged));
+    #region Dependency Properties
     public Image<Bgra, byte> Image
     {
       get => GetValue(ImageProperty) as Image<Bgra, byte>;
       set => SetValue(ImageProperty, value);
     }
+    public static readonly DependencyProperty ImageProperty = DependencyProperty.Register(
+      nameof(Image),
+      typeof(Image<Bgra, byte>),
+      typeof(ImageEraser),
+      new PropertyMetadata(ImageChanged));
+
+    public MouseButton MouseButton
+    {
+      get => (MouseButton)GetValue(MouseButtonProperty);
+      set => SetValue(MouseButtonProperty, value);
+    }
+    public static readonly DependencyProperty MouseButtonProperty = DependencyProperty.Register(
+        nameof(MouseButton),
+        typeof(MouseButton),
+        typeof(ImageEraser),
+        new PropertyMetadata(default(MouseButton)));
+
+    #endregion
 
     private static void ImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-      (d as ImageEraser).OnPropertyChanged(nameof(ImageSource));
+      var element = d as ImageEraser;
+      element.ImageDisplay = element.Image.Clone();
     }
 
-    public BitmapSource ImageSource => Image?.ToBitmapSource();
+    private Image<Bgra, byte> imageDisplay;
+    public Image<Bgra, byte> ImageDisplay
+    {
+      get => imageDisplay;
+      set
+      {
+        imageDisplay = value;
+        OnPropertyChanged(nameof(ImageSource));
+      }
+    }
+    /// <summary>
+    /// 不要直接將BitmapSource綁定到DependencyProperty上，會多呼叫GetValue()而降低效率
+    /// 因此這裡使用一個public property來當作中間層
+    /// </summary>
+    public BitmapSource ImageSource => ImageDisplay?.ToBitmapSource();
 
     private Point mousePos;
     private ScaleTransform scale;
@@ -56,36 +88,37 @@ namespace CycWpfLibrary.UserControls
     {
       rectCursor.Visibility = Visibility.Collapsed;
     }
-    private void image_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    private void image_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      isEdit = false;
-      image.CaptureMouse();
-      image_MouseMove(sender, e);
-    }
-    private void image_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-    {
-      image.ReleaseMouseCapture();
-      if (isEdit)
+      var element = sender as FrameworkElement;
+      if (e.IsMouseButtonPressed(MouseButton))
       {
-        Image = Image; //invoke twoway binding for Image
+        isEdit = false;
+        imageControl.CaptureMouse();
+        image_MouseMove(sender, e);
       }
+    }
+    private void image_MouseUp(object sender, MouseButtonEventArgs e)
+    {
+      imageControl.ReleaseMouseCapture();
+      if (isEdit)
+        Image = Image; //invoke Image.set -> two-way binding 
+    }
+
+    private async void image_MouseMove(object sender, MouseEventArgs e)
+    {
+      mousePos = e.GetPosition(imageControl);
+      if (e.IsMouseButtonPressed(MouseButton))
+      {
+        ImageDisplay = await ImageDisplay.EraseImageAsync(new Rect(
+          mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)),
+          new Vector(eraserSize, eraserSize)));
+        isEdit = true;
+      }
+      UpdateCursor();
     }
     private void image_MouseWheel(object sender, MouseWheelEventArgs e)
     {
-      UpdateCursor();
-    }
-
-    private void image_MouseMove(object sender, MouseEventArgs e)
-    {
-      mousePos = e.GetPosition(image);
-      if (e.RightButton == MouseButtonState.Pressed && image.IsMouseCaptured)
-      {
-        Image.EraseImage(new Rect(
-          mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)), 
-          new Vector(eraserSize, eraserSize)));
-        OnPropertyChanged(nameof(ImageSource));
-        isEdit = true;
-      }
       UpdateCursor();
     }
 
@@ -97,5 +130,6 @@ namespace CycWpfLibrary.UserControls
       Canvas.SetLeft(rectCursor, mousePos.X - eraserSize / 2);
       Canvas.SetTop(rectCursor, mousePos.Y - eraserSize / 2);
     }
+
   }
 }

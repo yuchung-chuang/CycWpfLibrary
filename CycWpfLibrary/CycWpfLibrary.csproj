@@ -87,6 +87,7 @@
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="Emgu\Colors.cs" />
     <Compile Include="Emgu\Drawing.cs" />
+    <Compile Include="Input\InputExtensions.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
     <Compile Include="Diagnostics\interfaces\ILogManager.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="MVVM\Converters\UniversalConverter.cs" />
     <Compile Include="MVVM\Validations\ValidationHelpers.cs" />
     <Compile Include="MVVM\Validations\Validations.cs" />
+    <Compile Include="MVVM\ViewModels\ObservableDependencyObject.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ObservableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
@@ -196,9 +198,7 @@
   <ItemGroup>
     <Resource Include="License-LGPL.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\Fonts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\iosLayout\packages\Fody.3.1.3\build\Fody.targets" Condition="Exists('..\..\iosLayout\packages\Fody.3.1.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

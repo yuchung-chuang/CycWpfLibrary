@@ -9,20 +9,15 @@
                             d:DesignHeight="450"
                             d:DesignWidth="800">
   <Grid Name="mainGrid">
-    <!--<local:PanZoomBorder x:Name="panZoom">-->
-    <Viewbox Name="panZoom"
-             mvvm:Pan.IsEnabled="True"
-             mvvm:Pan.MouseButton="Left"
-             mvvm:Zoom.IsEnabled="True">
-      <!--Centering the child in PanZoomBorder-->
+    <Viewbox>
       <Grid>
-        <Image Name="image"
+        <Image Name="imageControl"
                Source="{Binding ImageSource}"
                MouseEnter="image_MouseEnter"
                MouseLeave="image_MouseLeave"
-               MouseRightButtonDown="image_MouseRightButtonDown"
+               MouseDown="image_MouseDown"
+               MouseUp="image_MouseUp"
                MouseMove="image_MouseMove"
-               MouseRightButtonUp="image_MouseRightButtonUp"
                MouseWheel="image_MouseWheel"
                Cursor="None" />
         <Canvas>
@@ -39,6 +34,5 @@
         </Canvas>
       </Grid>
     </Viewbox>
-    <!--</local:PanZoomBorder>-->
   </Grid>
 </mvvm:ObservableUserControl>
