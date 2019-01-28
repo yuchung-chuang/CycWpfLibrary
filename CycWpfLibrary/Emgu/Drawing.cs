@@ -24,7 +24,7 @@ namespace CycWpfLibrary.Emgu
 
     public static Image<Bgra, byte> EraseImage(this Image<Bgra, byte> image, Rect rect)
     {
-      var optImage = image.CopyBlank();
+      var optImage = image.Copy();
       CvInvoke.Rectangle(optImage, rect.ToWinForm(), Bgras.Transparent.MCvScalar, -1);
       return optImage;
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CycWpfLibrary.Media;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using CycWpfLibrary.Media;
 
 namespace CycWpfLibrary
 {
@@ -18,8 +18,18 @@ namespace CycWpfLibrary
     public static async Task CursorWaitForAsync(Action action)
     {
       Application.Current.MainWindow.Cursor = Cursors.Wait;
-      await Task.Run(action);
-      Application.Current.MainWindow.Cursor = Cursors.Arrow;
+      try //in case there is any error in the action
+      {
+        await Task.Run(action);
+      }
+      catch (Exception e)
+      {
+        throw e;
+      }
+      finally
+      {
+        Application.Current.MainWindow.Cursor = Cursors.Arrow;
+      }
     }
 
     /// <summary>
