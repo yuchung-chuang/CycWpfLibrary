@@ -1,4 +1,5 @@
-﻿using CycWpfLibrary.Media;
+﻿using CycWpfLibrary.Input;
+using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,6 +53,18 @@ namespace CycWpfLibrary.MVVM
       => element.SetValue(MaximumProperty, value);
     #endregion
 
+    private static readonly DrawingBrush background = new DrawingBrush
+    {
+      TileMode = TileMode.Tile,
+      Viewport = new Rect(0, 0, 32, 32),
+      ViewportUnits = BrushMappingMode.Absolute,
+      Drawing = new GeometryDrawing
+      {
+        Brush = Brushes.LightGray,
+        Geometry = Geometry.Parse("M0,0 H16 V16 H32 V32 H16 V16 H0Z"),
+      }
+    };
+
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
@@ -65,20 +78,10 @@ namespace CycWpfLibrary.MVVM
         element.EnsureTransforms();
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
-        if (element.Parent is Panel panel)
-        {
-          panel.Background = new DrawingBrush
-          {
-            TileMode = TileMode.Tile,
-            Viewport = new Rect(0, 0, 32, 32),
-            ViewportUnits = BrushMappingMode.Absolute,
-            Drawing = new GeometryDrawing
-            {
-              Brush = Brushes.LightGray,
-              Geometry = Geometry.Parse("M0,0 H16 V16 H32 V32 H16 V16 H0Z"),
-            }
-          };
-        }
+        if (element.Parent is Panel parent)
+          parent.Background = background;
+        else if (element.Parent is Border border)
+          border.Background = background;
       }
       else
       {

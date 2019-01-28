@@ -1,10 +1,14 @@
 ﻿using CycWpfLibrary.Media;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Bitmap = System.Drawing.Bitmap;
+using ColorWpf = System.Windows.Media.Color;
 using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
 
 namespace CycWpfLibrary.Emgu
@@ -72,5 +76,16 @@ namespace CycWpfLibrary.Emgu
       => pixelBitmap.Bitmap.ToImage<TColor, TDepth>();
     public static Mat ToMat(this Bitmap bitmap) => bitmap.ToImage<Bgr, byte>().Mat;
     public static BitmapSource ToBitmapSource(this Image<Bgra, byte> image) => image.Bytes.ToBitmap(image.Width, image.Height).ToBitmapSource();
+
+    private static readonly BitmapSource sourceSample = BitmapSource.Create(2, 2, 96, 96, PixelFormats.Indexed1, new BitmapPalette(new List<ColorWpf> { Colors.Transparent }), new byte[] { 0, 0, 0, 0 }, 1);
+    public static async Task<BitmapSource> ToBitmapSourceAsync(this Image<Bgra, byte> image)
+    {
+      var source = sourceSample;
+      await Task.Run(() =>
+      {
+        source = image.Bytes.ToBitmap(image.Width, image.Height).ToBitmapSource();
+      });
+      return source;
+    }
   }
 }

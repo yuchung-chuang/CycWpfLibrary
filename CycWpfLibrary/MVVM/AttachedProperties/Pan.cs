@@ -1,4 +1,5 @@
-﻿using CycWpfLibrary.Media;
+﻿using CycWpfLibrary.Input;
+using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -71,7 +72,7 @@ namespace CycWpfLibrary.MVVM
     private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (IsMouseButtonPressed(element, e))
+      if (e.IsMouseButtonPressed(GetMouseButton(element)))
       {
         var transforms = (element.RenderTransform as TransformGroup).Children;
         translate = transforms.GetTranslate();
@@ -95,7 +96,7 @@ namespace CycWpfLibrary.MVVM
     private static void Element_MouseMove(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (element.IsMouseCaptured && IsMouseButtonPressed(element, e))
+      if (element.IsMouseCaptured && e.IsMouseButtonPressed(GetMouseButton(element)))
       {
         var delta = e.GetAbsolutePosition(element) - mouseAnchor;
         var scale = (element.RenderTransform as TransformGroup).Children.GetScale();
@@ -106,25 +107,5 @@ namespace CycWpfLibrary.MVVM
       }
 
     }
-
-    private static bool IsMouseButtonPressed(UIElement element, MouseEventArgs e)
-    {
-      switch (GetMouseButton(element))
-      {
-        case MouseButton.Left:
-          return e.LeftButton == MouseButtonState.Pressed;
-        case MouseButton.Middle:
-          return e.MiddleButton == MouseButtonState.Pressed;
-        case MouseButton.Right:
-          return e.RightButton == MouseButtonState.Pressed;
-        case MouseButton.XButton1:
-          return e.XButton1 == MouseButtonState.Pressed;
-        case MouseButton.XButton2:
-          return e.XButton2 == MouseButtonState.Pressed;
-        default:
-          return false;
-      }
-    }
-
   }
 }
