@@ -13,7 +13,7 @@ using Window = System.Windows.Window;
 
 namespace CycWpfLibrary.Media
 {
-  public class PixelBitmap : DependencyObject, ICloneable
+  public class PixelBitmap : DependencyObject, ICloneable, IEquatable<PixelBitmap>
   {
     public readonly PixelFormat PixelFormat = PixelFormat.Format32bppArgb;
     public readonly int Depth = 4; //根據Format32bppArgb
@@ -185,5 +185,7 @@ namespace CycWpfLibrary.Media
       bitmap.UnlockBits(bitmapData); //其他地方正在使用物件.....
 
     }
+
+    public bool Equals(PixelBitmap other) => Pixel.IsEqual(other.Pixel);
   }
 }

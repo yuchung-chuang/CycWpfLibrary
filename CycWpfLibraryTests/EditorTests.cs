@@ -2,6 +2,7 @@
 using System.Drawing;
 using CycWpfLibrary.Media;
 using CycWpfLibrary;
+using System.Linq;
 
 namespace CycWpfLibrary.Tests
 {
@@ -16,11 +17,11 @@ namespace CycWpfLibrary.Tests
       var editor = new EditManager();
       editor.Init(PB1);
       editor.Edit(PB2);
-      Assert.AreEqual(PB2, editor.Object);
+      Assert.IsTrue(PB2.Equals(editor.Object as PixelBitmap));
       editor.Undo();
-      Assert.AreEqual(PB1, editor.Object);
+      Assert.IsTrue(PB1.Equals(editor.Object as PixelBitmap));
       editor.Redo();
-      Assert.AreEqual(PB2, editor.Object);
+      Assert.IsTrue(PB2.Equals(editor.Object as PixelBitmap));
     }
   }
 }

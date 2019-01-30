@@ -29,6 +29,7 @@ namespace CycWpfLibrary.UserControls
       gridMain.DataContext = this;
     }
 
+    #region Dependency Properties
     public FrameworkElement CurrentPage
     {
       get => (FrameworkElement)GetValue(CurrentPageProperty);
@@ -36,9 +37,9 @@ namespace CycWpfLibrary.UserControls
     }
     public static readonly DependencyProperty CurrentPageProperty =
         DependencyProperty.Register(
-          nameof(CurrentPage), 
-          typeof(FrameworkElement), 
-          typeof(PageControl), 
+          nameof(CurrentPage),
+          typeof(FrameworkElement),
+          typeof(PageControl),
           new PropertyMetadata(OnCurrentPageChanged));
 
     public ICommand TurnBackCommand
@@ -62,7 +63,11 @@ namespace CycWpfLibrary.UserControls
         typeof(ICommand),
         typeof(PageControl),
         new PropertyMetadata(default(ICommand)));
+    #endregion
 
+    /// <summary>
+    /// For animation
+    /// </summary>
     private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       var pageControl = d as PageControl;
