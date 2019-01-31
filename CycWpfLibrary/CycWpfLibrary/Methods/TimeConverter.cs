@@ -4,7 +4,7 @@ using static CycWpfLibrary.Math;
 
 namespace CycWpfLibrary
 {
-  public static class TimeConverter
+  public static class TimeToString
   {
     /// <summary>
     /// 將總時間轉換成MM:SS:MS / MM:SS:TIC格式的字串
