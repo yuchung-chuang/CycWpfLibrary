@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -29,6 +30,22 @@ namespace CycWpfLibrary
       finally
       {
         Application.Current.MainWindow.Cursor = Cursors.Arrow;
+      }
+    }
+
+    /// <summary>
+    /// 非同步等待，直到<paramref name="predicate"/>條件成立
+    /// </summary>
+    /// <param name="predicate">解除等待之條件</param>
+    /// <param name="param">傳入<paramref name="predicate"/>之參數</param>
+    /// <remarks>
+    /// <see cref="SpinWait.SpinUntil(Func{bool})"/>為同步等待，在等待期間會阻擋UI執行緒導致畫面凍結
+    /// </remarks>
+    public static async Task WaitAsync(Predicate<object> predicate, object param)
+    {
+      while (!predicate.Invoke(param))
+      {
+        await Task.Delay(1000);
       }
     }
 

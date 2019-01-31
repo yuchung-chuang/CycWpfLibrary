@@ -13,7 +13,7 @@ namespace CycWpfLibrary.MVVM
   {
     public static ValidationResult IsNotNull(object value)
     {
-      return new ValidationResult(string.IsNullOrWhiteSpace((value ?? "").ToString()), "Input should not be null");
+      return new ValidationResult(!string.IsNullOrWhiteSpace((value ?? "").ToString()), "Input should not be null");
     }
 
     public static ValidationResult IsDouble(object value)
