@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test"
         xmlns:custom="clr-namespace:CycWpfLibrary.CustomControls;assembly=CycWpfLibrary.CustomControls"
+        xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM;assembly=CycWpfLibrary"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="350"
@@ -34,6 +35,10 @@
                  Stroke="Black"
                  StrokeThickness="2"
                  IsHitTestVisible="False" />
+      <Image Source="pack://application:,,,/CycWpfLibrary.Resources;component/a.jpg" 
+             Width="100"
+             Height="100"
+             mvvm:Pan.IsEnabled="True"/>
     </StackPanel>
 
   </Grid>
