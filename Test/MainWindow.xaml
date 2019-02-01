@@ -35,7 +35,7 @@
                  Stroke="Black"
                  StrokeThickness="2"
                  IsHitTestVisible="False" />
-      <Image Source="pack://application:,,,/CycWpfLibrary.Resources;component/a.jpg" 
+      <Image Source="a.jpg" 
              Width="100"
              Height="100"
              mvvm:Pan.IsEnabled="True"/>

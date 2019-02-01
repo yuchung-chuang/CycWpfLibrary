@@ -108,7 +108,7 @@
       <Name>CycWpfLibrary.CustomControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">
-      <Project>{3311b149-7aca-45f1-9096-00be229b4719}</Project>
+      <Project>{482d004f-7715-41e1-9d47-b00e8d7c9acc}</Project>
       <Name>CycWpfLibrary.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary\CycWpfLibrary.csproj">

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.CustomControl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.UserControls", "CycWpfLibrary.UserControls\CycWpfLibrary.UserControls.csproj", "{7AA8FE4A-4554-4B43-B9B5-38EDC992DB09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Resources", "CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj", "{3311B149-7ACA-45F1-9096-00BE229B4719}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Resources", "CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj", "{482D004F-7715-41E1-9D47-B00E8D7C9ACC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{7AA8FE4A-4554-4B43-B9B5-38EDC992DB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA8FE4A-4554-4B43-B9B5-38EDC992DB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA8FE4A-4554-4B43-B9B5-38EDC992DB09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3311B149-7ACA-45F1-9096-00BE229B4719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3311B149-7ACA-45F1-9096-00BE229B4719}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3311B149-7ACA-45F1-9096-00BE229B4719}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3311B149-7ACA-45F1-9096-00BE229B4719}.Release|Any CPU.Build.0 = Release|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
