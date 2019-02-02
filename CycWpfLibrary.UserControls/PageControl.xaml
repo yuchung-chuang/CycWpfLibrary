@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CycWpfLibrary.UserControls"
-             xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM;assembly=CycWpfLibrary"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:PageControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="600"
@@ -110,7 +110,7 @@
         </LinearGradientBrush>
       </Button.Background>
       <Button.RenderTransform>
-        <TranslateTransform X="{Binding ActualWidth, ElementName=BackButton, Converter={mvvm:MathConverter}, ConverterParameter=-x/2}" />
+        <TranslateTransform X="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=-x/2}" />
       </Button.RenderTransform>
       <Button.Triggers>
         <EventTrigger RoutedEvent="MouseEnter">
@@ -128,7 +128,7 @@
             <Storyboard>
               <DoubleAnimation Storyboard.TargetName="BackButton"
                                Storyboard.TargetProperty="(Button.RenderTransform).(TranslateTransform.X)"
-                               To="{Binding ActualWidth, ElementName=BackButton, Converter={mvvm:MathConverter}, ConverterParameter=-x/2}"
+                               To="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=-x/2}"
                                Duration="0:0:0.5" />
             </Storyboard>
           </BeginStoryboard>
@@ -144,7 +144,7 @@
             Content="&#xf105;"
             Command="{Binding TurnNextCommand}">
       <Button.RenderTransform>
-        <TranslateTransform X="{Binding ActualWidth, ElementName=NextButton, Converter={mvvm:MathConverter}, ConverterParameter=x/2}" />
+        <TranslateTransform X="{Binding ActualWidth, ElementName=NextButton, Converter={cyc:MathConverter}, ConverterParameter=x/2}" />
       </Button.RenderTransform>
       <Button.Background>
         <LinearGradientBrush EndPoint="1,0.5"
@@ -171,7 +171,7 @@
             <Storyboard>
               <DoubleAnimation Storyboard.TargetName="NextButton"
                                Storyboard.TargetProperty="(Button.RenderTransform).(TranslateTransform.X)"
-                               To="{Binding ActualWidth, ElementName=BackButton, Converter={mvvm:MathConverter}, ConverterParameter=x/2}"
+                               To="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=x/2}"
                                Duration="0:0:0.5" />
             </Storyboard>
           </BeginStoryboard>

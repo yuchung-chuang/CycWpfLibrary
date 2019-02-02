@@ -63,12 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Axis - 複製.xaml.cs">
-      <DependentUpon>Axis - 複製.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Axis.xaml.cs">
-      <DependentUpon>Axis.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ImageEraser.xaml.cs">
       <DependentUpon>ImageEraser.xaml</DependentUpon>
     </Compile>
@@ -104,14 +98,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Axis - 複製.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Axis.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Obsolete\ImageViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

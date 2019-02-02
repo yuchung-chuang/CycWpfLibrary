@@ -64,6 +64,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ArrayExtensionsTests.cs" />
+    <Compile Include="CycInputTypeConverterTests.cs" />
     <Compile Include="EditorTests.cs" />
     <Compile Include="EnumExtensionTests.cs" />
     <Compile Include="ImageConvertersTests.cs" />

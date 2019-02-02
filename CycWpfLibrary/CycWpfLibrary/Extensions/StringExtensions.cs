@@ -12,5 +12,7 @@ namespace CycWpfLibrary
     public static double ToDouble(this string str) => double.Parse(str);
 
     public static DateTime ToDate(this string str) => DateTime.Parse(str, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces);
+
+
   }
 }

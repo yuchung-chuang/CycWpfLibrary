@@ -91,7 +91,7 @@ namespace CycWpfLibrary.UserControls
     private void image_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (e.IsMouseButtonPressed(MouseButton))
+      if (MouseButton.IsPressed())
       {
         isEdit = false;
         imageControl.CaptureMouse();
@@ -108,7 +108,7 @@ namespace CycWpfLibrary.UserControls
     private async void image_MouseMove(object sender, MouseEventArgs e)
     {
       mousePos = e.GetPosition(imageControl);
-      if (e.IsMouseButtonPressed(MouseButton))
+      if (MouseButton.IsPressed())
       {
         ImageDisplay = await imageDisplay.EraseImageAsync(new Rect(
           mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)),

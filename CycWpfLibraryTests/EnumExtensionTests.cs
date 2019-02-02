@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CycWpfLibrary.Tests
 {
-  internal enum MyEnum
+  public enum MyEnum
   {
     a = 1,
     b = 2,
@@ -26,7 +26,23 @@ namespace CycWpfLibrary.Tests
       A = (MyEnum)A.Remove(MyEnum.a);
       Assert.AreEqual(A, B);
     }
+
+    [TestMethod()]
+    public void GetAllTest()
+    {
+      var array = EnumHelpers.GetAll<MyEnum>();
+      Assert.AreEqual(array[0], MyEnum.a);
+      Assert.AreEqual(array[1], MyEnum.b);
+      Assert.AreEqual(array[2], MyEnum.c);
+    }
+
+    [TestMethod()]
+    public void CountTest()
+    {
+      var count = EnumHelpers.Count<MyEnum>();
+      Assert.AreEqual(count, 3);
+    }
   }
 
-  
+
 }

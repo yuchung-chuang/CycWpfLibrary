@@ -4,6 +4,7 @@
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM"
+                            xmlns:cyc="clr-namespace:CycWpfLibrary"
                             mc:Ignorable="d"
                             d:DesignHeight="450"
                             d:DesignWidth="800">
@@ -11,7 +12,7 @@
         Background="Transparent">
     <Rectangle HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Stroke="{Binding AxisBrush, Converter={mvvm:UniversalConverter}}"
+               Stroke="{Binding AxisBrush, Converter={cyc:UniversalConverter}}"
                Fill="Transparent"
                StrokeThickness="3"
                Width="{Binding AxisWidth}"
@@ -22,7 +23,7 @@
       <Grid.Resources>
         <Style TargetType="Border">
           <Setter Property="Background"
-                  Value="{Binding ShadowBrush, Converter={mvvm:UniversalConverter}}" />
+                  Value="{Binding ShadowBrush, Converter={cyc:UniversalConverter}}" />
           <Setter Property="HorizontalAlignment"
                   Value="Left" />
           <Setter Property="VerticalAlignment"
@@ -37,7 +38,7 @@
       <Border Width="{Binding ElementName=gridShadow, Path=ActualWidth}"
               Margin="{Binding BottomBorderMargin}">
         <Border.Height>
-          <MultiBinding Converter="{mvvm:MathConverter}"
+          <MultiBinding Converter="{cyc:MathConverter}"
                         ConverterParameter="x - y">
             <Binding Path="ActualHeight"
                      ElementName="gridShadow" />
@@ -48,7 +49,7 @@
       <Border Height="{Binding AxisHeight}"
               Margin="{Binding RightBorderMargin}">
         <Border.Width>
-          <MultiBinding Converter="{mvvm:MathConverter}"
+          <MultiBinding Converter="{cyc:MathConverter}"
                         ConverterParameter="x - y">
             <Binding Path="ActualWidth"
                      ElementName="gridShadow" />

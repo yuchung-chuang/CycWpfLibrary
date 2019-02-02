@@ -39,6 +39,8 @@ namespace CycWpfLibrary
       return a < b;
     }
 
+    public static int Count(this Enum @enum) => Enum.GetValues(@enum.GetType()).Length;
+
     #region Helper
     private static void CheckType(Enum enumA, Enum enumB)
     {
@@ -47,5 +49,12 @@ namespace CycWpfLibrary
     }
     private static (ulong a, ulong b) ConvertEnums(Enum enumA, Enum enumB) => (Convert.ToUInt64(enumA), Convert.ToUInt64(enumB));
     #endregion
+  }
+
+  public static class EnumHelpers
+  {
+    public static int Count<T>() => Enum.GetValues(typeof(T)).Length;
+
+    public static T[] GetAll<T>() => Enum.GetValues(typeof(T)).Cast<T>().ToArray();
   }
 }
