@@ -90,7 +90,7 @@ namespace CycWpfLibrary
     private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (InputCheck(element))
+      if (InputCheck(element, e))
       {
         var transforms = (element.RenderTransform as TransformGroup).Children;
         translate = transforms.GetTranslate();
@@ -113,7 +113,7 @@ namespace CycWpfLibrary
     private static void Element_MouseMove(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (element.IsMouseCaptured && InputCheck(element))
+      if (element.IsMouseCaptured && InputCheck(element, e))
       {
         var delta = e.GetAbsolutePosition(element) - mouseAnchor;
         var scale = (element.RenderTransform as TransformGroup).Children.GetScale();
@@ -125,11 +125,12 @@ namespace CycWpfLibrary
 
     }
 
-    private static bool InputCheck(FrameworkElement element)
+    private static bool InputCheck(FrameworkElement element, EventArgs e)
     {
       var inputs = GetInputs(element) ?? new CycInputCollection();
       var input = GetInput(element) ?? new CycInput();
-      return (!input.IsEmpty && input.IsValid) || (!inputs.IsEmpty && inputs.IsValid) ? true : false;
+      var arg = e is MouseButtonEventArgs mbe ? mbe : null;
+      return (!input.IsEmpty && input.IsValid(arg)) || (!inputs.IsEmpty && inputs.IsValid(arg)) ? true : false;
     }
   }
 }

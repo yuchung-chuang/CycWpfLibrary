@@ -16,11 +16,12 @@ namespace CycWpfLibrary.Tests
     public void ConvertFromTest()
     {
       var converter = new CycInputTypeConverter();
-      var str = "mouse ,,left, right,,,; key ,  a, bb, ctrlc, leftctrl";
+      var str = "mouse ,,left, right,2,3,; key ,  a, bb, ctrlc, leftctrl";
       var input = converter.ConvertFrom(str) as CycInput;
-      Assert.IsTrue(input.MouseButton == MouseButton.Left);
+      Assert.IsTrue(input.MouseButton == MouseButton.Right);
       Assert.IsTrue(input.InputKeys[0].Value == Key.A);
       Assert.IsTrue(input.InputKeys[1].Value == Key.LeftCtrl);
+      Assert.IsTrue(input.ClickCount == 3);
 
       str = "mouse:left";
       input = converter.ConvertFrom(str) as CycInput;
