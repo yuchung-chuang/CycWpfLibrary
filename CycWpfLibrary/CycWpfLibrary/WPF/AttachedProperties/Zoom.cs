@@ -27,7 +27,7 @@ namespace CycWpfLibrary
       typeof(bool),
       typeof(Zoom),
       new PropertyMetadata(OnIsEnabledChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
@@ -39,7 +39,7 @@ namespace CycWpfLibrary
       typeof(bool),
       typeof(Zoom),
       new PropertyMetadata(default(bool)));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsLeaveReset(UIElement element)
       => (bool)element.GetValue(IsLeaveResetProperty);
@@ -51,7 +51,7 @@ namespace CycWpfLibrary
       typeof(double),
       typeof(Zoom),
       new PropertyMetadata(5d, OnMaximumChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static double GetMaximum(UIElement element)
       => (double)element.GetValue(MaximumProperty);

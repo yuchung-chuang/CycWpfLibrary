@@ -20,7 +20,7 @@ namespace CycWpfLibrary
         typeof(bool),
         typeof(RangeValidator),
         new PropertyMetadata(default(bool), OnIsEnabledChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(TextBox))]
     public static bool GetIsEnabled(DependencyObject obj)
         => (bool)obj.GetValue(IsEnabledProperty);
@@ -32,7 +32,7 @@ namespace CycWpfLibrary
         typeof(int),
         typeof(RangeValidator),
         new PropertyMetadata(int.MinValue));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(TextBox))]
     public static int GetMinimum(DependencyObject obj)
         => (int)obj.GetValue(MinimumProperty);
@@ -44,7 +44,7 @@ namespace CycWpfLibrary
         typeof(int),
         typeof(RangeValidator),
         new PropertyMetadata(int.MaxValue));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(TextBox))]
     public static int GetMaximum(DependencyObject obj)
         => (int)obj.GetValue(MaximumProperty);

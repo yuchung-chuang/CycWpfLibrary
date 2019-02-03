@@ -9,6 +9,5 @@ namespace CycWpfLibrary
   internal class AppNames
   {
     public const string CycWpfLibrary = "CycWpfLibrary";
-    public const string MVVM = "CycWpfLibrary.MVVM";
   }
 }

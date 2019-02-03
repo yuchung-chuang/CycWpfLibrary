@@ -47,7 +47,7 @@ namespace CycWpfLibrary
       typeof(bool),
       typeof(Eraser),
       new PropertyMetadata(default(bool), OnIsEnabledChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
@@ -59,7 +59,7 @@ namespace CycWpfLibrary
       typeof(MouseButton),
       typeof(Eraser),
       new PropertyMetadata(default(MouseButton)));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static MouseButton GetMouseButton(UIElement element)
       => (MouseButton)element.GetValue(MouseButtonProperty);
@@ -71,7 +71,7 @@ namespace CycWpfLibrary
       typeof(double),
       typeof(Eraser),
       new PropertyMetadata(10d));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static double GetEraserSize(UIElement element)
       => (double)element.GetValue(EraserSizeProperty);
@@ -83,7 +83,7 @@ namespace CycWpfLibrary
         typeof(Image<Bgra, byte>),
         typeof(Eraser),
         new PropertyMetadata(default(Image<Bgra, byte>), OnImageChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static Image<Bgra, byte> GetImage(DependencyObject obj)
         => (Image<Bgra, byte>)obj.GetValue(ImageProperty);
@@ -95,7 +95,7 @@ namespace CycWpfLibrary
         typeof(FrameworkElement),
         typeof(Eraser),
         new PropertyMetadata(default(FrameworkElement), OnCursorChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static FrameworkElement GetCursor(DependencyObject obj)
         => (FrameworkElement)obj.GetValue(CursorProperty);
@@ -108,7 +108,7 @@ namespace CycWpfLibrary
         typeof(ICommand),
         typeof(Eraser),
         new PropertyMetadata(default(ICommand)));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(ImageControl))]
     public static ICommand GetMouseDownCommand(DependencyObject obj)
         => (ICommand)obj.GetValue(MouseDownCommandProperty);

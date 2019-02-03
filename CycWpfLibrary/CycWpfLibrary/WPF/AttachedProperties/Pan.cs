@@ -27,7 +27,7 @@ namespace CycWpfLibrary
       typeof(bool),
       typeof(Pan),
       new PropertyMetadata(default(bool), OnIsEnabledChanged));
-    [Category(AppNames.MVVM)]
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static bool GetIsEnabled(UIElement element)
       => (bool)element.GetValue(IsEnabledProperty);
@@ -38,8 +38,8 @@ namespace CycWpfLibrary
         "Inputs",
         typeof(CycInputCollection),
         typeof(Pan),
-        new PropertyMetadata());
-    [Category(AppNames.MVVM)]
+        new PropertyMetadata(new CycInputCollection()));
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     public static CycInputCollection GetInputs(DependencyObject obj)
         => (CycInputCollection)obj.GetValue(InputsProperty);
@@ -50,8 +50,8 @@ namespace CycWpfLibrary
         "Input",
         typeof(CycInput),
         typeof(Pan),
-        new PropertyMetadata(default(CycInput)));
-    [Category(AppNames.MVVM)]
+        new PropertyMetadata(new CycInput()));
+    [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     [TypeConverter(typeof(CycInputTypeConverter))]
     public static CycInput GetInput(DependencyObject obj)
@@ -127,8 +127,8 @@ namespace CycWpfLibrary
 
     private static bool InputCheck(FrameworkElement element, EventArgs e)
     {
-      var inputs = GetInputs(element) ?? new CycInputCollection();
-      var input = GetInput(element) ?? new CycInput();
+      var inputs = GetInputs(element);
+      var input = GetInput(element);
       var arg = e is MouseButtonEventArgs mbe ? mbe : null;
       return (!input.IsEmpty && input.IsValid(arg)) || (!inputs.IsEmpty && inputs.IsValid(arg)) ? true : false;
     }

@@ -49,6 +49,8 @@ namespace CycWpfLibrary
     }
     public Key Value { get; set; }
   }
+
+  [TypeConverter(typeof(CycInputTypeConverter))]
   public class CycInput
   {
     public int? ClickCount { get; set; }

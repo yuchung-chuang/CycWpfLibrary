@@ -26,6 +26,7 @@ namespace CycWpfLibrary.UserControls
       mainGrid.DataContext = this;
       this.EnsureTransforms();
       scale = (RenderTransform as TransformGroup).Children.GetScale();
+      RenderOptions.SetBitmapScalingMode(imageControl, BitmapScalingMode.LowQuality);
     }
 
     #region Dependency Properties
@@ -95,6 +96,7 @@ namespace CycWpfLibrary.UserControls
       {
         isEdit = false;
         imageControl.CaptureMouse();
+        stopwatch.Restart();
         image_MouseMove(sender, e);
       }
     }
@@ -105,14 +107,21 @@ namespace CycWpfLibrary.UserControls
         Image = imageDisplay; //invoke Image.set -> two-way binding 
     }
 
+    private Stopwatch stopwatch = new Stopwatch();
+    private double fps = 24;
     private async void image_MouseMove(object sender, MouseEventArgs e)
     {
       mousePos = e.GetPosition(imageControl);
       if (MouseButton.IsPressed())
       {
-        ImageDisplay = await imageDisplay.EraseImageAsync(new Rect(
+        imageDisplay = await imageDisplay.EraseImageAsync(new Rect(
           mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)),
-          new Vector(eraserSize, eraserSize)));
+          new Vector(eraserSize, eraserSize))); // 不更新畫面
+        if (stopwatch.ElapsedMilliseconds > 1000 / fps)
+        {
+          OnPropertyChanged(nameof(ImageSource)); //每隔fps才更新一次畫面
+          stopwatch.Restart();
+        }
         isEdit = true;
       }
       UpdateCursor();

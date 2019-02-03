@@ -15,6 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -26,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.3</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,9 +38,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>7.3</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>CycAppKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -84,15 +93,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CycWpfLibrary\Classes\PageManagerBase.cs" />
-    <Compile Include="CycWpfLibrary\Constants.cs" />
+    <Compile Include="CycWpfLibrary\Classes\Constants.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StringExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="Emgu\Colors.cs" />
     <Compile Include="Emgu\Drawing.cs" />
-    <Compile Include="CycWpfLibrary\Input\ControlBehaviors.cs" />
-    <Compile Include="CycWpfLibrary\Input\InputExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Input\InputManager.cs" />
+    <Compile Include="CycWpfLibrary\WPF\Input\ControlBehaviors.cs" />
+    <Compile Include="CycWpfLibrary\WPF\Input\InputExtensions.cs" />
+    <Compile Include="CycWpfLibrary\WPF\Input\InputManager.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
     <Compile Include="Diagnostics\interfaces\ILogManager.cs" />
@@ -179,6 +188,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="CycAppKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
