@@ -13,6 +13,6 @@ namespace CycWpfLibrary
 
     public static DateTime ToDate(this string str) => DateTime.Parse(str, CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces);
 
-
+    public static bool IsNull(this string str) => string.IsNullOrEmpty(str);
   }
 }

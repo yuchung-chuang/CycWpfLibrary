@@ -18,16 +18,15 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsDouble(object value)
     {
-      var isNotNullValidation = IsNotNull(value);
-      if (!isNotNullValidation.IsValid)
-        return new ValidationResult(false, isNotNullValidation.ErrorContent);
-
-      return new ValidationResult(double.TryParse(value.ToString(), out var num),
-        "Input number is invalid");
+      if (string.IsNullOrEmpty(value.ToString()))
+        return ValidationResult.ValidResult; // allows value to be null
+      return new ValidationResult(double.TryParse(value.ToString(), out var num), "Input number is invalid");
     }
 
     public static ValidationResult IsLogBase(object value)
     {
+      if (string.IsNullOrEmpty(value.ToString()))
+        return ValidationResult.ValidResult;
       var doubleValidation = IsDouble(value);
       if (!doubleValidation.IsValid)
         return new ValidationResult(false, doubleValidation.ErrorContent);
@@ -48,20 +47,22 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsInRange(object value, int max, int min)
     {
+      if (string.IsNullOrEmpty(value.ToString()))
+        return ValidationResult.ValidResult;
       var doubleValidation = IsDouble(value);
       if (!doubleValidation.IsValid)
         return new ValidationResult(false, doubleValidation.ErrorContent);
 
       var num = value.ToString().ToDouble();
-      return new ValidationResult(Math.IsIn(num, max, min), $"Input value should be in ({min}, {max})");
+      return new ValidationResult(Math.IsIn(num, max, min), $"Input number should be in (" +
+        $"{(min == int.MinValue ? "-∞" : min.ToString())}, " +
+        $"{(max == int.MaxValue ? "∞" : max.ToString())})");
     }
 
     public static ValidationResult IsDate(object value)
     {
-      var isNotNullValidation = IsNotNull(value);
-      if (!isNotNullValidation.IsValid)
-        return new ValidationResult(false, isNotNullValidation.ErrorContent);
-
+      if (string.IsNullOrEmpty(value.ToString()))
+        return ValidationResult.ValidResult;
       return new ValidationResult(DateTime.TryParse((value ?? "").ToString(), CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out var time), "Invalid date");
     }
 

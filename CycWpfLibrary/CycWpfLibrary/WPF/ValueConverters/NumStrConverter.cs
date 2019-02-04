@@ -18,6 +18,7 @@ namespace CycWpfLibrary
     /// <summary>
     /// Convert number string to double.
     /// </summary>
-    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => double.Parse(value as string);
+    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>   
+      value.ToString().IsNull() ? null : (double?)double.Parse(value.ToString());
   }
 }

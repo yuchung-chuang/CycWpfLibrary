@@ -38,7 +38,6 @@ namespace CycWpfLibrary.Media
     public AnimatedPage()
     {
       Loaded += AnimatedPage_Loaded;
-
     }
 
     public double AnimationSeconds { get; set; } = 1;

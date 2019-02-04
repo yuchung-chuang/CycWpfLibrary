@@ -1,5 +1,5 @@
-﻿using CycWpfLibrary.Input;
-using CycWpfLibrary.Media;
+﻿using CycWpfLibrary.Media;
+using CycWpfLibrary.MVVM;
 using CycWpfLibrary.Resources;
 using System;
 using System.Collections;
@@ -19,7 +19,7 @@ namespace CycWpfLibrary
   /// <summary>
   /// 提供平移相依屬性的靜態類別。
   /// </summary>
-  public static class Pan
+  public static class Pan 
   {
     #region Dependency Properties
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
@@ -59,7 +59,7 @@ namespace CycWpfLibrary
     public static void SetInput(DependencyObject obj, CycInput value)
         => obj.SetValue(InputProperty, value);
     #endregion
-
+    
     private static readonly Cursor panCursor = ResourceManager.panCursor;
     private static Cursor cursorCache;
     private static Point mouseAnchor;
@@ -132,5 +132,6 @@ namespace CycWpfLibrary
       var arg = e is MouseButtonEventArgs mbe ? mbe : null;
       return (!input.IsEmpty && input.IsValid(arg)) || (!inputs.IsEmpty && inputs.IsValid(arg)) ? true : false;
     }
+
   }
 }

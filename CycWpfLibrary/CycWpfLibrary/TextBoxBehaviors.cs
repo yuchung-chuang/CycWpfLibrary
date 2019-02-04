@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace CycWpfLibrary.Input
+namespace CycWpfLibrary
 {
   public static class TextBoxBehaviors
   {
+    public static void TextBox_Error(object sender, ValidationErrorEventArgs e)
+    {
+      (sender as TextBox).Clear();
+    }
+
     public static void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
     {
       (sender as TextBox).SelectAll();

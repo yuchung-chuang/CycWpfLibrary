@@ -1,5 +1,4 @@
-﻿using CycWpfLibrary.Input;
-using CycWpfLibrary.Media;
+﻿using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

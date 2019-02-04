@@ -1,5 +1,4 @@
 ﻿using CycWpfLibrary.Emgu;
-using CycWpfLibrary.Input;
 using CycWpfLibrary.Media;
 using CycWpfLibrary.MVVM;
 using CycWpfLibrary.WinForm;
