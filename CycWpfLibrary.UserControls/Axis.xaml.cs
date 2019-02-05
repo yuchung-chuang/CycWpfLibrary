@@ -1,10 +1,14 @@
-﻿using CycWpfLibrary.MVVM;
-using System.Diagnostics;
+﻿using CycWpfLibrary.Emgu;
+using CycWpfLibrary.Media;
+using CycWpfLibrary.MVVM;
+using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using static CycWpfLibrary.Math;
 
-namespace CycWpfLibrary.Controls
+namespace CycWpfLibrary.UserControls
 {
   public enum AdjustType
   {
@@ -18,82 +22,109 @@ namespace CycWpfLibrary.Controls
     LeftBottom = Left | Bottom,
     RightBottom = Right | Bottom,
   }
+  /// <summary>
+  /// Axis.xaml 的互動邏輯
+  /// </summary>
   public partial class Axis : ObservableUserControl
   {
     public Axis()
     {
       InitializeComponent();
-
       gridMain.DataContext = this;
     }
 
-    public string AxisBrush { get; set; }
-    public string ShadowBrush { get; set; }
-
-    #region AxisProperties
-    public static readonly DependencyProperty AxisLeftProperty = DependencyProperty.Register(nameof(AxisLeft), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
-    {
-      var sender = d as Axis;
-      sender.OnPropertyChanged(nameof(AxisMargin));
-    }));
+    #region DPs
     public double AxisLeft
     {
       get => (double)GetValue(AxisLeftProperty);
       set => SetValue(AxisLeftProperty, Clamp(value, AxisRight - tol, 0));
     }
-    public static readonly DependencyProperty AxisTopProperty = DependencyProperty.Register(nameof(AxisTop), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
-    {
-      var sender = d as Axis;
-      sender.OnPropertyChanged(nameof(AxisMargin));
-      sender.OnPropertyChanged(nameof(AxisRight));
-      sender.OnPropertyChanged(nameof(TopBorderMargin));
-      sender.OnPropertyChanged(nameof(RightBorderMargin));
-    }));
+    public static readonly DependencyProperty AxisLeftProperty = DependencyProperty.Register(
+        nameof(AxisLeft),
+        typeof(double),
+        typeof(Axis),
+        new PropertyMetadata(default(double), OnAxisLeftChanged));
+
     public double AxisTop
     {
       get => (double)GetValue(AxisTopProperty);
       set => SetValue(AxisTopProperty, Clamp(value, AxisBottom - tol, 0));
     }
-    public static readonly DependencyProperty AxisWidthProperty = DependencyProperty.Register(nameof(AxisWidth), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
-    {
-      var sender = d as Axis;
-      sender.AxisRight = -1; //fire OnPropertyChanged
-    }));
+    public static readonly DependencyProperty AxisTopProperty = DependencyProperty.Register(
+        nameof(AxisTop),
+        typeof(double),
+        typeof(Axis),
+        new PropertyMetadata(default(double), OnAxisTopChanged));
+
     public double AxisWidth
     {
       get => (double)GetValue(AxisWidthProperty);
       set => SetValue(AxisWidthProperty, Clamp(value, double.MaxValue, tol));
     }
-    public static readonly DependencyProperty AxisHeightProperty = DependencyProperty.Register(nameof(AxisHeight), typeof(double), typeof(Axis), new PropertyMetadata((d, e) =>
-    {
-      var sender = d as Axis;
-      sender.AxisBottom = -1; //fire OnPropertyChanged
-    }));
+    public static readonly DependencyProperty AxisWidthProperty = DependencyProperty.Register(
+        nameof(AxisWidth),
+        typeof(double),
+        typeof(Axis),
+        new PropertyMetadata(default(double), OnAxisWidthChanged));
+    
     public double AxisHeight
     {
       get => (double)GetValue(AxisHeightProperty);
       set => SetValue(AxisHeightProperty, Clamp(value, double.MaxValue, tol));
     }
-    public double AxisRight
+    public static readonly DependencyProperty AxisHeightProperty = DependencyProperty.Register(
+        nameof(AxisHeight),
+        typeof(double),
+        typeof(Axis),
+        new PropertyMetadata(default(double), OnAxisHeightChanged));
+    public ImageSource ImageSource
     {
-      get => AxisLeft + AxisWidth;
-      set { }
+      get => (ImageSource)GetValue(ImageSourceProperty);
+      set => SetValue(ImageSourceProperty, value);
     }
-    public double AxisBottom
-    {
-      get => AxisTop + AxisHeight;
-      set { }
-    }
+    public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register(
+        nameof(ImageSource),
+        typeof(ImageSource),
+        typeof(Axis),
+        new PropertyMetadata(default(ImageSource), OnImageSourceChanged));
     #endregion
 
-    #region Margins
+    private static void OnAxisLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var axis = d as Axis;
+      axis.OnPropertyChanged(nameof(AxisMargin));
+      axis.OnPropertyChanged(nameof(AxisRelative));
+    }
+    private static void OnAxisTopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var axis = d as Axis;
+      axis.OnPropertyChanged(nameof(AxisMargin));
+      axis.OnPropertyChanged(nameof(AxisRelative));
+    }
+    private static void OnAxisWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var axis = d as Axis;
+      axis.OnPropertyChanged(nameof(AxisRelative));
+    }
+    private static void OnAxisHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var axis = d as Axis;
+      axis.OnPropertyChanged(nameof(AxisRelative));
+    }
+    private static void OnImageSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      var axis = d as Axis;
+      axis.image = (axis.ImageSource as BitmapSource).ToPixelBitmap();
+      axis.OnPropertyChanged(nameof(AxisRelative));
+    }
+
     public Thickness AxisMargin => new Thickness(AxisLeft, AxisTop, 0, 0);
-    public Thickness TopBorderMargin => new Thickness(0, AxisTop, 0, 0);
-    public Thickness BottomBorderMargin => new Thickness(0, AxisBottom, 0, 0);
-    public Thickness RightBorderMargin => new Thickness(AxisRight, AxisTop, 0, 0);
-    #endregion
+    public Rect AxisRelative => image == null ? new Rect() : new Rect(AxisLeft / image.Width, AxisTop / image.Height, AxisWidth / image.Width, AxisHeight / image.Height);
+    public double AxisRight => AxisLeft + AxisWidth;
+    public double AxisBottom => AxisTop + AxisHeight;
 
-    #region Event Callbacks
+    private PixelBitmap image;
+    private double tol = 10;
     private bool IsAdjust = false;
     private AdjustType State = AdjustType.None;
     private AdjustType GetState(Point mousePos)
@@ -137,13 +168,12 @@ namespace CycWpfLibrary.Controls
         case AdjustType.LeftBottom:
           Cursor = Cursors.SizeNESW;
           break;
-      }        
+      }
     }
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
       base.OnMouseDown(e);
       var mousePos = e.GetPosition(gridMain);
-      Debug.WriteLine($"{typeof(Axis)}.{nameof(mousePos)}:{mousePos}");
       State = GetState(mousePos);
       UpdateCursor(State);
 
@@ -157,12 +187,15 @@ namespace CycWpfLibrary.Controls
         e.Handled = true;
       }
     }
-
-    private double tol = 10;
+    protected override void OnMouseUp(MouseButtonEventArgs e)
+    {
+      base.OnMouseUp(e);
+      IsAdjust = false;
+      ReleaseMouseCapture();
+    }
     protected override void OnMouseMove(MouseEventArgs e)
     {
       base.OnMouseMove(e);
-
       var mousePos = e.GetPosition(gridMain);
       // is not adjusting, just update the cursor
       if (!IsAdjust)
@@ -191,15 +224,6 @@ namespace CycWpfLibrary.Controls
         AxisWidth = mousePos.X - AxisLeft;
       if (State.Contain(AdjustType.Bottom))
         AxisHeight = mousePos.Y - AxisTop;
-
     }
-
-    protected override void OnMouseUp(MouseButtonEventArgs e)
-    {
-      base.OnMouseUp(e);
-      IsAdjust = false;
-      ReleaseMouseCapture();
-    }
-    #endregion
   }
 }
