@@ -1,4 +1,5 @@
 ﻿using CycWpfLibrary.Media;
+using CycWpfLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,18 +59,6 @@ namespace CycWpfLibrary
       => element.SetValue(MaximumProperty, value);
     #endregion
 
-    private static readonly DrawingBrush background = new DrawingBrush
-    {
-      TileMode = TileMode.Tile,
-      Viewport = new Rect(0, 0, 32, 32),
-      ViewportUnits = BrushMappingMode.Absolute,
-      Drawing = new GeometryDrawing
-      {
-        Brush = Brushes.LightGray,
-        Geometry = Geometry.Parse("M0,0 H16 V16 H32 V32 H16 V16 H0Z"),
-      }
-    };
-
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       if (!(d is FrameworkElement element))
@@ -84,9 +73,9 @@ namespace CycWpfLibrary
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
         if (element.Parent is Panel parent)
-          parent.Background = background;
+          parent.Background = ResourceManager.crossboardBrush;
         else if (element.Parent is Border border)
-          border.Background = background;
+          border.Background = ResourceManager.crossboardBrush;
       }
       else
       {

@@ -90,8 +90,5 @@
   <ItemGroup>
     <Resource Include="pan.cur" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="a.jpg" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
