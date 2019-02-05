@@ -40,17 +40,27 @@ namespace CycWpfLibrary.UserControls
       typeof(ImageEraser),
       new PropertyMetadata(ImageChanged));
 
-    public MouseButton MouseButton
+    public CycInput Input
     {
-      get => (MouseButton)GetValue(MouseButtonProperty);
-      set => SetValue(MouseButtonProperty, value);
+      get => (CycInput)GetValue(InputProperty);
+      set => SetValue(InputProperty, value);
     }
-    public static readonly DependencyProperty MouseButtonProperty = DependencyProperty.Register(
-        nameof(MouseButton),
-        typeof(MouseButton),
+    public static readonly DependencyProperty InputProperty = DependencyProperty.Register(
+        nameof(Input),
+        typeof(CycInput),
         typeof(ImageEraser),
-        new PropertyMetadata(default(MouseButton)));
+        new PropertyMetadata(new CycInput()));
 
+    public CycInputCollection Inputs
+    {
+      get => (CycInputCollection)GetValue(InputsProperty);
+      set => SetValue(InputsProperty, value);
+    }
+    public static readonly DependencyProperty InputsProperty = DependencyProperty.Register(
+        nameof(Inputs),
+        typeof(CycInputCollection),
+        typeof(ImageEraser),
+        new PropertyMetadata(new CycInputCollection()));
     #endregion
 
     private static void ImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -79,6 +89,13 @@ namespace CycWpfLibrary.UserControls
     private ScaleTransform scale;
     private double eraserSize => 20 / scale.ScaleX;
     private bool isEdit;
+    private bool isEditting;
+
+    private bool InputCheck(MouseEventArgs e)
+    {
+      var arg = e is MouseButtonEventArgs mbe ? mbe : null;
+      return (!Input.IsEmpty && Input.IsValid(arg)) || (!Inputs.IsEmpty && Inputs.IsValid(arg)) ? true : false;
+    }
 
     private void image_MouseEnter(object sender, MouseEventArgs e)
     {
@@ -91,9 +108,10 @@ namespace CycWpfLibrary.UserControls
     private void image_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (MouseButton.IsPressed())
+      if (InputCheck(e))
       {
         isEdit = false;
+        isEditting = true;
         imageControl.CaptureMouse();
         stopwatch.Restart();
         image_MouseMove(sender, e);
@@ -102,6 +120,7 @@ namespace CycWpfLibrary.UserControls
     private void image_MouseUp(object sender, MouseButtonEventArgs e)
     {
       imageControl.ReleaseMouseCapture();
+      isEditting = false;
       if (isEdit)
         Image = imageDisplay; //invoke Image.set -> two-way binding 
     }
@@ -111,7 +130,7 @@ namespace CycWpfLibrary.UserControls
     private async void image_MouseMove(object sender, MouseEventArgs e)
     {
       mousePos = e.GetPosition(imageControl);
-      if (MouseButton.IsPressed())
+      if (isEditting)
       {
         imageDisplay = await imageDisplay.EraseImageAsync(new Rect(
           mousePos.Minus(new Point(eraserSize / 2, eraserSize / 2)),
