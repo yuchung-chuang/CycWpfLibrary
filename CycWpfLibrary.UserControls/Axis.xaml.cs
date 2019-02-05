@@ -87,8 +87,29 @@ namespace CycWpfLibrary.UserControls
         typeof(ImageSource),
         typeof(Axis),
         new PropertyMetadata(default(ImageSource), OnImageSourceChanged));
-    #endregion
 
+    public CycInput Input
+    {
+      get => (CycInput)GetValue(InputProperty);
+      set => SetValue(InputProperty, value);
+    }
+    public static readonly DependencyProperty InputProperty = DependencyProperty.Register(
+        nameof(Input),
+        typeof(CycInput),
+        typeof(Axis),
+        new PropertyMetadata(new CycInput()));
+
+    public CycInputCollection Inputs
+    {
+      get => (CycInputCollection)GetValue(InputsProperty);
+      set => SetValue(InputsProperty, value);
+    }
+    public static readonly DependencyProperty InputsProperty = DependencyProperty.Register(
+        nameof(Inputs),
+        typeof(CycInputCollection),
+        typeof(Axis),
+        new PropertyMetadata(new CycInputCollection()));
+    #endregion
     private static void OnAxisLeftChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
       var axis = d as Axis;
@@ -173,6 +194,8 @@ namespace CycWpfLibrary.UserControls
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
       base.OnMouseDown(e);
+      if (!InputCheck(e))
+        return;
       var mousePos = e.GetPosition(gridMain);
       State = GetState(mousePos);
       UpdateCursor(State);
@@ -224,6 +247,12 @@ namespace CycWpfLibrary.UserControls
         AxisWidth = mousePos.X - AxisLeft;
       if (State.Contain(AdjustType.Bottom))
         AxisHeight = mousePos.Y - AxisTop;
+    }
+
+    private bool InputCheck(EventArgs e)
+    {
+      var arg = e is MouseButtonEventArgs mbe ? mbe : null;
+      return (!Input.IsEmpty && Input.IsValid(arg)) || (!Inputs.IsEmpty && Inputs.IsValid(arg)) ? true : false;
     }
   }
 }

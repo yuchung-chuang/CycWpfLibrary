@@ -48,6 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\Styles\EditorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\DropBorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -62,6 +66,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\_EditorControl\MoveThumb.cs" />
+    <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="DropBorder.cs" />
     <Compile Include="NumericTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

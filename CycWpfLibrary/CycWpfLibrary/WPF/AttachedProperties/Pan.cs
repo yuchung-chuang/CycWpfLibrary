@@ -65,6 +65,7 @@ namespace CycWpfLibrary
     private static Point mouseAnchor;
     private static TranslateTransform translate;
     private static Point translateAnchor;
+    private static bool IsPanning;
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -99,6 +100,7 @@ namespace CycWpfLibrary
         cursorCache = element.Cursor;
         element.Cursor = panCursor;
         element.CaptureMouse();
+        IsPanning = true;
       }
     }
     private static void Element_MouseUp(object sender, MouseButtonEventArgs e)
@@ -108,12 +110,13 @@ namespace CycWpfLibrary
       {
         element.ReleaseMouseCapture();
         element.Cursor = cursorCache;
+        IsPanning = false;
       }
     }
     private static void Element_MouseMove(object sender, MouseEventArgs e)
     {
       var element = sender as FrameworkElement;
-      if (element.IsMouseCaptured && InputCheck(element, e))
+      if (element.IsMouseCaptured && IsPanning)
       {
         var delta = e.GetAbsolutePosition(element) - mouseAnchor;
         var scale = (element.RenderTransform as TransformGroup).Children.GetScale();

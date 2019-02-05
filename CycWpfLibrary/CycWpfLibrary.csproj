@@ -108,11 +108,6 @@
     <Compile Include="Diagnostics\interfaces\ILogger.cs" />
     <Compile Include="Diagnostics\LogManager.cs" />
     <Compile Include="Diagnostics\ConsoleLogger.cs" />
-    <Compile Include="Controls\Axis.xaml.cs">
-      <DependentUpon>Axis.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\_EditorControl\MoveThumb.cs" />
-    <Compile Include="Controls\_EditorControl\ResizeThumb.cs" />
     <Compile Include="CycWpfLibrary\Extensions\EnumExtensions.cs" />
     <Compile Include="Diagnostics\DebugLogger.cs" />
     <Compile Include="Emgu\ImageConverters.cs" />
@@ -197,16 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\Axis.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\Styles\EditorControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="License-LGPL.txt" />
