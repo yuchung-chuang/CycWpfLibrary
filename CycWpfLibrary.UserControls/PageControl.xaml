@@ -7,16 +7,14 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:PageControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="600"
              d:DesignWidth="900">
-  <UserControl.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Styles\Fonts.xaml" />
-      </ResourceDictionary.MergedDictionaries>
-      <ControlTemplate x:Key="ButtonTemplate"
+  <Grid Name="gridMain">
+    <Grid.Resources>
+      <ControlTemplate x:Key="NotFocusableButtonTemplate"
                        TargetType="{x:Type ButtonBase}">
         <Border x:Name="border"
                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -35,17 +33,7 @@
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
         </Border>
       </ControlTemplate>
-    </ResourceDictionary>
-  </UserControl.Resources>
-  <Grid Name="gridMain">
-    <Grid.Resources>
       <Style TargetType="Button">
-        <Setter Property="FontFamily"
-                Value="{StaticResource FontAwesome}" />
-        <Setter Property="FontSize"
-                Value="100" />
-        <Setter Property="FontWeight"
-                Value="ExtraBold" />
         <Setter Property="Foreground"
                 Value="WhiteSmoke" />
         <Setter Property="Opacity"
@@ -53,7 +41,7 @@
         <Setter Property="BorderBrush"
                 Value="{x:Null}" />
         <Setter Property="Template"
-                Value="{StaticResource ButtonTemplate}" />
+                Value="{StaticResource NotFocusableButtonTemplate}" />
         <Style.Triggers>
           <Trigger Property="IsMouseOver"
                    Value="true">
@@ -98,7 +86,6 @@
     <Button Name="BackButton"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Content="&#xf104;"
             Command="{Binding TurnBackCommand}">
       <Button.Background>
         <LinearGradientBrush EndPoint="1,0.5"
@@ -135,13 +122,15 @@
         </EventTrigger>
 
       </Button.Triggers>
-
+      
+      <icon:PackIconFontAwesome Kind="AngleLeftSolid"
+                          Width="{Binding ElementName=BackButton, Path=ActualWidth, Converter={cyc:MathConverter}, ConverterParameter=x/3 }"
+                          Height="{Binding ElementName=BackButton, Path=ActualHeight, Converter={cyc:MathConverter}, ConverterParameter=x/3 }" />
     </Button>
 
     <Button Name="NextButton"
             Grid.Column="3"
             Grid.ColumnSpan="2"
-            Content="&#xf105;"
             Command="{Binding TurnNextCommand}">
       <Button.RenderTransform>
         <TranslateTransform X="{Binding ActualWidth, ElementName=NextButton, Converter={cyc:MathConverter}, ConverterParameter=x/2}" />
@@ -178,6 +167,9 @@
         </EventTrigger>
 
       </Button.Triggers>
+      <icon:PackIconFontAwesome Kind="AngleRightSolid"
+                                Width="{Binding ElementName=NextButton, Path=ActualWidth, Converter={cyc:MathConverter}, ConverterParameter=x/3 }"
+                                Height="{Binding ElementName=NextButton, Path=ActualHeight, Converter={cyc:MathConverter}, ConverterParameter=x/3 }" />
     </Button>
   </Grid>
 </UserControl>
