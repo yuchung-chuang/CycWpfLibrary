@@ -60,7 +60,7 @@ namespace CycWpfLibrary
         => obj.SetValue(InputProperty, value);
     #endregion
     
-    private static readonly Cursor panCursor = ResourceManager.panCursor;
+    private static readonly Cursor panCursor = ResourceManager.PanCursor;
     private static Cursor cursorCache;
     private static Point mouseAnchor;
     private static TranslateTransform translate;

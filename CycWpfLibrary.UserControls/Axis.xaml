@@ -6,6 +6,7 @@
                             xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
                             xmlns:local="clr-namespace:CycWpfLibrary.UserControls"
                             xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM;assembly=CycWpfLibrary"
+                            xmlns:resource="clr-namespace:CycWpfLibrary.Resources;assembly=CycWpfLibrary.Resources"
                             mc:Ignorable="d"
                             d:DataContext="{d:DesignInstance local:Axis, IsDesignTimeCreatable=True}"
                             d:DesignHeight="450"
@@ -18,7 +19,7 @@
              Stretch="None" 
              Panel.ZIndex="0"/>
       <Border Name="shadow"
-              Background="#4C000000"
+              Background="{x:Static resource:ResourceManager.ShadowBrush}"
               Width="{Binding ElementName=gridMain, Path=ActualWidth}"
               Height="{Binding ElementName=gridMain, Path=ActualHeight}"
               Panel.ZIndex="1" />

@@ -136,6 +136,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">
+      <Project>{482d004f-7715-41e1-9d47-b00e8d7c9acc}</Project>
+      <Name>CycWpfLibrary.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary\CycWpfLibrary.csproj">
       <Project>{dc9b1571-60b9-48d4-a147-24820d8e895b}</Project>
       <Name>CycWpfLibrary</Name>
@@ -144,7 +148,9 @@
   <ItemGroup>
     <Resource Include="License-LGPL.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets" Condition="Exists('..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -9,11 +9,16 @@ using System.Windows.Media;
 
 namespace CycWpfLibrary.Resources
 {
-  public static class ResourceManager
+  public class ResourceManager
   {
-    public static readonly Cursor panCursor = new Cursor(Application.GetResourceStream(new Uri(@"pack://application:,,,/CycWpfLibrary.Resources;component/pan.cur", UriKind.Absolute)).Stream);
+    public ResourceManager()
+    {
 
-    public static readonly DrawingBrush crossboardBrush = new DrawingBrush
+    }
+
+    public static readonly Cursor PanCursor = new Cursor(Application.GetResourceStream(new Uri(@"pack://application:,,,/CycWpfLibrary.Resources;component/pan.cur", UriKind.Absolute)).Stream);
+
+    public static readonly DrawingBrush CrossboardBrush = new DrawingBrush
     {
       TileMode = TileMode.Tile,
       Viewport = new Rect(0, 0, 32, 32),
@@ -24,5 +29,7 @@ namespace CycWpfLibrary.Resources
         Geometry = Geometry.Parse("M0,0 H16 V16 H32 V32 H16 V16 H0Z"),
       }
     };
+
+    public static readonly SolidColorBrush ShadowBrush = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.3), 0, 0, 0));
   }
 }
