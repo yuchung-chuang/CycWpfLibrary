@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="CycWpfLibrary\Classes\PageManagerBase.cs" />
     <Compile Include="CycWpfLibrary\Classes\Constants.cs" />
+    <Compile Include="CycWpfLibrary\Extensions\DoubleExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\ScreenExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StringExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StructExtensions.cs" />
@@ -177,7 +178,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="CycWpfLibrary\Methods\TimeConverter.cs" />
+    <Compile Include="CycWpfLibrary\Methods\TimeToString.cs" />
     <Compile Include="Xml\XmlGenericSerializer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

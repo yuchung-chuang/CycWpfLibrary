@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using CycWpfLibrary;
 
 namespace CycWpfLibrary.CustomControls
 {
@@ -82,7 +84,14 @@ namespace CycWpfLibrary.CustomControls
     private double padding;
     private double cornerRadius;
     private bool isDragMove;
-    private Cursor cursorCache;
+    private RectangleGeometry rectGeo;
+    private Rect initialRect;
+    private Rect targetRect;
+    private static readonly double enterMillisecond = 500;
+    private static readonly Duration enterDuration = enterMillisecond.ToDuration();
+    private static readonly double leaveMillisecond = enterMillisecond / 2;
+    private static readonly Duration leaveDuration = leaveMillisecond.ToDuration();
+    private static readonly double animationSlide = 15;
 
     public override void OnApplyTemplate()
     {
@@ -91,25 +100,24 @@ namespace CycWpfLibrary.CustomControls
       PART_TextBlock = GetTemplateChild(PART_TextBlock_Name) as TextBlock;
 
       PART_TextBlock.Text = Text;
-      PART_CloseButton.Click += PART_CloseButton_Click;
+      PART_CloseButton.Click += PART_CloseButton_ClickAsync;
 
       Left = screenPos.X;
       Top = screenPos.Y + PlacementTarget.ActualHeight + padding * 2;
 
-      shadowBorder.Clip = new CombinedGeometry
+      initialRect = new Rect(new Point(), mainPanel.RenderSize);
+      rectGeo = new RectangleGeometry(initialRect, cornerRadius, cornerRadius);
+      targetRect = new Rect(windowPos.Minus((padding, padding)), PlacementTarget.RenderSize.Add((padding, padding).Times(2)));
+      var combinedGeo = new CombinedGeometry
       {
         GeometryCombineMode = GeometryCombineMode.Exclude,
-        Geometry1 = new RectangleGeometry(new Rect(new Point(), mainPanel.RenderSize)),
-        Geometry2 = new RectangleGeometry(new Rect(windowPos.Minus((padding, padding)), PlacementTarget.RenderSize.Add((padding, padding).Times(2))), cornerRadius, cornerRadius),
+        Geometry1 = new RectangleGeometry(initialRect),
+        Geometry2 = rectGeo,
       };
+
+      shadowBorder.Clip = combinedGeo;
       Panel.SetZIndex(shadowBorder, int.MaxValue);
       mainPanel.Children.Add(shadowBorder);
-    }
-
-    protected override void OnRender(DrawingContext drawingContext)
-    {
-      base.OnRender(drawingContext);
-      this.ShiftWindowOntoScreen();
     }
 
     protected override void OnContentRendered(EventArgs e)
@@ -138,10 +146,23 @@ namespace CycWpfLibrary.CustomControls
       }
     }
 
-    private void PART_CloseButton_Click(object sender, RoutedEventArgs e)
+    protected override void OnRender(DrawingContext drawingContext)
     {
-      mainPanel.Children.Remove(shadowBorder);
+      base.OnRender(drawingContext);
+      this.ShiftWindowOntoScreen();
+      rectGeo.BeginAnimation(RectangleGeometry.RectProperty, new RectAnimation(initialRect, targetRect, enterDuration));
+      this.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, enterDuration));
+      this.BeginAnimation(TopProperty, new DoubleAnimation(Top + animationSlide, Top, enterDuration));
+    }
+
+    private async void PART_CloseButton_ClickAsync(object sender, RoutedEventArgs e)
+    {
+      this.BeginAnimation(OpacityProperty, new DoubleAnimation(1, 0, leaveDuration));
+      this.BeginAnimation(TopProperty, new DoubleAnimation(Top, Top + animationSlide, leaveDuration));
+      rectGeo.BeginAnimation(RectangleGeometry.RectProperty, new RectAnimation(targetRect, initialRect, leaveDuration));
+      await NativeMethod.WaitAsync((obj) => false, null, leaveMillisecond);
       Close();
+      mainPanel.Children.Remove(shadowBorder);
     }
   }
 }
