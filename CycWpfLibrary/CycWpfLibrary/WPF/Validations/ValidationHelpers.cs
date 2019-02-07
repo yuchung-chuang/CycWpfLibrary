@@ -45,7 +45,7 @@ namespace CycWpfLibrary
       return new ValidationResult(Math.IsIn(@byte, 255, 0), "Byte must between (0, 255)");
     }
 
-    public static ValidationResult IsInRange(object value, int max, int min)
+    public static ValidationResult IsInRange(object value, int max, int min, bool excludeMax, bool excludeMin)
     {
       if (string.IsNullOrEmpty(value.ToString()))
         return ValidationResult.ValidResult;
@@ -54,9 +54,12 @@ namespace CycWpfLibrary
         return new ValidationResult(false, doubleValidation.ErrorContent);
 
       var num = value.ToString().ToDouble();
-      return new ValidationResult(Math.IsIn(num, max, min), $"Input number should be in (" +
+      return new ValidationResult(Math.IsIn(num, max, min, excludeMax, excludeMin), 
+        $"Input number should be in" +
+        $"{(excludeMin ? "[" : "(")}" +
         $"{(min == int.MinValue ? "-∞" : min.ToString())}, " +
-        $"{(max == int.MaxValue ? "∞" : max.ToString())})");
+        $"{(max == int.MaxValue ? "∞" : max.ToString())}" +
+        $"{(excludeMax ? "]" : ")")}");
     }
 
     public static ValidationResult IsDate(object value)
@@ -90,7 +93,7 @@ namespace CycWpfLibrary
     {
       // The dependency object is valid if it has no errors and all
       // of its children (that are dependency objects) are error-free.
-      return !Validation.GetHasError(obj) && 
+      return !Validation.GetHasError(obj) &&
         LogicalTreeHelper.GetChildren(obj).OfType<DependencyObject>().All(IsValid);
     }
   }

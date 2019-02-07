@@ -73,6 +73,15 @@ namespace CycWpfLibrary
         return (value < Max && value > Min) ? true : false;
     }
 
+    public static bool IsIn(double value, double Max, double Min, bool excludeMax, bool excludeMin)
+    {
+      if (Min > Max)
+        Swap(ref Max, ref Min);
+      var inMax = excludeMax ? value < Max : value <= Max;
+      var inMin = excludeMin ? value > Min : value >= Min;
+      return inMax && inMin;
+    }
+
     public static double LogBase(double Base, double num)
     {
       return Log(num) / Log(Base);

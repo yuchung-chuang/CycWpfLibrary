@@ -50,6 +50,30 @@ namespace CycWpfLibrary
         => (int)obj.GetValue(MaximumProperty);
     public static void SetMaximum(DependencyObject obj, int value)
         => obj.SetValue(MaximumProperty, value);
+
+    public static readonly DependencyProperty ExcludeMaxProperty = DependencyProperty.RegisterAttached(
+        "ExcludeMax",
+        typeof(bool),
+        typeof(RangeValidator),
+        new PropertyMetadata(default(bool)));
+    [Category(AppNames.CycWpfLibrary)]
+    [AttachedPropertyBrowsableForType(typeof(TextBox))]
+    public static bool GetExcludeMax(DependencyObject obj)
+        => (bool)obj.GetValue(ExcludeMaxProperty);
+    public static void SetExcludeMax(DependencyObject obj, bool value)
+        => obj.SetValue(ExcludeMaxProperty, value);
+
+    public static readonly DependencyProperty ExcludeMinProperty = DependencyProperty.RegisterAttached(
+        "ExcludeMin",
+        typeof(bool),
+        typeof(RangeValidator),
+        new PropertyMetadata(default(bool)));
+    [Category(AppNames.CycWpfLibrary)]
+    [AttachedPropertyBrowsableForType(typeof(TextBox))]
+    public static bool GetExcludeMin(DependencyObject obj)
+        => (bool)obj.GetValue(ExcludeMinProperty);
+    public static void SetExcludeMin(DependencyObject obj, bool value)
+        => obj.SetValue(ExcludeMinProperty, value);
     #endregion
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -86,6 +110,8 @@ namespace CycWpfLibrary
         myRule.ValidatesOnTargetUpdated = true;
         myRule.Minimum = (int)tb.GetValue(MinimumProperty);
         myRule.Maximum = (int)tb.GetValue(MaximumProperty);
+        myRule.ExcludeMax = (bool)tb.GetValue(ExcludeMaxProperty);
+        myRule.ExcludeMin = (bool)tb.GetValue(ExcludeMinProperty);
         myRule.Validate(tb.Text, CultureInfo.CurrentCulture);
       }
     }

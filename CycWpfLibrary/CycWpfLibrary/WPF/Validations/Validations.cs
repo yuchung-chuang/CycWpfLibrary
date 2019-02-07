@@ -33,8 +33,10 @@ namespace CycWpfLibrary
   {
     public int Maximum { get; set; } = int.MaxValue;
     public int Minimum { get; set; } = int.MinValue;
+    public bool ExcludeMax { get; set; }
+    public bool ExcludeMin { get; set; }
 
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.IsInRange(value, Maximum, Minimum);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.IsInRange(value, Maximum, Minimum, ExcludeMax, ExcludeMin);
   }
 
   public class DateValidationRule : ValidationRule
