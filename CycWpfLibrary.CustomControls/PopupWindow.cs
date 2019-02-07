@@ -1,4 +1,6 @@
-﻿using CycWpfLibrary.Resources;
+﻿using CycWpfLibrary;
+using CycWpfLibrary.Media;
+using CycWpfLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +14,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using CycWpfLibrary;
 
 namespace CycWpfLibrary.CustomControls
 {
@@ -83,7 +84,6 @@ namespace CycWpfLibrary.CustomControls
     private Point screenPos;
     private double padding;
     private double cornerRadius;
-    private bool isDragMove;
     private RectangleGeometry rectGeo;
     private Rect initialRect;
     private Rect targetRect;
@@ -128,31 +128,22 @@ namespace CycWpfLibrary.CustomControls
       Height = content.Height + padding * 2;
     }
 
-    protected override void OnMouseDown(MouseButtonEventArgs e)
+    protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
     {
-      base.OnMouseDown(e);
-      if (e.ChangedButton == MouseButton.Left)
-      {
-        this.DragMove();
-        isDragMove = true;
-      }
-    }
-    protected override void OnMouseUp(MouseButtonEventArgs e)
-    {
-      base.OnMouseUp(e);
-      if (isDragMove)
-      {
-        isDragMove = false;
-      }
+      base.OnMouseLeftButtonDown(e);
+      this.DragMove();
     }
 
-    protected override void OnRender(DrawingContext drawingContext)
+    protected override async void OnRender(DrawingContext drawingContext)
     {
       base.OnRender(drawingContext);
       this.ShiftWindowOntoScreen();
       rectGeo.BeginAnimation(RectangleGeometry.RectProperty, new RectAnimation(initialRect, targetRect, enterDuration));
       this.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, enterDuration));
       this.BeginAnimation(TopProperty, new DoubleAnimation(Top + animationSlide, Top, enterDuration));
+      await NativeMethod.WaitAsync((obj) => false, null, enterMillisecond);
+
+      this.BeginAnimation(TopProperty, null); //解除Animation對屬性的綁定
     }
 
     private async void PART_CloseButton_ClickAsync(object sender, RoutedEventArgs e)
