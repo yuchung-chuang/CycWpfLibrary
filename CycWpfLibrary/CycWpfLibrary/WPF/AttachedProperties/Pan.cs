@@ -19,7 +19,7 @@ namespace CycWpfLibrary
   /// <summary>
   /// 提供平移相依屬性的靜態類別。
   /// </summary>
-  public static class Pan 
+  public static class Pan
   {
     #region Dependency Properties
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
@@ -58,8 +58,20 @@ namespace CycWpfLibrary
         => (CycInput)obj.GetValue(InputProperty);
     public static void SetInput(DependencyObject obj, CycInput value)
         => obj.SetValue(InputProperty, value);
+
+    public static readonly DependencyProperty ClipToParentProperty = DependencyProperty.RegisterAttached(
+        "ClipToParent",
+        typeof(bool),
+        typeof(Pan),
+        new PropertyMetadata(default(bool)));
+    [Category(AppNames.CycWpfLibrary)]
+    [AttachedPropertyBrowsableForType(typeof(UIElement))]
+    public static bool GetClipToParent(DependencyObject obj)
+        => (bool)obj.GetValue(ClipToParentProperty);
+    public static void SetClipToParent(DependencyObject obj, bool value)
+        => obj.SetValue(ClipToParentProperty, value);
     #endregion
-    
+
     private static readonly Cursor panCursor = ResourceManager.PanCursor;
     private static Cursor cursorCache;
     private static Point mouseAnchor;
@@ -78,7 +90,8 @@ namespace CycWpfLibrary
         element.MouseUp += Element_MouseUp;
         element.MouseMove += Element_MouseMove;
         element.EnsureTransforms();
-        element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
+        if (element.Parent != null && GetClipToParent(element))
+          element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
       }
       else
       {
@@ -87,7 +100,7 @@ namespace CycWpfLibrary
         element.MouseMove -= Element_MouseMove;
       }
     }
-    
+
     private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
     {
       var element = sender as FrameworkElement;
