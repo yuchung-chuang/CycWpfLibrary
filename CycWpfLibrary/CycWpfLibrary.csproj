@@ -72,6 +72,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\WpfPlotDigitizer\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -94,13 +95,15 @@
   <ItemGroup>
     <Compile Include="CycWpfLibrary\Classes\PageManagerBase.cs" />
     <Compile Include="CycWpfLibrary\Classes\Constants.cs" />
+    <Compile Include="CycWpfLibrary\Extensions\ScreenExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StringExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Extensions\StructExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="Emgu\Colors.cs" />
     <Compile Include="Emgu\Drawing.cs" />
     <Compile Include="CycWpfLibrary\TextBoxBehaviors.cs" />
-    <Compile Include="CycWpfLibrary\WPF\Input\InputExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Extensions\InputExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\Input\InputManager.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
@@ -116,7 +119,6 @@
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\Animations\AnimatedPage.cs" />
     <Compile Include="Media\Animations\AnimationExtensions.cs" />
-    <Compile Include="Media\Geometry\RectExtensions.cs" />
     <Compile Include="Media\Geometry\TransformExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\AttachedProperties\Eraser.cs" />
     <Compile Include="CycWpfLibrary\WPF\AttachedProperties\obsolete\IsObserveSize.cs" />
@@ -144,7 +146,6 @@
     <Compile Include="Media\Images\BitmapExtensions.cs" />
     <Compile Include="Media\Images\ImageExts.cs" />
     <Compile Include="CycWpfLibrary\Extensions\ArrayExtensions.cs" />
-    <Compile Include="Media\Geometry\PointExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions.cs" />
     <Compile Include="Linq\Expressions\ExpressionExtensions.cs" />
     <Compile Include="Media\Images\ColorExtensions.cs" />

@@ -4,5 +4,6 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.CustomControls;component/Themes/DropBorder.xaml" />
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.CustomControls;component/Themes/NumericTextBox.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.CustomControls;component/Themes/PopupWindow.xaml" />
   </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

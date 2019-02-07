@@ -26,6 +26,7 @@ namespace CycWpfLibrary.CustomControls
       DefaultStyleKeyProperty.OverrideMetadata(typeof(DropBorder), new FrameworkPropertyMetadata(typeof(DropBorder)));
     }
 
+    #region DPs
     /// <summary>
     /// Get the first dropped file name.
     /// </summary>
@@ -51,6 +52,8 @@ namespace CycWpfLibrary.CustomControls
       nameof(DropFileNames),
       typeof(string[]),
       typeof(DropBorder));
+
+    #endregion
 
     public bool AllowMultipleDrop { get; set; }
 
