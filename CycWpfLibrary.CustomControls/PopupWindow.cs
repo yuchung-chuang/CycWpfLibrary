@@ -39,11 +39,11 @@ namespace CycWpfLibrary.CustomControls
       targetScreenPos = centerScreenPos;
       resources = new PopupWindowResources();
       resources.InitializeComponent();
+      cornerRadius = (double)resources["cornerRadius"];
       shadow = new Border
       {
         Style = resources["shadowStyle"] as Style,
       };
-      cornerRadius = (double)resources["cornerRadius"];
       targetRectangle = new Rectangle
       {
         Style = resources["targetRectangleStyle"] as Style,
@@ -105,19 +105,17 @@ namespace CycWpfLibrary.CustomControls
     private Point targetPanelPos;
     private Point targetScreenPos;
     private Point centerScreenPos;
-    private RectangleGeometry rectGeo;
+    private RectangleGeometry shadowRectGeo;
     private Rect initialRect;
     private Rect targetRect;
 
-    private static readonly double padding = 5d;
-    private static double cornerRadius;
     private Thickness initialMargin;
     private Thickness targetMargin;
-    private static readonly double enterMs = 500;
-    private static readonly Duration enterDuration = enterMs.ToDuration();
-    private static readonly double leaveMs = enterMs / 2;
-    private static readonly Duration leaveDuration = leaveMs.ToDuration();
-    private static readonly double animationSlide = 15;
+    private readonly double cornerRadius;
+    private readonly double padding = 5d;
+    private readonly double enterMs = 500;
+    private readonly double leaveMs = 200;
+    private readonly double animationSlide = 15;
 
     public override void OnApplyTemplate()
     {
@@ -129,14 +127,16 @@ namespace CycWpfLibrary.CustomControls
       PART_CloseButton.Click += PART_CloseButton_ClickAsync;
 
       initialRect = new Rect(new Point(), mainPanel.RenderSize);
-      rectGeo = new RectangleGeometry(initialRect, cornerRadius, cornerRadius);
       targetRect = new Rect(targetPanelPos.Minus((padding, padding)),
         PlacementTarget?.RenderSize.Add((padding, padding).Times(2)) ?? new Size());
+      shadowRectGeo = new RectangleGeometry(PlacementTarget != null ? initialRect : targetRect,
+        cornerRadius, cornerRadius);
+      targetRectangle.Visibility = PlacementTarget != null ? Visibility.Visible : Visibility.Collapsed;
       var combinedGeo = new CombinedGeometry
       {
         GeometryCombineMode = GeometryCombineMode.Exclude,
         Geometry1 = new RectangleGeometry(initialRect),
-        Geometry2 = rectGeo,
+        Geometry2 = shadowRectGeo,
       };
       shadow.Clip = combinedGeo;
       Panel.SetZIndex(shadow, int.MaxValue - 1);
@@ -175,10 +175,14 @@ namespace CycWpfLibrary.CustomControls
       this.ShiftWindowOntoScreen();
       this.BeginAnimation(TopProperty, Top + animationSlide, Top, enterMs);
       this.BeginAnimation(OpacityProperty, 0d, 1, enterMs);
-      rectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, targetRect, enterMs);
-      targetRectangle.BeginAnimation(MarginProperty, targetMargin, enterMs);
-      targetRectangle.BeginAnimation(WidthProperty, targetRect.Width, enterMs);
-      targetRectangle.BeginAnimation(HeightProperty, targetRect.Height, enterMs);
+      if (PlacementTarget != null)
+      {
+        shadowRectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, targetRect, enterMs);
+        targetRectangle.BeginAnimation(MarginProperty, targetMargin, enterMs);
+        targetRectangle.BeginAnimation(WidthProperty, targetRect.Width, enterMs);
+        targetRectangle.BeginAnimation(HeightProperty, targetRect.Height, enterMs);
+      }
+      shadow.BeginAnimation(OpacityProperty, 0d, 1, enterMs);
 
       await NativeMethod.WaitAsync((obj) => false, null, enterMs);
       this.BeginAnimation(TopProperty, null); //解除Animation對屬性的綁定
@@ -188,10 +192,14 @@ namespace CycWpfLibrary.CustomControls
     {
       this.BeginAnimation(OpacityProperty, 0d, leaveMs);
       this.BeginAnimation(TopProperty, Top + animationSlide, leaveMs);
-      rectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, leaveMs);
-      targetRectangle.BeginAnimation(MarginProperty, initialMargin, leaveMs);
-      targetRectangle.BeginAnimation(WidthProperty, initialRect.Width, leaveMs);
-      targetRectangle.BeginAnimation(HeightProperty, initialRect.Height, leaveMs);
+      if (PlacementTarget != null)
+      {
+        shadowRectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, leaveMs);
+        targetRectangle.BeginAnimation(MarginProperty, initialMargin, leaveMs);
+        targetRectangle.BeginAnimation(WidthProperty, initialRect.Width, leaveMs);
+        targetRectangle.BeginAnimation(HeightProperty, initialRect.Height, leaveMs);
+      }
+      shadow.BeginAnimation(OpacityProperty, 0d, leaveMs);
 
       await NativeMethod.WaitAsync((obj) => false, null, leaveMs);
       Close();
