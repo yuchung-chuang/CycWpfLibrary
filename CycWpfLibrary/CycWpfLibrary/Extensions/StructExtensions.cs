@@ -51,6 +51,11 @@ namespace CycWpfLibrary
     {
       return new Size(size.Width / factor, size.Height / factor);
     }
+
+    public static Point ToPoint(this Size size)
+    {
+      return new Point(size.Width, size.Height);
+    }
   }
   public static class RectExtensions
   {
@@ -130,6 +135,11 @@ namespace CycWpfLibrary
     public static Point Divide(this Point point1, Point point2)
     {
       return new Point(point1.X / point2.X, point1.Y / point2.Y);
+    }
+
+    public static Size ToSize(this Point point)
+    {
+      return new Size(point.X, point.Y);
     }
   }
 }

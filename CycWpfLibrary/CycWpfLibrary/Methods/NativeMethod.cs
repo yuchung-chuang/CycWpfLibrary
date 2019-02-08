@@ -37,21 +37,21 @@ namespace CycWpfLibrary
     }
 
     /// <summary>
-    /// 非同步等待，直到<paramref name="predicate"/>條件成立或等候時間超過<paramref name="timeout"/>
+    /// 非同步等待，直到<paramref name="predicate"/>條件成立或等候時間超過<paramref name="msTimeout"/>
     /// </summary>
     /// <param name="predicate">解除等待之條件</param>
     /// <param name="param">傳入<paramref name="predicate"/>之參數</param>
     /// <remarks>
     /// <see cref="SpinWait.SpinUntil(Func{bool})"/>為同步等待，在等待期間會阻擋UI執行緒導致畫面凍結
     /// </remarks>
-    public static async Task WaitAsync(Predicate<object> predicate, object param, double? timeout = null)
+    public static async Task WaitAsync(Predicate<object> predicate, object param, double? msTimeout = null)
     {
       var fps = 24;
       var timestep = 1000 / fps;
       var time = 0;
       while (!predicate.Invoke(param))
       {
-        if (timeout != null && time > timeout)
+        if (msTimeout != null && time > msTimeout)
           break;
         await Task.Delay(timestep);
         time += timestep;

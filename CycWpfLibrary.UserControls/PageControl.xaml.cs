@@ -27,6 +27,9 @@ namespace CycWpfLibrary.UserControls
     {
       InitializeComponent();
       gridMain.DataContext = this;
+
+      TurnBackButton = BackButton;
+      TurnNextButton = NextButton;
     }
 
     #region Dependency Properties
@@ -64,6 +67,9 @@ namespace CycWpfLibrary.UserControls
         typeof(PageControl),
         new PropertyMetadata(default(ICommand)));
     #endregion
+
+    public Button TurnNextButton { get; private set; }
+    public Button TurnBackButton { get; private set; }
 
     /// <summary>
     /// For animation

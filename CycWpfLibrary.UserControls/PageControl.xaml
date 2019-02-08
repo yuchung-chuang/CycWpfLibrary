@@ -77,12 +77,12 @@
     <Frame Grid.Column="1"
            Grid.ColumnSpan="3"
            Name="oldPageFrame"
-           NavigationUIVisibility="Hidden" 
+           NavigationUIVisibility="Hidden"  
            Padding="10" />
     <Frame Grid.Column="1"
            Grid.ColumnSpan="3"
            Name="newPageFrame"
-           NavigationUIVisibility="Hidden"
+           NavigationUIVisibility="Hidden" 
            Padding="10" />
 
     <Button Name="BackButton"

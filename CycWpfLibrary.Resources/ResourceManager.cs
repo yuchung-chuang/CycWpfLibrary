@@ -16,9 +16,9 @@ namespace CycWpfLibrary.Resources
 
     }
 
-    public static readonly Cursor PanCursor = new Cursor(Application.GetResourceStream(new Uri(@"pack://application:,,,/CycWpfLibrary.Resources;component/pan.cur", UriKind.Absolute)).Stream);
+    public static Cursor PanCursor { get; } = new Cursor(Application.GetResourceStream(new Uri(@"pack://application:,,,/CycWpfLibrary.Resources;component/pan.cur", UriKind.Absolute)).Stream);
 
-    public static readonly DrawingBrush CrossboardBrush = new DrawingBrush
+    public static DrawingBrush CrossboardBrush { get; } = new DrawingBrush
     {
       TileMode = TileMode.Tile,
       Viewport = new Rect(0, 0, 32, 32),
@@ -30,6 +30,6 @@ namespace CycWpfLibrary.Resources
       }
     };
 
-    public static readonly SolidColorBrush ShadowBrush = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.3), 0, 0, 0));
+    public static SolidColorBrush ShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.3), 0, 0, 0));
   }
 }

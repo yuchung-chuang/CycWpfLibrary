@@ -135,8 +135,8 @@ namespace CycWpfLibrary
         var scale = (element.RenderTransform as TransformGroup).Children.GetScale();
         var toX = Math.Clamp(translateAnchor.X + delta.X, 0, element.ActualWidth * (1 - scale.ScaleX));
         var toY = Math.Clamp(translateAnchor.Y + delta.Y, 0, element.ActualHeight * (1 - scale.ScaleY));
-        translate.AnimateTo(TranslateTransform.XProperty, toX, 0);
-        translate.AnimateTo(TranslateTransform.YProperty, toY, 0);
+        translate.BeginAnimation(TranslateTransform.XProperty, toX, 0);
+        translate.BeginAnimation(TranslateTransform.YProperty, toY, 0);
       }
 
     }

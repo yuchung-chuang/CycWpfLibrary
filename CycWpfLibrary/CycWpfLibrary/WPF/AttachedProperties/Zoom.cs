@@ -93,10 +93,10 @@ namespace CycWpfLibrary
       var transforms = (element.RenderTransform as TransformGroup).Children;
       var translate = transforms.GetTranslate();
       var scale = transforms.GetScale();
-      translate.AnimateTo(TranslateTransform.XProperty, 1d, LeaveTime);
-      translate.AnimateTo(TranslateTransform.YProperty, 1d, LeaveTime);
-      scale.AnimateTo(ScaleTransform.ScaleXProperty, 1d, LeaveTime);
-      scale.AnimateTo(ScaleTransform.ScaleYProperty, 1d, LeaveTime);
+      translate.BeginAnimation(TranslateTransform.XProperty, 1d, LeaveTime);
+      translate.BeginAnimation(TranslateTransform.YProperty, 1d, LeaveTime);
+      scale.BeginAnimation(ScaleTransform.ScaleXProperty, 1d, LeaveTime);
+      scale.BeginAnimation(ScaleTransform.ScaleYProperty, 1d, LeaveTime);
     }
     private static void Element_MouseWheel(object sender, MouseWheelEventArgs e)
     {
@@ -115,10 +115,10 @@ namespace CycWpfLibrary
       var ToScale = Math.Clamp(scale.ScaleX + zoom, GetMaximum(element), 1);
       var ToX = Math.Clamp(absolute.X - relative.X * ToScale, 0, element.ActualWidth * (1 - ToScale));
       var ToY = Math.Clamp(absolute.Y - relative.Y * ToScale, 0, element.ActualHeight * (1 - ToScale));
-      scale.AnimateTo(ScaleTransform.ScaleXProperty, ToScale, WheelTime);
-      scale.AnimateTo(ScaleTransform.ScaleYProperty, ToScale, WheelTime);
-      translate.AnimateTo(TranslateTransform.XProperty, ToX, WheelTime);
-      translate.AnimateTo(TranslateTransform.YProperty, ToY, WheelTime);
+      scale.BeginAnimation(ScaleTransform.ScaleXProperty, ToScale, WheelTime);
+      scale.BeginAnimation(ScaleTransform.ScaleYProperty, ToScale, WheelTime);
+      translate.BeginAnimation(TranslateTransform.XProperty, ToX, WheelTime);
+      translate.BeginAnimation(TranslateTransform.YProperty, ToY, WheelTime);
 
     }
     private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
