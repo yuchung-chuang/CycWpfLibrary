@@ -50,7 +50,7 @@ namespace CycWpfLibrary
         "Input",
         typeof(CycInput),
         typeof(Pan),
-        new PropertyMetadata(new CycInput()));
+        new PropertyMetadata(new CycInput(), OnInputChanged));
     [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(UIElement))]
     [TypeConverter(typeof(CycInputTypeConverter))]
@@ -72,12 +72,20 @@ namespace CycWpfLibrary
         => obj.SetValue(ClipToParentProperty, value);
     #endregion
 
-    private static readonly Cursor panCursor = Resources.CycResources.PanCursor;
+    private static readonly Cursor panCursor = CycResources.PanCursor;
     private static Cursor cursorCache;
     private static Point mouseAnchor;
     private static TranslateTransform translate;
     private static Point translateAnchor;
     private static bool IsPanning;
+
+    private static void OnInputChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+      if (!(d is FrameworkElement element))
+        throw new NotSupportedException();
+
+      SetInputs(element, new CycInputCollection { e.NewValue as CycInput });
+    }
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -146,7 +154,7 @@ namespace CycWpfLibrary
       var inputs = GetInputs(element);
       var input = GetInput(element);
       var arg = e is MouseButtonEventArgs mbe ? mbe : null;
-      return (!input.IsEmpty && input.IsValid(arg)) || (!inputs.IsEmpty && inputs.IsValid(arg)) ? true : false;
+      return (!inputs.IsEmpty && inputs.IsValid(arg)) ? true : false;
     }
 
   }

@@ -59,7 +59,7 @@
                    Margin="10"
                    TextElement.Foreground="{TemplateBinding Foreground}"
                    TextElement.FontWeight="Regular"
-                   TextElement.FontSize="15"
+                   TextElement.FontSize="20"
                    TextOptions.TextFormattingMode="Ideal"
                    TextOptions.TextRenderingMode="Auto"
                    FocusManager.IsFocusScope="False"
