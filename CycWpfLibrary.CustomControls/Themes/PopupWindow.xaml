@@ -46,6 +46,8 @@
             Value="NoResize" />
     <Setter Property="Background"
             Value="Transparent" />
+    <Setter Property="Foreground"
+            Value="Red" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Window">

@@ -99,6 +99,7 @@
     <Compile Include="CycWpfLibrary\Extensions\ScreenExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StringExtensions.cs" />
     <Compile Include="CycWpfLibrary\Extensions\StructExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Extensions\UIElementExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="Emgu\Colors.cs" />

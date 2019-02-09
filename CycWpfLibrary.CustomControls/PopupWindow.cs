@@ -1,20 +1,11 @@
-﻿using CycWpfLibrary;
-using CycWpfLibrary.Media;
-using CycWpfLibrary.Resources;
+﻿using CycWpfLibrary.Media;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 namespace CycWpfLibrary.CustomControls
@@ -36,18 +27,12 @@ namespace CycWpfLibrary.CustomControls
       mainPanel = mainWindow.Content as Panel;
       centerPanelPos = mainPanel.RenderSize.ToPoint().Divide(2);
       centerScreenPos = mainPanel.PointToScreenDPI(centerPanelPos);
-      targetPanelPos = centerPanelPos;
-      targetScreenPos = centerScreenPos;
       resources = new PopupWindowResources();
       resources.InitializeComponent();
       cornerRadius = (double)resources["cornerRadius"];
       shadow = new Border
       {
         Style = resources["shadowStyle"] as Style,
-      };
-      targetRectangle = new Rectangle
-      {
-        Style = resources["targetRectangleStyle"] as Style,
       };
     }
 
@@ -74,16 +59,16 @@ namespace CycWpfLibrary.CustomControls
         typeof(PopupWindow),
         new PropertyMetadata(new List<Inline>()));
 
-    public FrameworkElement PlacementTarget
+    public FrameworkElement[] PlacementTarget
     {
-      get => (FrameworkElement)GetValue(PlacementTargetProperty);
+      get => (FrameworkElement[])GetValue(PlacementTargetProperty);
       set => SetValue(PlacementTargetProperty, value);
     }
     public static readonly DependencyProperty PlacementTargetProperty = DependencyProperty.Register(
         nameof(PlacementTarget),
-        typeof(FrameworkElement),
+        typeof(FrameworkElement[]),
         typeof(PopupWindow),
-        new PropertyMetadata(default(FrameworkElement), OnPlacementTargetChanged));
+        new PropertyMetadata(default(FrameworkElement[]), OnPlacementTargetChanged));
 
     private static void OnPlacementTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -91,13 +76,26 @@ namespace CycWpfLibrary.CustomControls
       var target = popup.PlacementTarget;
       if (e.NewValue != null)
       {
-        popup.targetPanelPos = target.TransformToAncestor(popup.mainPanel).Transform(new Point());
-        popup.targetScreenPos = target.PointToScreenDPI(new Point());
+        var n = target.Length;
+        popup.targetPanelPos = new Point[n];
+        popup.targetScreenPos = new Point[n];
+        popup.targetRectangle = new Rectangle[n];
+        popup.targetRect = new Rect[n];
+        popup.targetMargin = new Thickness[n];
+        popup.shadowRectGeo = new RectangleGeometry[n];
+        for (int i = 0; i < target.Length; i++)
+        {
+          popup.targetPanelPos[i] = target[i].TransformToAncestor(popup.mainPanel).Transform(new Point());
+          popup.targetScreenPos[i] = target[i].PointToScreenDPI(new Point());
+          popup.targetRectangle[i] = new Rectangle
+          {
+            Style = popup.resources["targetRectangleStyle"] as Style,
+          };
+        }
       }
       else
       {
-        popup.targetPanelPos = popup.centerPanelPos;
-        popup.targetScreenPos = popup.centerScreenPos;
+        throw new NotSupportedException();
       }
     }
     #endregion
@@ -109,20 +107,20 @@ namespace CycWpfLibrary.CustomControls
     private TextBlock PART_TextBlock;
     private Button PART_CloseButton;
     private Border shadow;
-    private Rectangle targetRectangle;
     private Window mainWindow;
     private Panel mainPanel;
-
     private Point centerPanelPos;
-    private Point targetPanelPos;
-    private Point targetScreenPos;
     private Point centerScreenPos;
-    private RectangleGeometry shadowRectGeo;
-    private Rect initialRect;
-    private Rect targetRect;
 
+    private Rectangle[] targetRectangle;
+    private Point[] targetPanelPos;
+    private Point[] targetScreenPos;
+    private RectangleGeometry[] shadowRectGeo;
+    private Rect initialRect;
+    private Rect[] targetRect;
     private Thickness initialMargin;
-    private Thickness targetMargin;
+    private Thickness[] targetMargin;
+
     private readonly double cornerRadius;
     private readonly double padding = 5d;
     private readonly double enterMs = 500;
@@ -134,37 +132,49 @@ namespace CycWpfLibrary.CustomControls
       base.OnApplyTemplate();
       PART_CloseButton = GetTemplateChild(PART_CloseButton_Name) as Button;
       PART_TextBlock = GetTemplateChild(PART_TextBlock_Name) as TextBlock;
-
+      // add events
+      PART_CloseButton.Click += PART_CloseButton_ClickAsync;
+      // add Texts
       PART_TextBlock.Text = Text;
       foreach (var inline in Inlines)
       {
         PART_TextBlock.Inlines.Add(inline);
       }
-      PART_CloseButton.Click += PART_CloseButton_ClickAsync;
-
+      // define shapes
       initialRect = new Rect(new Point(), mainPanel.RenderSize);
-      targetRect = new Rect(targetPanelPos.Minus((padding, padding)),
-        PlacementTarget?.RenderSize.Add((padding, padding).Times(2)) ?? new Size());
-      shadowRectGeo = new RectangleGeometry(PlacementTarget != null ? initialRect : targetRect,
-        cornerRadius, cornerRadius);
-      targetRectangle.Visibility = PlacementTarget != null ? Visibility.Visible : Visibility.Collapsed;
-      var combinedGeo = new CombinedGeometry
+      initialMargin = new Thickness(0, 0, 0, 0);
+      for (int i = 0; i < PlacementTarget?.Length; i++)
+      {
+        targetRect[i] = new Rect(targetPanelPos[i].Minus((padding, padding)), PlacementTarget[i]?.RenderSize.Add((padding, padding).Times(2)) ?? new Size());
+        shadowRectGeo[i] = new RectangleGeometry(PlacementTarget.Length > 0 ? initialRect : targetRect[i], cornerRadius, cornerRadius);
+        targetRectangle[i].Visibility = PlacementTarget.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+
+        targetMargin[i] = new Thickness(targetRect[i].Left, targetRect[i].Top, 0, 0);
+        targetRectangle[i].Width = initialRect.Width;
+        targetRectangle[i].Height = initialRect.Height;
+        targetRectangle[i].Margin = initialMargin;
+        Panel.SetZIndex(targetRectangle[i], int.MaxValue);
+        mainPanel.Children.Add(targetRectangle[i]);
+      }
+
+      CombinedGeometry combinedGeo = new CombinedGeometry
       {
         GeometryCombineMode = GeometryCombineMode.Exclude,
         Geometry1 = new RectangleGeometry(initialRect),
-        Geometry2 = shadowRectGeo,
+        Geometry2 = new RectangleGeometry(),
       };
+      for (int i = 0; i < PlacementTarget?.Length; i++)
+      {
+        combinedGeo = new CombinedGeometry
+        {
+          GeometryCombineMode = GeometryCombineMode.Exclude,
+          Geometry1 = combinedGeo,
+          Geometry2 = shadowRectGeo[i],
+        };
+      }
       shadow.Clip = combinedGeo;
-      Panel.SetZIndex(shadow, int.MaxValue - 1);
+      Panel.SetZIndex(shadow, int.MaxValue - PlacementTarget?.Length ?? 0); //shadow underneath other controls
       mainPanel.Children.Add(shadow);
-
-      initialMargin = new Thickness(0, 0, 0, 0);
-      targetMargin = new Thickness(targetRect.Left, targetRect.Top, 0, 0);
-      targetRectangle.Width = initialRect.Width;
-      targetRectangle.Height = initialRect.Height;
-      targetRectangle.Margin = initialMargin;
-      Panel.SetZIndex(targetRectangle, int.MaxValue);
-      mainPanel.Children.Add(targetRectangle);
     }
 
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -177,12 +187,12 @@ namespace CycWpfLibrary.CustomControls
     {
       base.OnRender(drawingContext);
 
-      if (PlacementTarget != null)
+      if (PlacementTarget?.Length == 1)
       {
-        Left = targetScreenPos.X;
-        Top = targetScreenPos.Y + PlacementTarget.ActualHeight + padding * 2;
+        Left = targetScreenPos[0].X;
+        Top = targetScreenPos[0].Y + PlacementTarget[0].ActualHeight + padding * 2;
       }
-      else
+      else // if no target of more than one target, place popup in the center
       {
         Left = centerScreenPos.X - ActualWidth / 2;
         Top = centerScreenPos.Y - ActualHeight / 2;
@@ -191,12 +201,12 @@ namespace CycWpfLibrary.CustomControls
       this.ShiftWindowOntoScreen();
       this.BeginAnimation(TopProperty, Top + animationSlide, Top, enterMs);
       this.BeginAnimation(OpacityProperty, 0d, 1, enterMs);
-      if (PlacementTarget != null)
+      for (int i = 0; i < PlacementTarget?.Length; i++)
       {
-        shadowRectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, targetRect, enterMs);
-        targetRectangle.BeginAnimation(MarginProperty, targetMargin, enterMs);
-        targetRectangle.BeginAnimation(WidthProperty, targetRect.Width, enterMs);
-        targetRectangle.BeginAnimation(HeightProperty, targetRect.Height, enterMs);
+        shadowRectGeo[i].BeginAnimation(RectangleGeometry.RectProperty, initialRect, targetRect[i], enterMs);
+        targetRectangle[i].BeginAnimation(MarginProperty, targetMargin[i], enterMs);
+        targetRectangle[i].BeginAnimation(WidthProperty, targetRect[i].Width, enterMs);
+        targetRectangle[i].BeginAnimation(HeightProperty, targetRect[i].Height, enterMs);
       }
       shadow.BeginAnimation(OpacityProperty, 0d, 1, enterMs);
 
@@ -208,19 +218,19 @@ namespace CycWpfLibrary.CustomControls
     {
       this.BeginAnimation(OpacityProperty, 0d, leaveMs);
       this.BeginAnimation(TopProperty, Top + animationSlide, leaveMs);
-      if (PlacementTarget != null)
+      for (int i = 0; i < PlacementTarget?.Length; i++)
       {
-        shadowRectGeo.BeginAnimation(RectangleGeometry.RectProperty, initialRect, leaveMs);
-        targetRectangle.BeginAnimation(MarginProperty, initialMargin, leaveMs);
-        targetRectangle.BeginAnimation(WidthProperty, initialRect.Width, leaveMs);
-        targetRectangle.BeginAnimation(HeightProperty, initialRect.Height, leaveMs);
+        shadowRectGeo[i].BeginAnimation(RectangleGeometry.RectProperty, initialRect, leaveMs);
+        targetRectangle[i].BeginAnimation(MarginProperty, initialMargin, leaveMs);
+        targetRectangle[i].BeginAnimation(WidthProperty, initialRect.Width, leaveMs);
+        targetRectangle[i].BeginAnimation(HeightProperty, initialRect.Height, leaveMs);
       }
       shadow.BeginAnimation(OpacityProperty, 0d, leaveMs);
 
       await NativeMethod.WaitAsync((obj) => false, null, leaveMs);
       Close();
       mainPanel.Children.Remove(shadow);
-      mainPanel.Children.Remove(targetRectangle);
+      mainPanel.Children.RemoveAll(targetRectangle);
     }
   }
 }
