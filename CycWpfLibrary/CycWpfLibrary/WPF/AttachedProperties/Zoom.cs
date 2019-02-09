@@ -73,9 +73,9 @@ namespace CycWpfLibrary
         element.RenderTransformOrigin = new Point(0, 0);
         element.Parent.SetValue(UIElement.ClipToBoundsProperty, true);
         if (element.Parent is Panel parent)
-          parent.Background = ResourceManager.CrossboardBrush;
+          parent.Background = Resources.CycResources.CrossboardBrush;
         else if (element.Parent is Border border)
-          border.Background = ResourceManager.CrossboardBrush;
+          border.Background = Resources.CycResources.CrossboardBrush;
       }
       else
       {

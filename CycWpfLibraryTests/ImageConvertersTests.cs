@@ -4,6 +4,9 @@ using System.Drawing;
 using CycWpfLibrary.Emgu;
 using Emgu.CV.Structure;
 using CycWpfLibrary;
+using System;
+using CycWpfLibrary.Resources;
+using Emgu.CV;
 
 namespace CycWpfLibrary.Tests
 {
@@ -14,7 +17,8 @@ namespace CycWpfLibrary.Tests
 
     public ImageConvertersTests()
     {
-      bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\data.png");
+      //bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\data.png");
+      bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\MouseWheel.png");
     }
 
     [TestMethod()]

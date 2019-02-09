@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -61,6 +62,17 @@ namespace CycWpfLibrary.CustomControls
         typeof(string),
         typeof(PopupWindow),
         new PropertyMetadata(default(string)));
+
+    public List<Inline> Inlines
+    {
+      get => (List<Inline>)GetValue(InlinesProperty);
+      set => SetValue(InlinesProperty, value);
+    }
+    public static readonly DependencyProperty InlinesProperty = DependencyProperty.Register(
+        nameof(Inlines),
+        typeof(List<Inline>),
+        typeof(PopupWindow),
+        new PropertyMetadata(new List<Inline>()));
 
     public FrameworkElement PlacementTarget
     {
@@ -124,6 +136,10 @@ namespace CycWpfLibrary.CustomControls
       PART_TextBlock = GetTemplateChild(PART_TextBlock_Name) as TextBlock;
 
       PART_TextBlock.Text = Text;
+      foreach (var inline in Inlines)
+      {
+        PART_TextBlock.Inlines.Add(inline);
+      }
       PART_CloseButton.Click += PART_CloseButton_ClickAsync;
 
       initialRect = new Rect(new Point(), mainPanel.RenderSize);

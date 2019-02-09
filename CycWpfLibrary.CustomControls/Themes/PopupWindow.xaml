@@ -4,7 +4,8 @@
                     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:local="clr-namespace:CycWpfLibrary.CustomControls"
                     xmlns:re="clr-namespace:CycWpfLibrary.Resources;assembly=CycWpfLibrary.Resources"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
   <ResourceDictionary.MergedDictionaries>
     <!-- Material Design -->
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -13,9 +14,9 @@
     <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.BlueGrey.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
-  <re:ResourceManager x:Key="resources" />
+  <re:CycResources x:Key="resources" />
   <sys:Double x:Key="cornerRadius">5</sys:Double>
-  
+
   <Style x:Key="shadowStyle"
          TargetType="Border">
     <Setter Property="Background"
@@ -39,7 +40,7 @@
     <Setter Property="VerticalAlignment"
             Value="Top" />
   </Style>
-  
+
   <Style TargetType="local:PopupWindow">
     <Setter Property="ResizeMode"
             Value="NoResize" />
@@ -71,7 +72,17 @@
               <TextBlock Name="PART_TextBlock"
                          TextWrapping="Wrap"
                          Margin="10"
-                         TextAlignment="Center" />
+                         TextAlignment="Center">
+                <TextBlock.Resources>
+                  <Style TargetType="Image">
+                    <Setter Property="Height"
+                            Value="{Binding ElementName=PART_PopupContentElement, Path=(TextElement.FontSize)}" />
+                  </Style>
+                </TextBlock.Resources>
+              </TextBlock>
+              <AdornerDecorator>
+                <ContentPresenter />
+              </AdornerDecorator>
               <Button Name="PART_CloseButton"
                       Content="Got it!"
                       Margin="10"

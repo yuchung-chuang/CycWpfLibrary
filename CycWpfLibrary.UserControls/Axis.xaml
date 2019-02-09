@@ -19,7 +19,7 @@
              Stretch="None" 
              Panel.ZIndex="0"/>
       <Border Name="shadow"
-              Background="{x:Static resource:ResourceManager.ShadowBrush}"
+              Background="{x:Static resource:CycResources.ShadowBrush}"
               Width="{Binding ElementName=gridMain, Path=ActualWidth}"
               Height="{Binding ElementName=gridMain, Path=ActualHeight}"
               Panel.ZIndex="1" />

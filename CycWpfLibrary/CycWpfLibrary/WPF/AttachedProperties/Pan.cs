@@ -72,7 +72,7 @@ namespace CycWpfLibrary
         => obj.SetValue(ClipToParentProperty, value);
     #endregion
 
-    private static readonly Cursor panCursor = ResourceManager.PanCursor;
+    private static readonly Cursor panCursor = Resources.CycResources.PanCursor;
     private static Cursor cursorCache;
     private static Point mouseAnchor;
     private static TranslateTransform translate;
