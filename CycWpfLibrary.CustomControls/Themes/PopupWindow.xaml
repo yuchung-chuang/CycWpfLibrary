@@ -27,8 +27,34 @@
 
   <Style x:Key="targetRectangleStyle"
          TargetType="Rectangle">
-    <Setter Property="Stroke"
-            Value="Red" />
+    <Setter Property="Stroke">
+      <Setter.Value>
+        <LinearGradientBrush EndPoint="0.5,1"
+                             MappingMode="RelativeToBoundingBox"
+                             StartPoint="0.5,0">
+          <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+              <ScaleTransform CenterY="0.5"
+                              CenterX="0.5" />
+              <SkewTransform CenterY="0.5"
+                             CenterX="0.5" />
+              <RotateTransform Angle="-39.644"
+                               CenterY="0.5"
+                               CenterX="0.5" />
+              <TranslateTransform />
+            </TransformGroup>
+          </LinearGradientBrush.RelativeTransform>
+          <GradientStop Color="#FF00D8FF"
+                        Offset="0.316" />
+          <GradientStop Color="White"
+                        Offset="0.634" />
+          <GradientStop Color="#FF832EE9"
+                        Offset="0.93" />
+          <GradientStop Color="#FF4AE59F"
+                        Offset="0" />
+        </LinearGradientBrush>
+      </Setter.Value>
+    </Setter>
     <Setter Property="StrokeThickness"
             Value="3" />
     <Setter Property="RadiusX"
@@ -46,8 +72,6 @@
             Value="NoResize" />
     <Setter Property="Background"
             Value="Transparent" />
-    <Setter Property="Foreground"
-            Value="Red" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Window">
@@ -59,7 +83,7 @@
                    Margin="10"
                    TextElement.Foreground="{TemplateBinding Foreground}"
                    TextElement.FontWeight="Regular"
-                   TextElement.FontSize="20"
+                   TextElement.FontSize="15"
                    TextOptions.TextFormattingMode="Ideal"
                    TextOptions.TextRenderingMode="Auto"
                    FocusManager.IsFocusScope="False"
@@ -74,14 +98,7 @@
               <TextBlock Name="PART_TextBlock"
                          TextWrapping="Wrap"
                          Margin="10"
-                         TextAlignment="Center">
-                <TextBlock.Resources>
-                  <Style TargetType="Image">
-                    <Setter Property="Height"
-                            Value="{Binding ElementName=PART_PopupContentElement, Path=(TextElement.FontSize)}" />
-                  </Style>
-                </TextBlock.Resources>
-              </TextBlock>
+                         TextAlignment="Center" />
               <AdornerDecorator>
                 <ContentPresenter />
               </AdornerDecorator>
