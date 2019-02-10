@@ -12,6 +12,14 @@ namespace CycWpfLibrary.Media
   {
     public static void EnsureTransforms(this UIElement element)
     {
+      var transform = element.RenderTransform;
+      if (transform is TransformGroup group &&
+        group.Children.Count == 4 &&
+        group.Children[0] is ScaleTransform &&
+        group.Children[1] is TranslateTransform &&
+        group.Children[2] is RotateTransform &&
+        group.Children[3] is SkewTransform)
+        return; //需要確認模式，以保證使用此方法檢驗過的element都具有相同的transform，方便使用者紀錄transformCache
       element.RenderTransform = new TransformGroup
       {
         Children = new TransformCollection
