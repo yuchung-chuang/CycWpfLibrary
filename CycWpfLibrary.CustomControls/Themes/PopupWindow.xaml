@@ -15,8 +15,8 @@
   </ResourceDictionary.MergedDictionaries>
 
   <re:CycResources x:Key="resources" />
-  <sys:Double x:Key="cornerRadius">5</sys:Double>
-  <sys:Double x:Key="popupWidth">300</sys:Double>
+  <sys:Double x:Key="PopupCornerRadius">5</sys:Double>
+  <sys:Double x:Key="PopupMaxWidth">300</sys:Double>
 
   <Style x:Key="shadowStyle"
          TargetType="Border">
@@ -59,35 +59,13 @@
     <Setter Property="StrokeThickness"
             Value="3" />
     <Setter Property="RadiusX"
-            Value="{StaticResource cornerRadius}" />
+            Value="{StaticResource PopupCornerRadius}" />
     <Setter Property="RadiusY"
-            Value="{StaticResource cornerRadius}" />
+            Value="{StaticResource PopupCornerRadius}" />
     <Setter Property="HorizontalAlignment"
             Value="Left" />
     <Setter Property="VerticalAlignment"
             Value="Top" />
-  </Style>
-
-  <Style x:Key="gridTextStyle"
-         TargetType="TextBlock">
-    <Setter Property="TextWrapping"
-            Value="Wrap" />
-    <Setter Property="VerticalAlignment"
-            Value="Center" />
-  </Style>
-
-  <Style x:Key="gridImageStyle"
-         TargetType="Image">
-    <Setter Property="Height"
-            Value="30" />
-  </Style>
-
-  <Style x:Key="gridStyle"
-         TargetType="Grid">
-    <Setter Property="HorizontalAlignment"
-            Value="Center" />
-    <Setter Property="MaxWidth"
-            Value="{StaticResource popupWidth}" />
   </Style>
   
   <Style TargetType="local:PopupWindow">
@@ -102,7 +80,7 @@
                    md:ShadowAssist.ShadowDepth="Depth3"
                    Background="{TemplateBinding Background}"
                    UniformCornerRadius="4"
-                   Width="{StaticResource popupWidth}"
+                   MaxWidth="{StaticResource PopupMaxWidth}"
                    Margin="10"
                    TextElement.Foreground="{TemplateBinding Foreground}"
                    TextElement.FontWeight="Regular"

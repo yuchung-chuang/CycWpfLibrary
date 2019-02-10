@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using static System.Math;
 
-namespace CycWpfLibrary.Controls
+namespace CycWpfLibrary.CustomControls
 {
   public class ResizeThumb : Thumb
   {

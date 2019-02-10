@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace CycWpfLibrary.Controls
+namespace CycWpfLibrary.CustomControls
 {
   public class MoveThumb : Thumb
   {

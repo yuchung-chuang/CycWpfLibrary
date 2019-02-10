@@ -29,7 +29,7 @@ namespace CycWpfLibrary.CustomControls
       centerScreenPos = mainPanel.PointToScreenDPI(centerPanelPos);
       resources = new PopupWindowResources();
       resources.InitializeComponent();
-      cornerRadius = (double)resources["cornerRadius"];
+      cornerRadius = (double)resources["PopupCornerRadius"];
       shadow = new Border
       {
         Style = resources["shadowStyle"] as Style,
