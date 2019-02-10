@@ -1,5 +1,6 @@
-﻿using CycWpfLibrary.UserControls;
+﻿using CycWpfLibrary.Media;
 using CycWpfLibrary.MVVM;
+using CycWpfLibrary.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CycWpfLibrary.Media;
 
 namespace CycWpfLibrary.UserControls
 {
@@ -84,9 +84,15 @@ namespace CycWpfLibrary.UserControls
       var newPage = e.NewValue;
       newPageFrame.Content = null;
       oldPageFrame.Content = oldPage;
-      if (oldPage is AnimatedPage animatedPage)
-        animatedPage.PageAnimation();
-      newPageFrame.Content = newPage;
+      if (oldPage is AnimatedPage animatedOldPage)
+        animatedOldPage.PageAnimation(); //UnLoad animation
+      if (newPage is AnimatedPage animatedNewPage)
+      {
+        animatedNewPage.AnimationCompleted += (obj, arg) => pageControl.PageAnimated?.Invoke(pageControl, arg);
+        newPageFrame.Content = animatedNewPage; //invoke Load animation
+      }
     }
+
+    public event EventHandler PageAnimated;
   }
 }

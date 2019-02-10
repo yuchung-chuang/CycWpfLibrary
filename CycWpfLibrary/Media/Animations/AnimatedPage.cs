@@ -59,6 +59,7 @@ namespace CycWpfLibrary.Media
           return;
       var storyboard = new Storyboard();
       storyboard.AddPageAnimation(this);
+      storyboard.Completed += (s,e) => AnimationCompleted?.Invoke(this, e);
       storyboard.Begin(this);
 
       void SetFromToPairs()
@@ -81,6 +82,8 @@ namespace CycWpfLibrary.Media
           (new Thickness(0), new Thickness(0, height, 0, -height));
       }
     }
+
+    public event EventHandler AnimationCompleted;
 
     private void AnimatedPage_Loaded(object sender, RoutedEventArgs e)
     {
