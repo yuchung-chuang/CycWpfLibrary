@@ -88,6 +88,7 @@ namespace CycWpfLibrary.UserControls
     private Point mousePos;
     private ScaleTransform scale;
     private double eraserSize => 20 / scale.ScaleX;
+
     private bool isEdit;
     private bool isEditting;
 

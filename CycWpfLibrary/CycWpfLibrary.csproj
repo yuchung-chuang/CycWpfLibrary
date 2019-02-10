@@ -107,6 +107,7 @@
     <Compile Include="CycWpfLibrary\TextBoxBehaviors.cs" />
     <Compile Include="CycWpfLibrary\Extensions\InputExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\Input\InputManager.cs" />
+    <Compile Include="Emgu\Ocr\Obsolete.cs" />
     <Compile Include="IO\PathExtensions.cs" />
     <Compile Include="Diagnostics\FileLogger.cs" />
     <Compile Include="Diagnostics\interfaces\ILogManager.cs" />

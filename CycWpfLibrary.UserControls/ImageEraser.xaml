@@ -8,31 +8,29 @@
                             mc:Ignorable="d"
                             d:DesignHeight="450"
                             d:DesignWidth="800">
-  <Grid Name="mainGrid">
-    <Viewbox>
-      <Grid>
-        <Image Name="imageControl"
-               Source="{Binding ImageSource}"
-               MouseEnter="image_MouseEnter"
-               MouseLeave="image_MouseLeave"
-               MouseDown="image_MouseDown"
-               MouseUp="image_MouseUp"
-               MouseMove="image_MouseMove"
-               MouseWheel="image_MouseWheel"
-               Cursor="None" />
-        <Canvas>
-          <Rectangle Name="rectCursor"
-                     Width="20"
-                     Height="20"
-                     Fill="#7F00FFFF"
-                     Stroke="Black"
-                     StrokeThickness="2"
-                     Canvas.Left="0"
-                     Canvas.Top="0"
-                     IsHitTestVisible="False"
-                     Visibility="Collapsed" />
-        </Canvas>
-      </Grid>
-    </Viewbox>
-  </Grid>
+  <Viewbox>
+    <Grid Name="mainGrid">
+      <Image Name="imageControl"
+             Source="{Binding ImageSource}"
+             MouseEnter="image_MouseEnter"
+             MouseLeave="image_MouseLeave"
+             MouseDown="image_MouseDown"
+             MouseUp="image_MouseUp"
+             MouseMove="image_MouseMove"
+             MouseWheel="image_MouseWheel"
+             Cursor="None" />
+      <Canvas>
+        <Rectangle Name="rectCursor"
+                   Width="20"
+                   Height="20"
+                   Fill="#7F00FFFF"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   Canvas.Left="0"
+                   Canvas.Top="0"
+                   IsHitTestVisible="False"
+                   Visibility="Collapsed" />
+      </Canvas>
+    </Grid>
+  </Viewbox>
 </mvvm:ObservableUserControl>

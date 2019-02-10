@@ -55,7 +55,7 @@ namespace CycWpfLibrary
 
       var num = value.ToString().ToDouble();
       return new ValidationResult(Math.IsIn(num, max, min, excludeMax, excludeMin), 
-        $"Input number should be in" +
+        $"Input number should be in " +
         $"{(excludeMin ? "[" : "(")}" +
         $"{(min == int.MinValue ? "-∞" : min.ToString())}, " +
         $"{(max == int.MaxValue ? "∞" : max.ToString())}" +
