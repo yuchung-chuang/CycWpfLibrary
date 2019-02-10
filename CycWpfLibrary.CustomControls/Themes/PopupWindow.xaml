@@ -21,7 +21,7 @@
   <Style x:Key="shadowStyle"
          TargetType="Border">
     <Setter Property="Background"
-            Value="{Binding Source={StaticResource resources}, Path=ShadowBrush}" />
+            Value="{Binding Source={StaticResource resources}, Path=DarkShadowBrush}" />
     <Setter Property="Opacity"
             Value="0" />
   </Style>

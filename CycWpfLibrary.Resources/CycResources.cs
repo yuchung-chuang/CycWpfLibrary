@@ -37,6 +37,8 @@ namespace CycWpfLibrary.Resources
 
     public static SolidColorBrush ShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.3), 0, 0, 0));
 
+    public static SolidColorBrush DarkShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.7), 0, 0, 0));
+
     public static Uri MouseLeftButtonUri { get; } = new Uri(CurrentPackUri + "MouseLeftButton.png");
     public static Uri MouseRightButtonUri { get; } = new Uri(CurrentPackUri + "MouseRightButton.png");
     public static Uri MouseWheelUri { get; } = new Uri(CurrentPackUri + "MouseWheel.png");
