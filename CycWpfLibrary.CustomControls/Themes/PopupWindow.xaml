@@ -80,7 +80,6 @@
                    md:ShadowAssist.ShadowDepth="Depth3"
                    Background="{TemplateBinding Background}"
                    UniformCornerRadius="4"
-                   MaxWidth="{StaticResource PopupMaxWidth}"
                    Margin="10"
                    TextElement.Foreground="{TemplateBinding Foreground}"
                    TextElement.FontWeight="Regular"
