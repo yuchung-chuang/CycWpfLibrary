@@ -8,6 +8,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:qc="http://QuickConverter.CodePlex.com/"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:PageControl, IsDesignTimeCreatable=True}"
              d:DesignHeight="600"
@@ -99,7 +100,7 @@
         </LinearGradientBrush>
       </Button.Background>
       <Button.RenderTransform>
-        <TranslateTransform X="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=-x/2}" />
+        <TranslateTransform X="{qc:Binding '-$P/2',  P={Binding ActualWidth, ElementName=BackButton}}" />
       </Button.RenderTransform>
       <Button.Triggers>
         <EventTrigger RoutedEvent="MouseEnter">
@@ -117,7 +118,7 @@
             <Storyboard>
               <DoubleAnimation Storyboard.TargetName="BackButton"
                                Storyboard.TargetProperty="(Button.RenderTransform).(TranslateTransform.X)"
-                               To="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=-x/2}"
+                               To="{qc:Binding '-$P/2', P={Binding ActualWidth, ElementName=BackButton}}"
                                Duration="0:0:0.5" />
             </Storyboard>
           </BeginStoryboard>
@@ -126,8 +127,8 @@
       </Button.Triggers>
       
       <icon:PackIconFontAwesome Kind="AngleLeftSolid"
-                          Width="{Binding ElementName=BackButton, Path=ActualWidth, Converter={cyc:MathConverter}, ConverterParameter=x/3 }"
-                          Height="{Binding ElementName=BackButton, Path=ActualHeight, Converter={cyc:MathConverter}, ConverterParameter=x/3 }" />
+                                Width="{qc:Binding '$P/3', P={Binding ActualWidth, ElementName=BackButton}}"
+                                Height="{qc:Binding '$P/3', P={Binding ActualHeight, ElementName=BackButton}}" />
     </Button>
 
     <Button Name="NextButton"
@@ -135,7 +136,7 @@
             Grid.ColumnSpan="2"
             Command="{Binding TurnNextCommand}">
       <Button.RenderTransform>
-        <TranslateTransform X="{Binding ActualWidth, ElementName=NextButton, Converter={cyc:MathConverter}, ConverterParameter=x/2}" />
+        <TranslateTransform X="{qc:Binding '$P/2', P={Binding ActualWidth, ElementName=NextButton}}" />
       </Button.RenderTransform>
       <Button.Background>
         <LinearGradientBrush EndPoint="1,0.5"
@@ -162,7 +163,7 @@
             <Storyboard>
               <DoubleAnimation Storyboard.TargetName="NextButton"
                                Storyboard.TargetProperty="(Button.RenderTransform).(TranslateTransform.X)"
-                               To="{Binding ActualWidth, ElementName=BackButton, Converter={cyc:MathConverter}, ConverterParameter=x/2}"
+                               To="{qc:Binding '$P/2', P={Binding ActualWidth, ElementName=NextButton}}"
                                Duration="0:0:0.5" />
             </Storyboard>
           </BeginStoryboard>
@@ -170,8 +171,8 @@
 
       </Button.Triggers>
       <icon:PackIconFontAwesome Kind="AngleRightSolid"
-                                Width="{Binding ElementName=NextButton, Path=ActualWidth, Converter={cyc:MathConverter}, ConverterParameter=x/3 }"
-                                Height="{Binding ElementName=NextButton, Path=ActualHeight, Converter={cyc:MathConverter}, ConverterParameter=x/3 }" />
+                                Width="{qc:Binding '$P/3', P={Binding ActualWidth, ElementName=NextButton}}"
+                                Height="{qc:Binding '$P/3', P={Binding ActualHeight, ElementName=NextButton}}" />
     </Button>
   </Grid>
 </UserControl>
