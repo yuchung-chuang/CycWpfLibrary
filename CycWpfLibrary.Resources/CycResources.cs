@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +21,14 @@ namespace CycWpfLibrary.Resources
     /// </summary>
     public static string PackUri { get; } = @"pack://application:,,,/";
 
-    public static string CurrentPackUri { get; } = PackUri + @"CycWpfLibrary.Resources;component/";
+    /// <summary>
+    /// Usage: <see cref="CurrentPackUri"/> + "filePath/fileName"
+    /// </summary>
+    public static string CurrentPackUri => PackUri + Assembly.GetEntryAssembly().GetName().Name + @";component/";
 
-    public static Cursor PanCursor { get; } = new Cursor(Application.GetResourceStream(new Uri(CurrentPackUri + "pan.cur", UriKind.Absolute)).Stream);
+    public static string CycResourcesPackUri { get; } = PackUri + @"CycWpfLibrary.Resources;component/";
+
+    public static Cursor PanCursor { get; } = new Cursor(Application.GetResourceStream(new Uri(CycResourcesPackUri + "pan.cur", UriKind.Absolute)).Stream);
 
     public static DrawingBrush CrossboardBrush { get; } = new DrawingBrush
     {
@@ -39,8 +46,49 @@ namespace CycWpfLibrary.Resources
 
     public static SolidColorBrush DarkShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.7), 0, 0, 0));
 
-    public static Uri MouseLeftButtonUri { get; } = new Uri(CurrentPackUri + "MouseLeftButton.png");
-    public static Uri MouseRightButtonUri { get; } = new Uri(CurrentPackUri + "MouseRightButton.png");
-    public static Uri MouseWheelUri { get; } = new Uri(CurrentPackUri + "MouseWheel.png");
+    public static Uri MouseLeftButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseLeftButton.png");
+    public static Uri MouseRightButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseRightButton.png");
+    public static Uri MouseWheelUri { get; } = new Uri(CycResourcesPackUri + "MouseWheel.png");
+
+    /// <summary>
+    /// Usage: Prepare "app/lang/default.xaml" and "app/lang/YOURLANGUAGE.xaml" files, and call this method in <see cref="Application.OnStartup(StartupEventArgs)"/>
+    /// </summary>
+    public static void LoadLanguage()
+    {
+      CultureInfo currentInfo = CultureInfo.CurrentCulture;
+
+      ResourceDictionary rd = null;
+
+      try
+      {
+#if DEBUG
+        rd = Application.LoadComponent(new Uri(@"app/lang/" + "zh-TW" + ".xaml", UriKind.Relative)) as ResourceDictionary;
+#else
+        if (currentInfo.Name.Contains("zh"))
+        {
+          rd = Application.LoadComponent(new Uri(@"app/lang/" + "zh-TW" + ".xaml", UriKind.Relative)) as ResourceDictionary;
+        }
+#endif
+      }
+      catch { }
+
+      if (rd != null)
+      {
+        var md = Application.Current.Resources.MergedDictionaries;
+        if (md.Count > 0)
+        {
+          foreach (var d in md)
+          {
+            var uri = new Uri(CurrentPackUri + @"app/lang/default.xaml", UriKind.Absolute);
+            if (d.Source == uri)
+            {
+              d.Clear();
+              break;
+            }
+          }
+        }
+        md.Add(rd);
+      }
+    }
   }
 }
