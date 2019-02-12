@@ -1,5 +1,8 @@
-﻿using CycWpfLibrary.Media;
+﻿using CycWpfLibrary.Emgu;
+using CycWpfLibrary.Media;
 using CycWpfLibrary.WinForm;
+using Emgu.CV;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,9 +12,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using static System.Math;
 using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
 using PointWF = System.Drawing.Point;
-using static System.Math;
 using Screen = System.Windows.Forms.Screen;
 
 namespace CycWpfLibrary
@@ -83,7 +86,7 @@ namespace CycWpfLibrary
     /// <summary>
     /// 將螢幕內<paramref name="rect"/>中的像素拷貝成<see cref="BitmapSource"/>。
     /// </summary>
-    public static BitmapSource CopyScreen(Rect rect)
+    public static Image<Bgra, byte> CopyScreen(Rect rect)
     {
       using (var screenBmp = new Bitmap(
           (int)rect.Width,
@@ -94,7 +97,7 @@ namespace CycWpfLibrary
         {
           var rectWF = rect.ToWinForm();
           bmpGraphics.CopyFromScreen(rectWF.Left, rectWF.Top, 0, 0, rectWF.Size);
-          return screenBmp.ToBitmapSource();
+          return screenBmp.ToImage<Bgra, byte>();
         }
       }
     }
