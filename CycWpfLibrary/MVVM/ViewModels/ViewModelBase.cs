@@ -1,11 +1,12 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
+using System.Windows;
 
 namespace CycWpfLibrary.MVVM
 {
   /// <summary>
   /// 提供ViewMoel的基底功能。
   /// </summary>
-  /// <typeparam name="ViewModelType"></typeparam>
   public class ViewModelBase : ObservableObject
   {
     /// <summary>
@@ -24,5 +25,6 @@ namespace CycWpfLibrary.MVVM
         property.SetValue(this, value, null);
       }
     }
+
   }
 }

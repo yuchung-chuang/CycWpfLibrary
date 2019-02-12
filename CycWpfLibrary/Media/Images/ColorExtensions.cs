@@ -7,8 +7,6 @@ namespace CycWpfLibrary.Media
 {
   public static class ColorExtensions
   {
-    #region From Myself
-
     /// <summary>
     /// 對<see cref="Color"/>做線性內插。
     /// </summary>
@@ -38,7 +36,23 @@ namespace CycWpfLibrary.Media
       var B = (byte)Clamp(color.B + value, 255, 0);
       return Color.FromArgb(color.A, R, G, B);
     }
-    #endregion
+
+    public static SolidColorBrush ToBrush(this string HexColorString)
+    {
+      return (SolidColorBrush)new BrushConverter().ConvertFrom(HexColorString);
+    }
+
+    public static string ToHexString(this Color color)
+    {
+      var bytes = new byte[] { color.A, color.R, color.G, color.B };
+      return bytes.ToHexString();
+    }
+
+    public static string ToHexString(this byte[] ba)
+    {
+      return BitConverter.ToString(ba).Replace("-", "");
+    }
+    
 
     #region From BlurryControls
 

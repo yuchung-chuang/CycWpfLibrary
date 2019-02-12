@@ -10,17 +10,6 @@ using System.Windows.Input;
 
 namespace CycWpfLibrary
 {
-  public delegate void TurnEventHandler(object sender, TurnEventArgs e);
-  public class TurnEventArgs : EventArgs
-  {
-    public bool IsCancel { get; set; }
-  }
-  public delegate void TurnToEventHandler(object sender, TurnToEventArgs e);
-  public class TurnToEventArgs : TurnEventArgs
-  {
-    public int Index { get; set; }
-  }
-
   public abstract class PageManagerBase : ObservableObject
   {
     public virtual int Index { get; set; }
@@ -33,44 +22,61 @@ namespace CycWpfLibrary
     public ICommand TurnNextCommand { get; set; }
     public ICommand TurnBackCommand { get; set; }
 
-    public event TurnEventHandler TurnNextEvent;
-    public event TurnEventHandler TurnBackEvent;
-    public event TurnToEventHandler TurnToEvent;
+    public event EventHandler TurnNextEvent;
+    public event EventHandler TurnBackEvent;
+    public event EventHandler TurnToEvent;
 
-    public static bool IsSuccess(bool? turnResult) => turnResult == null || turnResult == true;
+    public virtual bool TurnNextValidation() => true;
+    public virtual bool TurnBackValidation() => true;
+    public virtual bool TurnToValidation(int index) => true;
     /// <summary>
     /// Turn to next page. If this action is successful, return true. Otherwise, return false.
     /// </summary>
     public virtual bool TurnNext(object param = null)
     {
-      var args = new TurnEventArgs();
-      TurnNextEvent?.Invoke(this, args);
-      if (!args.IsCancel)
+      var result = TurnNextValidation();
+      if (result)
+      {
+        TurnNextEvent?.Invoke(this, new EventArgs());
         Index++;
-      return !args.IsCancel;
+      }
+      return result;
     }
     /// <summary>
     /// Turn to previous page. If this action is successful, return true. Otherwise, return false.
     /// </summary>
     public virtual bool TurnBack(object param = null)
     {
-      var args = new TurnEventArgs();
-      TurnBackEvent?.Invoke(this, args);
-      if (!args.IsCancel)
+      var result = TurnBackValidation();
+      if (result)
+      {
+        TurnBackEvent?.Invoke(this, new EventArgs());
         Index--;
-      return !args.IsCancel;
+      }
+      return result;
     }
     /// <summary>
     /// Turn to <paramref name="index"/> page. If this action is successful, return true. Otherwise, return false.
     /// </summary>
     public virtual bool TurnTo(int index)
     {
-      var args = new TurnToEventArgs { Index = index };
-      TurnToEvent?.Invoke(this, args);
-      if (!args.IsCancel)
-        Index = index;
-      return !args.IsCancel;
+      var turns = index - this.Index;
+      if (turns > 0)
+      {
+        for (int i = 0; i < turns; i++)
+          if (!TurnNext())
+            return false;
+      }
+      else if (turns < 0)
+      {
+        for (int i = 0; i > turns; i--)
+          if (!TurnBack())
+            return false;
+      }
+      TurnToEvent?.Invoke(this, new EventArgs());
+      return true;
     }
+
     /// <summary>
     /// 判斷<see cref="Index"/>是否小於頁面總數
     /// </summary>

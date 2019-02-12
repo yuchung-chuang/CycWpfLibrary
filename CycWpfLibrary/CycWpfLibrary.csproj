@@ -93,20 +93,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CycWpfLibrary\Classes\PageManagerBase.cs" />
-    <Compile Include="CycWpfLibrary\Classes\Constants.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\DoubleExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\ScreenExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\StringExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\StructExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\UIElementExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Classes\PageManagerBase.cs" />
+    <Compile Include="CycWpfLibrary\System\Classes\Constants.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\DoubleExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Screen\ScreenExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\StringExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\StructExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\UIElementExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Screen\ScreenMethods.cs" />
     <Compile Include="CycWpfLibrary\WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="CycWpfLibrary\WPF\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="Emgu\ColorConverters.cs" />
     <Compile Include="Emgu\Colors.cs" />
     <Compile Include="Emgu\Drawing.cs" />
     <Compile Include="CycWpfLibrary\TextBoxBehaviors.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\InputExtensions.cs" />
+    <Compile Include="CycWpfLibrary\Input\InputExtensions.cs" />
     <Compile Include="CycWpfLibrary\WPF\Input\InputManager.cs" />
     <Compile Include="Emgu\Ocr\Obsolete.cs" />
     <Compile Include="IO\PathExtensions.cs" />
@@ -115,11 +116,11 @@
     <Compile Include="Diagnostics\interfaces\ILogger.cs" />
     <Compile Include="Diagnostics\LogManager.cs" />
     <Compile Include="Diagnostics\ConsoleLogger.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\EnumExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\EnumExtensions.cs" />
     <Compile Include="Diagnostics\DebugLogger.cs" />
     <Compile Include="Emgu\ImageConverters.cs" />
     <Compile Include="Emgu\ImageExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Classes\EditManager.cs" />
+    <Compile Include="CycWpfLibrary\System\Classes\EditManager.cs" />
     <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\Animations\AnimatedPage.cs" />
     <Compile Include="Media\Animations\AnimationExtensions.cs" />
@@ -142,17 +143,18 @@
     <Compile Include="CycWpfLibrary\WPF\Validations\ValidationHelpers.cs" />
     <Compile Include="CycWpfLibrary\WPF\Validations\Validations.cs" />
     <Compile Include="MVVM\ViewModels\ObservableDependencyObject.cs" />
+    <Compile Include="MVVM\ViewModels\ObservableWindow.cs" />
     <Compile Include="MVVM\ViewModels\ViewModelBase.cs" />
     <Compile Include="MVVM\ViewModels\ObservableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
     <Compile Include="Media\Images\ImageFileExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Extensions\ArrayExtensions.cs" />
+    <Compile Include="CycWpfLibrary\System\Extensions\ArrayExtensions.cs" />
     <Compile Include="Linq\EnumerableExtensions.cs" />
     <Compile Include="Linq\Expressions\ExpressionExtensions.cs" />
     <Compile Include="Media\Images\ColorExtensions.cs" />
-    <Compile Include="CycWpfLibrary\Methods\Math.cs" />
+    <Compile Include="CycWpfLibrary\System\Methods\Math.cs" />
     <Compile Include="Media\Images\ColorResources.cs" />
     <Compile Include="Media\Images\ImageExtensions.cs" />
     <Compile Include="Media\Images\Drawing.cs" />
@@ -162,7 +164,7 @@
     <Compile Include="Xaml\XamlMarkupObject.cs" />
     <Compile Include="MVVM\Commands\Interactivity.cs" />
     <Compile Include="MVVM\ViewModels\ObservableUserControl.cs" />
-    <Compile Include="CycWpfLibrary\Methods\NativeMethod.cs" />
+    <Compile Include="CycWpfLibrary\System\Methods\NativeMethod.cs" />
     <Compile Include="NAudio\LoopStream.cs" />
     <Compile Include="NAudio\WavePlayer.cs" />
     <Compile Include="Threading\TaskQueue.cs" />
@@ -180,7 +182,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="CycWpfLibrary\Methods\TimeToString.cs" />
+    <Compile Include="CycWpfLibrary\System\Methods\TimeToString.cs" />
     <Compile Include="Xml\XmlGenericSerializer.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

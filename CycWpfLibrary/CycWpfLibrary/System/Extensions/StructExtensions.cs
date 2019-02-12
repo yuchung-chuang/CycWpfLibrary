@@ -97,6 +97,11 @@ namespace CycWpfLibrary
       return Sqrt(Pow(point.X, 2) + Pow(point.Y, 2));
     }
 
+    public static Point Add(this Point point, double num)
+    {
+      return new Point(point.X + num, point.Y + num);
+    }
+
     public static Point Add(this Point point1, Point point2)
     {
       return new Point(point1.X + point2.X, point1.Y + point2.Y);
@@ -105,6 +110,11 @@ namespace CycWpfLibrary
     public static Point Add(this Point point1, (double X, double Y) point2)
     {
       return new Point(point1.X + point2.X, point1.Y + point2.Y);
+    }
+
+    public static Point Minus(this Point point, double num)
+    {
+      return new Point(point.X - num, point.Y - num);
     }
 
     public static Point Minus(this Point point1, Point point2)

@@ -73,7 +73,15 @@ namespace CycWpfLibrary.Emgu
     public static Image<TColor, TDepth> ToImage<TColor, TDepth>(this PixelBitmap pixelBitmap)
       where TColor : struct, IColor
       where TDepth : new()
-      => pixelBitmap.Bitmap.ToImage<TColor, TDepth>();
+    {
+      return pixelBitmap.Bitmap.ToImage<TColor, TDepth>();
+    }
+    public static Image<TColor, TDepth> ToImage<TColor, TDepth>(this BitmapSource bitmapSource) 
+      where TColor : struct, IColor
+      where TDepth : new()
+    {
+      return bitmapSource.ToBitmap().ToImage<TColor, TDepth>();
+    }
     public static Mat ToMat(this Bitmap bitmap) => bitmap.ToImage<Bgr, byte>().Mat;
     public static BitmapSource ToBitmapSource(this Image<Bgra, byte> image) => image.Bytes.ToBitmap(image.Width, image.Height).ToBitmapSource();
 
