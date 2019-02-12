@@ -10,6 +10,16 @@ using System.Windows.Input;
 
 namespace CycWpfLibrary
 {
+  public delegate void TurnEventHandler(object sender, TurnEventArgs e);
+  public class TurnEventArgs : EventArgs
+  {
+    public bool IsCancel { get; set; }
+  }
+  public delegate void TurnToEventHandler(object sender, TurnToEventArgs e);
+  public class TurnToEventArgs : TurnEventArgs
+  {
+    public int Index { get; set; }
+  }
 
   public abstract class PageManagerBase : ObservableObject
   {
@@ -23,9 +33,9 @@ namespace CycWpfLibrary
     public ICommand TurnNextCommand { get; set; }
     public ICommand TurnBackCommand { get; set; }
 
-    public event Func<object, EventArgs, bool> TurnNextEvent;
-    public event Func<object, EventArgs, bool> TurnBackEvent;
-    public event Func<object, int, bool> TurnToEvent;
+    public event TurnEventHandler TurnNextEvent;
+    public event TurnEventHandler TurnBackEvent;
+    public event TurnToEventHandler TurnToEvent;
 
     public static bool IsSuccess(bool? turnResult) => turnResult == null || turnResult == true;
     /// <summary>
@@ -33,30 +43,33 @@ namespace CycWpfLibrary
     /// </summary>
     public virtual bool TurnNext(object param = null)
     {
-      bool turnResult = IsSuccess(TurnNextEvent?.Invoke(this, null));
-      if (turnResult)
+      var args = new TurnEventArgs();
+      TurnNextEvent?.Invoke(this, args);
+      if (!args.IsCancel)
         Index++;
-      return turnResult;
+      return !args.IsCancel;
     }
     /// <summary>
     /// Turn to previous page. If this action is successful, return true. Otherwise, return false.
     /// </summary>
     public virtual bool TurnBack(object param = null)
     {
-      bool turnResult = IsSuccess(TurnBackEvent?.Invoke(this, null));
-      if (turnResult)
+      var args = new TurnEventArgs();
+      TurnBackEvent?.Invoke(this, args);
+      if (!args.IsCancel)
         Index--;
-      return turnResult;
+      return !args.IsCancel;
     }
     /// <summary>
     /// Turn to <paramref name="index"/> page. If this action is successful, return true. Otherwise, return false.
     /// </summary>
     public virtual bool TurnTo(int index)
     {
-      bool turnResult = IsSuccess( TurnToEvent?.Invoke(this, index));
-      if (turnResult)
+      var args = new TurnToEventArgs { Index = index };
+      TurnToEvent?.Invoke(this, args);
+      if (!args.IsCancel)
         Index = index;
-      return turnResult;
+      return !args.IsCancel;
     }
     /// <summary>
     /// 判斷<see cref="Index"/>是否小於頁面總數
