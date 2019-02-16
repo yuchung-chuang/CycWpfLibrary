@@ -50,45 +50,7 @@ namespace CycWpfLibrary.Resources
     public static Uri MouseRightButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseRightButton.png");
     public static Uri MouseWheelUri { get; } = new Uri(CycResourcesPackUri + "MouseWheel.png");
 
-    /// <summary>
-    /// Usage: Prepare "app/lang/default.xaml" and "app/lang/YOURLANGUAGE.xaml" files, and call this method in <see cref="Application.OnStartup(StartupEventArgs)"/>
-    /// </summary>
-    public static void LoadLanguage()
-    {
-      CultureInfo currentInfo = CultureInfo.CurrentCulture;
-
-      ResourceDictionary rd = null;
-
-      try
-      {
-#if DEBUG
-        rd = Application.LoadComponent(new Uri(@"app/lang/" + "zh-TW" + ".xaml", UriKind.Relative)) as ResourceDictionary;
-#else
-        if (currentInfo.Name.Contains("zh"))
-        {
-          rd = Application.LoadComponent(new Uri(@"app/lang/" + "zh-TW" + ".xaml", UriKind.Relative)) as ResourceDictionary;
-        }
-#endif
-      }
-      catch { }
-
-      if (rd != null)
-      {
-        var md = Application.Current.Resources.MergedDictionaries;
-        if (md.Count > 0)
-        {
-          foreach (var d in md)
-          {
-            var uri = new Uri(CurrentPackUri + @"app/lang/default.xaml", UriKind.Absolute);
-            if (d.Source == uri)
-            {
-              d.Clear();
-              break;
-            }
-          }
-        }
-        md.Add(rd);
-      }
-    }
+    public const string en_US = "en-US";
+    public const string zh_TW = "zh-TW";
   }
 }

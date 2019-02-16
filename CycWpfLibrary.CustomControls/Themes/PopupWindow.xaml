@@ -67,7 +67,11 @@
     <Setter Property="VerticalAlignment"
             Value="Top" />
   </Style>
-  
+
+  <sys:String x:Key="PopupOkButton">
+    Got it!
+  </sys:String>
+
   <Style TargetType="local:PopupWindow">
     <Setter Property="ResizeMode"
             Value="NoResize" />
@@ -103,7 +107,7 @@
                 <ContentPresenter />
               </AdornerDecorator>
               <Button Name="PART_CloseButton"
-                      Content="Got it!"
+                      Content="{DynamicResource PopupOkButton}"
                       Margin="10"
                       Width="100" />
             </StackPanel>
