@@ -83,13 +83,17 @@ namespace CycWpfLibrary
 
       if ((bool)e.NewValue)
       {
-        textBox.TextChanged += TextBox_TextChanged; // add validationRule at the very first time
-
+        textBox.GotFocus += TextBox_GotFocus;// add validationRule at the very first time
       }
       else
       {
-        textBox.TextChanged -= TextBox_TextChanged;
+        textBox.GotFocus -= TextBox_GotFocus;
       }
+    }
+
+    private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
+    {
+      Validate(sender as TextBox);
     }
 
     private static void TextBox_TextChanged(object sender, EventArgs e)
@@ -113,7 +117,7 @@ namespace CycWpfLibrary
         myRule.Maximum = (int)tb.GetValue(MaximumProperty);
         myRule.ExcludeMax = (bool)tb.GetValue(ExcludeMaxProperty);
         myRule.ExcludeMin = (bool)tb.GetValue(ExcludeMinProperty);
-        myRule.Validate(tb.Text, CultureInfo.CurrentCulture);
+        //myRule.Validate(tb.Text, CultureInfo.CurrentCulture); //useless to call validation manually
       }
     }
   }
