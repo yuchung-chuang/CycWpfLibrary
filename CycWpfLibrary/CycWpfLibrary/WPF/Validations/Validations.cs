@@ -16,7 +16,7 @@ namespace CycWpfLibrary
 
   public class DoubleValidation : ValidationRule
   {
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.IsDouble(value);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) =>   ValidationHelpers.IsDouble(value);
   }
 
   public class LogBaseValidation : ValidationRule
@@ -36,7 +36,7 @@ namespace CycWpfLibrary
     public bool ExcludeMax { get; set; }
     public bool ExcludeMin { get; set; }
 
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.IsInRange(value, Maximum, Minimum, ExcludeMax, ExcludeMin);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) =>   ValidationHelpers.IsInRange(value, Maximum, Minimum, ExcludeMax, ExcludeMin);
   }
 
   public class DateValidationRule : ValidationRule

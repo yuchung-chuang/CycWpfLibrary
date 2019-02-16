@@ -13,12 +13,13 @@ namespace CycWpfLibrary
     /// <summary>
     /// Convert double to string.
     /// </summary>
-    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value?.ToString();
+    public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) => 
+      (value ?? "").ToString();
 
     /// <summary>
     /// Convert number string to double.
     /// </summary>
-    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>   
-      value.ToString().IsNull() ? null : (double?)double.Parse(value.ToString());
+    public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+      (value ?? "").ToString().IsNull() ? null : (double?)double.Parse(value.ToString());
   }
 }

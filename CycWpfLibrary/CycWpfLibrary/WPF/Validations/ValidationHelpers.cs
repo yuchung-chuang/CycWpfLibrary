@@ -18,14 +18,14 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsDouble(object value)
     {
-      if (string.IsNullOrEmpty(value.ToString()))
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
         return ValidationResult.ValidResult; // allows value to be null
       return new ValidationResult(double.TryParse(value.ToString(), out var num), "Input number is invalid");
     }
 
     public static ValidationResult IsLogBase(object value)
     {
-      if (string.IsNullOrEmpty(value.ToString()))
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
         return ValidationResult.ValidResult;
       var doubleValidation = IsDouble(value);
       if (!doubleValidation.IsValid)
@@ -37,6 +37,8 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsByte(object value)
     {
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
+        return ValidationResult.ValidResult;
       var doubleValidation = IsDouble(value);
       if (!doubleValidation.IsValid)
         return new ValidationResult(false, doubleValidation.ErrorContent);
@@ -47,7 +49,7 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsInRange(object value, int max, int min, bool excludeMax, bool excludeMin)
     {
-      if (string.IsNullOrEmpty(value.ToString()))
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
         return ValidationResult.ValidResult;
       var doubleValidation = IsDouble(value);
       if (!doubleValidation.IsValid)
@@ -64,13 +66,15 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsDate(object value)
     {
-      if (string.IsNullOrEmpty(value.ToString()))
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
         return ValidationResult.ValidResult;
       return new ValidationResult(DateTime.TryParse((value ?? "").ToString(), CultureInfo.CurrentCulture, DateTimeStyles.AssumeLocal | DateTimeStyles.AllowWhiteSpaces, out var time), "Invalid date");
     }
 
     public static ValidationResult IsFutureDate(object value)
     {
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
+        return ValidationResult.ValidResult;
       var isDateValidation = IsDate(value);
       if (!isDateValidation.IsValid)
         return new ValidationResult(false, isDateValidation.ErrorContent);
@@ -81,6 +85,8 @@ namespace CycWpfLibrary
 
     public static ValidationResult IsPastDate(object value)
     {
+      if (string.IsNullOrEmpty((value ?? "").ToString()))
+        return ValidationResult.ValidResult;
       var isDateValidation = IsDate(value);
       if (!isDateValidation.IsValid)
         return new ValidationResult(false, isDateValidation.ErrorContent);

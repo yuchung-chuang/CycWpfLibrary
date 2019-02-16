@@ -83,7 +83,8 @@ namespace CycWpfLibrary
 
       if ((bool)e.NewValue)
       {
-        textBox.TextChanged += TextBox_TextChanged;
+        textBox.TextChanged += TextBox_TextChanged; // add validationRule at the very first time
+
       }
       else
       {
