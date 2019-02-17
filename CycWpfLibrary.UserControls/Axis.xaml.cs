@@ -43,7 +43,7 @@ namespace CycWpfLibrary.UserControls
         nameof(Stroke),
         typeof(Brush),
         typeof(Axis),
-        new PropertyMetadata(new SolidColorBrush(Colors.Green)));
+        new PropertyMetadata(new SolidColorBrush(Colors.Red)));
 
     public double AxisLeft
     {

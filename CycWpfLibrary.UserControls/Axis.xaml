@@ -20,12 +20,12 @@
              Panel.ZIndex="0"/>
       <Border Name="shadow"
               Background="{x:Static resource:CycResources.ShadowBrush}"
-              Width="{Binding ElementName=gridMain, Path=ActualWidth}"
-              Height="{Binding ElementName=gridMain, Path=ActualHeight}"
+              Width="{Binding ElementName=imageControl, Path=ActualWidth}"
+              Height="{Binding ElementName=imageControl, Path=ActualHeight}"
               Panel.ZIndex="1" />
       <Rectangle Name="axisImage"
-                 Width="{Binding ElementName=gridMain, Path=ActualWidth}"
-                 Height="{Binding ElementName=gridMain, Path=ActualHeight}"
+                 Width="{Binding ElementName=imageControl, Path=ActualWidth}"
+                 Height="{Binding ElementName=imageControl, Path=ActualHeight}"
                  Panel.ZIndex="2">
         <Rectangle.Fill>
           <VisualBrush Visual="{Binding ElementName=imageControl}"
