@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace CycWpfLibrary.Diagnostics
+namespace CycWpfLibrary
 {
   /// <summary>
   /// Holds a bunch of loggers to log messages for the user

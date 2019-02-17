@@ -1,4 +1,4 @@
-﻿using CycWpfLibrary.WinForm;
+﻿using CycWpfLibrary;
 using Emgu.CV.Structure;
 using System.Windows.Media;
 

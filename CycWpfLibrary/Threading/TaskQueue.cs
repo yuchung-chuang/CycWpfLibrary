@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CycWpfLibrary.Threading
+namespace CycWpfLibrary
 {
   /// <summary>
   /// 背景工作隊列，可動態加入背景工作並使工作依序執行

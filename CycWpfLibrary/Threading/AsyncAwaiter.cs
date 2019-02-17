@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CycWpfLibrary.Threading
+namespace CycWpfLibrary
 {
   /// <summary>
   /// Adds the ability to safely await on tasks to be complete that need limited access

@@ -1,6 +1,5 @@
 ﻿using CycWpfLibrary.Emgu;
 using CycWpfLibrary.Media;
-using CycWpfLibrary.MVVM;
 using System;
 using System.Windows;
 using System.Windows.Input;

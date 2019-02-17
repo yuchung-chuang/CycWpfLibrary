@@ -7,7 +7,7 @@ using SizeWpf = System.Windows.Size;
 using ColorWinForm = System.Drawing.Color;
 using ColorWpf = System.Windows.Media.Color;
 
-namespace CycWpfLibrary.WinForm
+namespace CycWpfLibrary
 {
   public static class Converters
   {

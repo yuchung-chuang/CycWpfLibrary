@@ -1,8 +1,8 @@
-﻿using CycWpfLibrary.IO;
+﻿using CycWpfLibrary;
 using System;
 using System.IO;
 
-namespace CycWpfLibrary.Diagnostics
+namespace CycWpfLibrary
 {
   /// <summary>
   /// Logs to a specific file

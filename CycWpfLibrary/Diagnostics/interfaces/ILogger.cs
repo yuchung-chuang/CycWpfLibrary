@@ -1,4 +1,4 @@
-﻿namespace CycWpfLibrary.Diagnostics
+﻿namespace CycWpfLibrary
 {
     /// <summary>
     /// A logger that will handle log messages from a <see cref="ILogManager"/>

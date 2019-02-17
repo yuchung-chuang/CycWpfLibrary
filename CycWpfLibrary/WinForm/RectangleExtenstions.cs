@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace CycWpfLibrary.WinForm
+namespace CycWpfLibrary
 {
   public static class RectangleExtenstions
   {

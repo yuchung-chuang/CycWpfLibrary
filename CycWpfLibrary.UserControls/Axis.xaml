@@ -1,11 +1,10 @@
-﻿<mvvm:ObservableUserControl x:Class="CycWpfLibrary.UserControls.Axis"
+﻿<cyc:ObservableUserControl x:Class="CycWpfLibrary.UserControls.Axis"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
                             xmlns:local="clr-namespace:CycWpfLibrary.UserControls"
-                            xmlns:mvvm="clr-namespace:CycWpfLibrary.MVVM;assembly=CycWpfLibrary"
                             xmlns:resource="clr-namespace:CycWpfLibrary.Resources;assembly=CycWpfLibrary.Resources"
                             mc:Ignorable="d"
                             d:DataContext="{d:DesignInstance local:Axis, IsDesignTimeCreatable=True}"
@@ -48,4 +47,4 @@
     </Grid>
 
   </Viewbox>
-</mvvm:ObservableUserControl>
+</cyc:ObservableUserControl>

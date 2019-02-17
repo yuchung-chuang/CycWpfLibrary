@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace CycWpfLibrary.Diagnostics
+namespace CycWpfLibrary
 {
   public class DebugLogger : ILogger
   {

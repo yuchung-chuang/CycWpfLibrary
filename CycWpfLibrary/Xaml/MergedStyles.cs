@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Markup;
 
-namespace CycWpfLibrary.Xaml
+namespace CycWpfLibrary
 {
   [MarkupExtensionReturnType(typeof(Style))]
   public class MergedStyles : MarkupExtension

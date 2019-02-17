@@ -3,7 +3,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace CycWpfLibrary.Xml
+namespace CycWpfLibrary
 {
   /// <summary>
   /// 提供序列化與反序列化的泛型方法
