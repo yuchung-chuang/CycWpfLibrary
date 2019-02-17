@@ -37,7 +37,7 @@
       <Rectangle Name="axisBorder"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Stroke="Red"
+                 Stroke="{Binding Stroke}"
                  Fill="Transparent"
                  StrokeThickness="3"
                  Width="{Binding AxisWidth}"

@@ -34,6 +34,17 @@ namespace CycWpfLibrary.UserControls
     }
 
     #region DPs
+    public Brush Stroke
+    {
+      get => (Brush)GetValue(StrokeProperty);
+      set => SetValue(StrokeProperty, value);
+    }
+    public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
+        nameof(Stroke),
+        typeof(Brush),
+        typeof(Axis),
+        new PropertyMetadata(new SolidColorBrush(Colors.Green)));
+
     public double AxisLeft
     {
       get => (double)GetValue(AxisLeftProperty);
