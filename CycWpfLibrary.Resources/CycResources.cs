@@ -32,6 +32,7 @@ namespace CycWpfLibrary.Resources
     public static Uri MouseLeftButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseLeftButton.png");
     public static Uri MouseRightButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseRightButton.png");
     public static Uri MouseWheelUri { get; } = new Uri(CycResourcesPackUri + "MouseWheel.png");
+    public static Uri CycIconUri { get; } = new Uri(CycResourcesPackUri + "icon_cyc.png");
 
     public static DrawingBrush CrossboardBrush { get; } = new DrawingBrush
     {

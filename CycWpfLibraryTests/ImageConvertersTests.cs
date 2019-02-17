@@ -26,9 +26,9 @@ namespace CycWpfLibrary.Tests
     {
       var bitmapSource = bitmap.ToBitmapSource();
       var bitmap2 = bitmapSource.ToBitmap();
-      var image = bitmap.ToImage<Rgba, byte>();
-      var image2 = bitmap2.ToImage<Rgba, byte>();
-      Assert.IsTrue(image.Bytes.IsEqual(image2.Bytes));
+      var image = bitmap.ToPixelBitmap();
+      var image2 = bitmap2.ToPixelBitmap();
+      Assert.IsTrue(image.Pixel.IsEqual(image2.Pixel));
     }
   }
 }

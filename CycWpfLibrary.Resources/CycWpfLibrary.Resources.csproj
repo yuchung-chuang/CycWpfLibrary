@@ -95,5 +95,8 @@
     <Resource Include="MouseRightButton.png" />
     <Resource Include="MouseWheel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_cyc.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
