@@ -28,7 +28,10 @@ namespace CycWpfLibrary.Resources
 
     public static string CycResourcesPackUri { get; } = PackUri + @"CycWpfLibrary.Resources;component/";
 
-    public static Cursor PanCursor { get; } = new Cursor(Application.GetResourceStream(new Uri(CycResourcesPackUri + "pan.cur", UriKind.Absolute)).Stream);
+    public static Uri PanCursorUri { get; } = new Uri(CycResourcesPackUri + "pan.cur");
+    public static Uri MouseLeftButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseLeftButton.png");
+    public static Uri MouseRightButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseRightButton.png");
+    public static Uri MouseWheelUri { get; } = new Uri(CycResourcesPackUri + "MouseWheel.png");
 
     public static DrawingBrush CrossboardBrush { get; } = new DrawingBrush
     {
@@ -45,10 +48,6 @@ namespace CycWpfLibrary.Resources
     public static SolidColorBrush ShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.3), 0, 0, 0));
 
     public static SolidColorBrush DarkShadowBrush { get; } = new SolidColorBrush(Color.FromArgb((byte)(255 * 0.7), 0, 0, 0));
-
-    public static Uri MouseLeftButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseLeftButton.png");
-    public static Uri MouseRightButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseRightButton.png");
-    public static Uri MouseWheelUri { get; } = new Uri(CycResourcesPackUri + "MouseWheel.png");
 
     public const string en_US = "en-US";
     public const string zh_TW = "zh-TW";

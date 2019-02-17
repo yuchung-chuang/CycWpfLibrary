@@ -73,6 +73,11 @@ namespace CycWpfLibrary.Media
       return uri.ToBitmapImage().ToPixelBitmap();
     }
 
+    public static Cursor ToCursor(this Uri uri)
+    {
+      return new Cursor(Application.GetResourceStream(uri).Stream);
+    }
+
     // BitmapImage
     public static Bitmap ToBitmap(this BitmapImage bitmapImage)
     {
