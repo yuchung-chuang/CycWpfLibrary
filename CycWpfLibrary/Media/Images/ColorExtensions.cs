@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using static CycWpfLibrary.Math;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public static class ColorExtensions
   {

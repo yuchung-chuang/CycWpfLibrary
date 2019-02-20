@@ -17,7 +17,7 @@ using PointWpf = System.Windows.Point;
 using SizeWinForm = System.Drawing.Size;
 using SizeWpf = System.Windows.Size;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   #region Helper classes
   internal struct IconInfo

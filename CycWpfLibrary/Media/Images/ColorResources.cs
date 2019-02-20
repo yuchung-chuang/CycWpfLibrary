@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public static class ColorResources
   {

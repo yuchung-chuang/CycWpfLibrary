@@ -139,6 +139,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CycWpfLibrary.Emgu\CycWpfLibrary.Emgu.csproj">
+      <Project>{49844f32-a5c8-423f-bbdc-09bfad908915}</Project>
+      <Name>CycWpfLibrary.Emgu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">
       <Project>{482d004f-7715-41e1-9d47-b00e8d7c9acc}</Project>
       <Name>CycWpfLibrary.Resources</Name>

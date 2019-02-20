@@ -1,4 +1,4 @@
-﻿using CycWpfLibrary.Media;
+﻿using CycWpfLibrary;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

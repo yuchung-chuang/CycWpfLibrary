@@ -1,5 +1,4 @@
-﻿using CycWpfLibrary.Media;
-using CycWpfLibrary;
+﻿using CycWpfLibrary;
 using CycWpfLibrary.Resources;
 using System;
 using System.Collections;

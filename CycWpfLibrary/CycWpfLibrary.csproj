@@ -50,21 +50,12 @@
     <AssemblyOriginatorKeyFile>CycAppKey.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator, Version=2.0.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\CommonServiceLocator.2.0.2\lib\net45\CommonServiceLocator.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
@@ -83,9 +74,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
-      <HintPath>..\..\WpfPlotDigitizer\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="System\Classes\PageManagerBase.cs" />
@@ -99,29 +87,15 @@
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\ValueConverters\VisibilityConverter.cs" />
-    <Compile Include="Emgu\ColorConverters.cs" />
-    <Compile Include="Emgu\Colors.cs" />
-    <Compile Include="Emgu\Drawing.cs" />
     <Compile Include="Input\TextBoxBehaviors.cs" />
     <Compile Include="Input\InputExtensions.cs" />
     <Compile Include="WPF\Input\InputManager.cs" />
-    <Compile Include="Emgu\Ocr\Obsolete.cs" />
     <Compile Include="System\Extensions\PathExtensions.cs" />
-    <Compile Include="Diagnostics\FileLogger.cs" />
-    <Compile Include="Diagnostics\interfaces\ILogManager.cs" />
-    <Compile Include="Diagnostics\interfaces\ILogger.cs" />
-    <Compile Include="Diagnostics\LogManager.cs" />
-    <Compile Include="Diagnostics\ConsoleLogger.cs" />
     <Compile Include="System\Extensions\EnumExtensions.cs" />
-    <Compile Include="Diagnostics\DebugLogger.cs" />
-    <Compile Include="Emgu\ImageConverters.cs" />
-    <Compile Include="Emgu\ImageExtensions.cs" />
     <Compile Include="System\Classes\EditManager.cs" />
-    <Compile Include="Diagnostics\LogLevel.cs" />
     <Compile Include="Media\Animations\AnimatedPage.cs" />
     <Compile Include="Media\Animations\AnimationExtensions.cs" />
     <Compile Include="Media\Geometry\TransformExtensions.cs" />
-    <Compile Include="WPF\AttachedProperties\Eraser.cs" />
     <Compile Include="WPF\AttachedProperties\obsolete\IsObserveSize.cs" />
     <Compile Include="WPF\AttachedProperties\Pan.cs" />
     <Compile Include="WPF\AttachedProperties\RangeValidator.cs" />
@@ -161,8 +135,6 @@
     <Compile Include="WPF\Commands\Interactivity.cs" />
     <Compile Include="WPF\ViewModels\ObservableUserControl.cs" />
     <Compile Include="System\Methods\NativeMethod.cs" />
-    <Compile Include="NAudio\LoopStream.cs" />
-    <Compile Include="NAudio\WavePlayer.cs" />
     <Compile Include="Threading\TaskQueue.cs" />
     <Compile Include="Xaml\MergedStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -194,9 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="License-LGPL.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">

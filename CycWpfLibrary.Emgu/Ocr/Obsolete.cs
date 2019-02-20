@@ -1,5 +1,4 @@
-﻿using CycWpfLibrary.Media;
-using Emgu.CV.OCR;
+﻿using Emgu.CV.OCR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

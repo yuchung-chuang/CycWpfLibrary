@@ -14,7 +14,6 @@ using PointWpf = System.Windows.Point;
 using SP = System.Windows.SystemParameters;
 using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
 using CycWpfLibrary;
-using CycWpfLibrary.Media;
 using System.Runtime.InteropServices;
 using PointWF = System.Drawing.Point;
 

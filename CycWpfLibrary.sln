@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.UserControls"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Resources", "CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj", "{482D004F-7715-41E1-9D47-B00E8D7C9ACC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.NAudio", "CycWpfLibrary.NAudio\CycWpfLibrary.NAudio.csproj", "{4167F50E-2326-45C4-8CED-1D82D1E7710D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CycWpfLibrary.Emgu", "CycWpfLibrary.Emgu\CycWpfLibrary.Emgu.csproj", "{49844F32-A5C8-423F-BBDC-09BFAD908915}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{482D004F-7715-41E1-9D47-B00E8D7C9ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4167F50E-2326-45C4-8CED-1D82D1E7710D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4167F50E-2326-45C4-8CED-1D82D1E7710D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4167F50E-2326-45C4-8CED-1D82D1E7710D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4167F50E-2326-45C4-8CED-1D82D1E7710D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49844F32-A5C8-423F-BBDC-09BFAD908915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

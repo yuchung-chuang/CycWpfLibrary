@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public static class ImageFileExtensions
   {

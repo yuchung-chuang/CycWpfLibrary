@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public static class AnimationExtensions
   {

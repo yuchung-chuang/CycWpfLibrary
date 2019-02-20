@@ -11,7 +11,7 @@ using SizeWinForm = System.Drawing.Size;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 using Window = System.Windows.Window;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public class PixelBitmap : DependencyObject, ICloneable, IEquatable<PixelBitmap>
   {

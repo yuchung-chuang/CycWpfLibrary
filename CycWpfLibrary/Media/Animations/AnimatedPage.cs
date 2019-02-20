@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace CycWpfLibrary.Media
+namespace CycWpfLibrary
 {
   public enum PageSlideType
   {

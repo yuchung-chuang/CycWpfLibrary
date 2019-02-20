@@ -1,5 +1,4 @@
-﻿using CycWpfLibrary.Media;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

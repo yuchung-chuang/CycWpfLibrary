@@ -1,5 +1,4 @@
 ﻿using CycWpfLibrary.Emgu;
-using CycWpfLibrary.Media;
 using CycWpfLibrary;
 using Emgu.CV;
 using Emgu.CV.Structure;
