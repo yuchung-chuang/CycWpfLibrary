@@ -3,7 +3,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:local="clr-namespace:CycWpfLibrary.CustomControls"
-                    xmlns:re="clr-namespace:CycWpfLibrary.Resources;assembly=CycWpfLibrary.Resources"
+                    xmlns:re="clr-namespace:CycWpfLibrary.Resource;assembly=CycWpfLibrary.Resource"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
   <ResourceDictionary.MergedDictionaries>

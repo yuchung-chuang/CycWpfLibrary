@@ -78,16 +78,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">
-      <Project>{482d004f-7715-41e1-9d47-b00e8d7c9acc}</Project>
-      <Name>CycWpfLibrary.Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CycWpfLibrary\CycWpfLibrary.csproj">
-      <Project>{DC9B1571-60B9-48D4-A147-24820D8E895B}</Project>
-      <Name>CycWpfLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="data.png" />
   </ItemGroup>
   <ItemGroup>

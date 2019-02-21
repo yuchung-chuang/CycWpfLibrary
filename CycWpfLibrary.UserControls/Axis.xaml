@@ -5,7 +5,7 @@
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
                             xmlns:local="clr-namespace:CycWpfLibrary.UserControls"
-                            xmlns:resource="clr-namespace:CycWpfLibrary.Resources;assembly=CycWpfLibrary.Resources"
+                            xmlns:resource="clr-namespace:CycWpfLibrary.Resource;assembly=CycWpfLibrary.Resource"
                             mc:Ignorable="d"
                             d:DataContext="{d:DesignInstance local:Axis, IsDesignTimeCreatable=True}"
                             d:DesignHeight="450"

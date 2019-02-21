@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CycWpfLibrary.Media;
 using System.Drawing;
 using CycWpfLibrary.Emgu;
 using Emgu.CV.Structure;
@@ -17,8 +16,8 @@ namespace CycWpfLibrary.Tests
 
     public ImageConvertersTests()
     {
-      //bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\data.png");
-      bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\MouseWheel.png");
+      bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\data.png");
+      //bitmap = new Bitmap(@"C:\Users\alex\Desktop\WPF\CycWpfLibrary\CycWpfLibraryTests\MouseWheel.png"); 
     }
 
     [TestMethod()]

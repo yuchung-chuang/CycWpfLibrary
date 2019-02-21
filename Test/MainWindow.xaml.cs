@@ -1,4 +1,5 @@
-﻿using CycWpfLibrary.Media;
+﻿using CycWpfLibrary;
+using Bitmap = System.Drawing.Bitmap;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;

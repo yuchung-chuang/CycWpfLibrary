@@ -108,9 +108,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CycWpfLibrary.Resources\CycWpfLibrary.Resources.csproj">
-      <Project>{482D004F-7715-41E1-9D47-B00E8D7C9ACC}</Project>
-      <Name>CycWpfLibrary.Resources</Name>
+    <ProjectReference Include="..\CycWpfLibrary.Resource\CycWpfLibrary.Resource.csproj">
+      <Project>{be626a2b-f351-4768-a246-4cab2a7f6a56}</Project>
+      <Name>CycWpfLibrary.Resource</Name>
     </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary\CycWpfLibrary.csproj">
       <Project>{dc9b1571-60b9-48d4-a147-24820d8e895b}</Project>

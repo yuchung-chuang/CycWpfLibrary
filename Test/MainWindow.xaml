@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Test"
-        xmlns:custom="clr-namespace:CycWpfLibrary.CustomControls;assembly=CycWpfLibrary.CustomControls"
         xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
         mc:Ignorable="d"
         Title="MainWindow"
@@ -25,7 +24,6 @@
               Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"/>
       <Button Content="RoutedCommand Button"
               Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
-      <custom:NumericTextBox />
       <Button Content="Change Cursor"
               Click="Button_Click" />
       <Rectangle Name="rectCursor"

@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Drawing;
-using CycWpfLibrary.Media;
 using CycWpfLibrary;
 using System.Linq;
 

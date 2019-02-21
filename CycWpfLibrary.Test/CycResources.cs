@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace CycWpfLibrary.Resources
+namespace CycWpfLibrary.Test
 {
   public class CycResources
   {
@@ -26,7 +26,7 @@ namespace CycWpfLibrary.Resources
     /// </summary>
     public static string CurrentPackUri => PackUri + Assembly.GetEntryAssembly().GetName().Name + @";component/";
 
-    public static string CycResourcesPackUri { get; } = PackUri + @"CycWpfLibrary.Resources;component/";
+    public static string CycResourcesPackUri { get; } = PackUri + Assembly.GetExecutingAssembly().GetName().Name + @";component/";
 
     public static Uri PanCursorUri { get; } = new Uri(CycResourcesPackUri + "pan.cur");
     public static Uri MouseLeftButtonUri { get; } = new Uri(CycResourcesPackUri + "MouseLeftButton.png");
