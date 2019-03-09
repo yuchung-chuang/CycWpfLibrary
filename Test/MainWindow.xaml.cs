@@ -45,5 +45,11 @@ namespace Test
       };
       this.Cursor = rect.ToCursor(new Point(0.5, 0.5));
     }
+
+    private void WindowButton_Click(object sender, RoutedEventArgs e)
+    {
+      var window = new Window1();
+      window.ShowDialog();
+    }
   }
 }

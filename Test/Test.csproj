@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -73,6 +76,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
@@ -103,6 +110,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CycWpfLibrary.FluentDesign\CycWpfLibrary.FluentDesign.csproj">
+      <Project>{061b1dd9-815b-437f-8cd6-d20923bc0af4}</Project>
+      <Name>CycWpfLibrary.FluentDesign</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary\CycWpfLibrary.csproj">
       <Project>{dc9b1571-60b9-48d4-a147-24820d8e895b}</Project>
       <Name>CycWpfLibrary</Name>

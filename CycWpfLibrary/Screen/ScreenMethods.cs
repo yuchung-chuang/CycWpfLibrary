@@ -88,7 +88,7 @@ namespace CycWpfLibrary
         {
           var rectWF = rect.ToWinForm();
           bmpGraphics.CopyFromScreen(rectWF.Left, rectWF.Top, 0, 0, rectWF.Size);
-          return screenBmp;
+          return screenBmp.Clone() as Bitmap;
         }
       }
     }

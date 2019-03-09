@@ -88,6 +88,8 @@
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
+    <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
+    <Compile Include="WPF\ValueConverters\SolidColorBrushConverter.cs" />
     <Compile Include="WPF\ValueConverters\VisibilityConverter.cs" />
     <Compile Include="Input\TextBoxBehaviors.cs" />
     <Compile Include="Input\InputExtensions.cs" />
@@ -133,12 +135,12 @@
     <Compile Include="Media\Images\PixelBitmap.cs" />
     <Compile Include="WPF\AttachedProperties\obsolete\AttachedPropertyBase.cs" />
     <Compile Include="WPF\Commands\RelayCommand.cs" />
-    <Compile Include="Xaml\XamlMarkupObject.cs" />
+    <Compile Include="WPF\Xaml\XamlMarkupObject.cs" />
     <Compile Include="WPF\Commands\Interactivity.cs" />
     <Compile Include="WPF\ViewModels\ObservableUserControl.cs" />
     <Compile Include="System\Methods\NativeMethod.cs" />
     <Compile Include="Threading\TaskQueue.cs" />
-    <Compile Include="Xaml\MergedStyles.cs" />
+    <Compile Include="WPF\Xaml\MergedStyles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

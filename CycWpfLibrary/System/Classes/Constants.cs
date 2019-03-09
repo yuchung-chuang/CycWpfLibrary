@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CycWpfLibrary
 {
-  internal class AppNames
+  public class AppNames
   {
     public const string CycWpfLibrary = "CycWpfLibrary";
   }
