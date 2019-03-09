@@ -1,0 +1,337 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
+                    xmlns:animation="clr-namespace:CycWpfLibrary.FluentDesign.Animations"
+                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
+
+  <Style TargetType="{x:Type local:CycButton}">
+    <Setter Property="Foreground"
+            Value="White" />
+    <Setter Property="Background"
+            Value="Transparent" />
+    <Setter Property="BorderThickness"
+            Value="4" />
+    <Setter Property="HorizontalContentAlignment"
+            Value="Center" />
+    <Setter Property="VerticalContentAlignment"
+            Value="Center" />
+    <Setter Property="UseLayoutRounding"
+            Value="True" />
+    <Setter Property="FocusVisualStyle"
+            Value="{x:Null}" />
+
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:CycButton}">
+          <Grid x:Name="root">
+            <Border x:Name="borderLight"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(local:PointerTracker.EnableBorderLight), Converter={cyc:VisibilityConverter}}">
+              <Border.BorderBrush>
+                <RadialGradientBrush MappingMode="Absolute"
+                                     RadiusY="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=(local:PointerTracker.TrackerSize)}"
+                                     RadiusX="{Binding RelativeSource={RelativeSource Mode=Self}, Path=RadiusY}">
+                  <RadialGradientBrush.Opacity>
+                    <MultiBinding Converter="{local:OpacityConverter}">
+                      <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Border}"
+                               Path="(local:PointerTracker.TrackerOpacity)" />
+                      <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Border}"
+                               Path="(local:PointerTracker.IsEnter)" />
+                    </MultiBinding>
+                  </RadialGradientBrush.Opacity>
+                  <RadialGradientBrush.Center>
+                    <MultiBinding Converter="{local:RelativePositionConverter}">
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                               Path="(local:PointerTracker.RootObject)" />
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                               Path="(local:PointerTracker.Position)" />
+                    </MultiBinding>
+                  </RadialGradientBrush.Center>
+                  <RadialGradientBrush.GradientOrigin>
+                    <MultiBinding Converter="{local:RelativePositionConverter}">
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                               Path="(local:PointerTracker.RootObject)" />
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
+                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                               Path="(local:PointerTracker.Position)" />
+                    </MultiBinding>
+                  </RadialGradientBrush.GradientOrigin>
+                  <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                                Offset="0" />
+                  <GradientStop Color="Transparent"
+                                Offset="1" />
+                </RadialGradientBrush>
+              </Border.BorderBrush>
+            </Border>
+            <Border x:Name="focusBorder"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Visibility="Collapsed">
+              <Border.BorderBrush>
+                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}" 
+                                 Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}"/>
+              </Border.BorderBrush>
+            </Border>
+            
+            <Border x:Name="contentBorder"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <Grid x:Name="contentGrid">
+                <Border x:Name="background"
+                        Opacity="0"
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}">
+                  <Border.Background>
+                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                                     Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}" />
+                  </Border.Background>
+                </Border>
+                <Border x:Name="hoverLight"
+                        Opacity="0"
+                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}">
+                  <Border.Background>
+                    <RadialGradientBrush MappingMode="Absolute"
+                                         RadiusY="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=(local:PointerTracker.TrackerSize)}"
+                                         RadiusX="{Binding RelativeSource={RelativeSource Mode=Self}, Path=RadiusY}"
+                                         Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}">
+                      <RadialGradientBrush.Center>
+                        <MultiBinding Converter="{local:RelativePositionConverter}">
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                                   Path="(local:PointerTracker.RootObject)" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                                   Path="(local:PointerTracker.Position)" />
+                        </MultiBinding>
+                      </RadialGradientBrush.Center>
+                      <RadialGradientBrush.GradientOrigin>
+                        <MultiBinding Converter="{local:RelativePositionConverter}">
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                                   Path="(local:PointerTracker.RootObject)" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                                   Path="(local:PointerTracker.Position)" />
+                        </MultiBinding>
+                      </RadialGradientBrush.GradientOrigin>
+                      <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                                    Offset="0" />
+                      <GradientStop Color="Transparent"
+                                    Offset="1" />
+                    </RadialGradientBrush>
+                  </Border.Background>
+                </Border>
+                <Rectangle x:Name="pressLight"
+                           Opacity="0"
+                           Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnablePressLight), Converter={cyc:VisibilityConverter}}">
+                  <Rectangle.Fill>
+                    <RadialGradientBrush x:Name="pressLightBrush"
+                                         MappingMode="Absolute"
+                                         RadiusY="5"
+                                         RadiusX="5"
+                                         Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}">
+                      <RadialGradientBrush.Center>
+                        <MultiBinding Converter="{local:RelativePositionConverter}">
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                                   Path="(local:PointerTracker.RootObject)" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                                   Path="(local:PointerTracker.Position)" />
+                        </MultiBinding>
+                      </RadialGradientBrush.Center>
+                      <RadialGradientBrush.GradientOrigin>
+                        <MultiBinding Converter="{local:RelativePositionConverter}">
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                                   Path="(local:PointerTracker.RootObject)" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" />
+                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                                   Path="(local:PointerTracker.Position)" />
+                        </MultiBinding>
+                      </RadialGradientBrush.GradientOrigin>
+                      <GradientStop Color="Transparent"
+                                    Offset="0" />
+                      <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                                    Offset="0.5" />
+                      <GradientStop Color="Transparent"
+                                    Offset="1" />
+                    </RadialGradientBrush>
+                  </Rectangle.Fill>
+                </Rectangle>
+              </Grid>
+            </Border>
+
+            <Border x:Name="ContentBorder"
+                    BorderBrush="{x:Null}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <ContentPresenter x:Name="contentPresenter"
+                                Focusable="False"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Margin="{TemplateBinding Padding}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+
+
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     Storyboard.TargetName="hoverLight"
+                                     To="0"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="MouseOver">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     Storyboard.TargetName="hoverLight"
+                                     To="1"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetName="background"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     To="0.5"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="background"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     To="0.5"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     Storyboard.TargetName="hoverLight"
+                                     To="0"
+                                     Duration="0:0:0.100">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     Storyboard.TargetName="pressLight"
+                                     To="1"
+                                     Duration="0:0:0.100">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusX)"
+                                     Storyboard.TargetName="pressLightBrush"
+                                     From="100"
+                                     To="50"
+                                     Duration="0:0:0.300">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusX)"
+                                     Storyboard.TargetName="pressLightBrush"
+                                     To="500"
+                                     BeginTime="0:0:0.500"
+                                     Duration="0:0:4.000">
+                      <DoubleAnimation.EasingFunction>
+                        <SineEase EasingMode="EaseInOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusY)"
+                                     Storyboard.TargetName="pressLightBrush"
+                                     From="100"
+                                     To="50"
+                                     Duration="0:0:0.300">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusY)"
+                                     Storyboard.TargetName="pressLightBrush"
+                                     To="500"
+                                     BeginTime="0:0:0.500"
+                                     Duration="0:0:4.000">
+                      <DoubleAnimation.EasingFunction>
+                        <SineEase EasingMode="EaseInOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                     Storyboard.TargetName="pressLightBrush"
+                                     To="0"
+                                     BeginTime="0:0:0.500"
+                                     Duration="0:0:4.000">
+                      <DoubleAnimation.EasingFunction>
+                        <SineEase EasingMode="EaseInOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <Storyboard>
+                    <animation:BrushAnimation Storyboard.TargetProperty="(TextElement.Foreground)"
+                                              Storyboard.TargetName="contentPresenter"
+                                              Duration="0:0:0.100"
+                                              AutoReverse="False">
+                      <animation:BrushAnimation.To>
+                        <SolidColorBrush Color="#FF838383" />
+                      </animation:BrushAnimation.To>
+                      <animation:BrushAnimation.EasingFunction>
+                        <SineEase EasingMode="EaseInOut" />
+                      </animation:BrushAnimation.EasingFunction>
+                    </animation:BrushAnimation>
+                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                     Storyboard.TargetName="borderLight"
+                                     To="0"
+                                     Duration="0:0:0.100"
+                                     AutoReverse="False">
+                      <DoubleAnimation.EasingFunction>
+                        <SineEase EasingMode="EaseInOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+              <VisualStateGroup x:Name="FocusStates">
+                <VisualState x:Name="Focused">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="focusBorder"
+                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
+                      <DiscreteObjectKeyFrame KeyTime="00:00:00"
+                                              Value="{x:Static Visibility.Visible}" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Unfocused">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="focusBorder"
+                                                   Storyboard.TargetProperty="(UIElement.Visibility)">
+                      <DiscreteObjectKeyFrame KeyTime="00:00:00"
+                                              Value="{x:Static Visibility.Collapsed}" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>
