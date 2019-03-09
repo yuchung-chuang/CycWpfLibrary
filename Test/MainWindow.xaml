@@ -27,7 +27,7 @@
                
                Background="Transparent">
       <WrapPanel.Resources>
-        <Style TargetType="fd:CycButton">
+        <Style TargetType="fd:RevealButton">
           <Setter Property="Margin"
                   Value="2" />
           <Setter Property="Width"
@@ -46,12 +46,12 @@
       </WrapPanel.Resources>
       <Label Name="label1"
              Content="{Binding Label}" />
-      <fd:CycButton Content="Command Button"
+      <fd:RevealButton Content="Command Button"
                     Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"
                     IsEnabled="False"/>
-      <fd:CycButton Content="RoutedCommand Button"
+      <fd:RevealButton Content="RoutedCommand Button"
                     Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
-      <fd:CycButton Content="Change Cursor"
+      <fd:RevealButton Content="Change Cursor"
                     Click="Button_Click" />
       <Rectangle Name="rectCursor"
                  Width="20"
@@ -64,14 +64,14 @@
              Width="100"
              Height="100"
              cyc:Pan.IsEnabled="True" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
-      <fd:CycButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
+      <fd:RevealButton Content="aaa" />
     </WrapPanel>
 
     <Button HorizontalAlignment="Right"

@@ -4,7 +4,7 @@
                     xmlns:animation="clr-namespace:CycWpfLibrary.FluentDesign.Animations"
                     xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
 
-  <Style TargetType="{x:Type local:CycButton}">
+  <Style TargetType="{x:Type local:RevealButton}">
     <Setter Property="Foreground"
             Value="White" />
     <Setter Property="Background"
@@ -22,7 +22,7 @@
 
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:CycButton}">
+        <ControlTemplate TargetType="{x:Type local:RevealButton}">
           <Grid x:Name="root">
             <Border x:Name="borderLight"
                     BorderThickness="{TemplateBinding BorderThickness}"

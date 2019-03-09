@@ -14,7 +14,7 @@
         fd:PointerTracker.TrackerSize="0"
         
         Background="Transparent">
-    <fd:CycButton Content="aaa"
+    <fd:RevealButton Content="aaa"
                   Width="100"
                   Height="100" />
   </Grid>

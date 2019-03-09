@@ -4,7 +4,7 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Window.xaml" />
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Menu.xaml" />
-    <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Themes/CycButton.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Themes/RevealButton.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <local:AddValueConverter x:Key="addValueConverter" />

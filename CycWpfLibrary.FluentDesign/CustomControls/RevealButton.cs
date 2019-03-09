@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 
 namespace CycWpfLibrary.FluentDesign
 {
-  public class CycButton : Button
+  public class RevealButton : Button
   {
-    static CycButton()
+    static RevealButton()
     {
-      DefaultStyleKeyProperty.OverrideMetadata(typeof(CycButton), new FrameworkPropertyMetadata(typeof(CycButton)));
+      DefaultStyleKeyProperty.OverrideMetadata(typeof(RevealButton), new FrameworkPropertyMetadata(typeof(RevealButton)));
     }
 
     public bool EnableHoverLight
@@ -30,7 +30,7 @@ namespace CycWpfLibrary.FluentDesign
     public static readonly DependencyProperty EnableHoverLightProperty = DependencyProperty.Register(
         nameof(EnableHoverLight),
         typeof(bool),
-        typeof(CycButton),
+        typeof(RevealButton),
         new PropertyMetadata(default(bool)));
 
     public bool EnablePressLight
@@ -41,7 +41,7 @@ namespace CycWpfLibrary.FluentDesign
     public static readonly DependencyProperty EnablePressLightProperty = DependencyProperty.Register(
         nameof(EnablePressLight),
         typeof(bool),
-        typeof(CycButton),
+        typeof(RevealButton),
         new PropertyMetadata(default(bool)));
 
     public double HoverLightSize
@@ -52,7 +52,7 @@ namespace CycWpfLibrary.FluentDesign
     public static readonly DependencyProperty HoverLightSizeProperty = DependencyProperty.Register(
         nameof(HoverLightSize),
         typeof(double),
-        typeof(CycButton),
+        typeof(RevealButton),
         new PropertyMetadata(100d));
 
     public double PressLightSize
@@ -63,7 +63,7 @@ namespace CycWpfLibrary.FluentDesign
     public static readonly DependencyProperty PressLightSizeProperty = DependencyProperty.Register(
         nameof(PressLightSize),
         typeof(double),
-        typeof(CycButton),
+        typeof(RevealButton),
         new PropertyMetadata(default(double)));
 
   }
