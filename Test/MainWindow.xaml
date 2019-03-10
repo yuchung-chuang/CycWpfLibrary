@@ -19,11 +19,15 @@
     <CommandBinding Command="{x:Static local:MainWindowViewModel.RequeryCommand}"
                     Executed="Requery_Executed" />
   </fd:RevealWindow.CommandBindings>
+  <Window.Resources>
+    <Style TargetType="ToolTip"
+           BasedOn="{StaticResource RevealTooltipStyle}" />
+  </Window.Resources>
   <Grid>
     <WrapPanel fd:PointerTracker.Enabled="True"
                fd:PointerTracker.TrackerSize="100"
                fd:PointerTracker.TrackerOpacity="0.5"
-               fd:PointerTracker.TrackerColor="#FF00E8FF"
+               fd:PointerTracker.TrackerColor="Cyan"
                Background="Transparent">
       <WrapPanel.Resources>
         <Style TargetType="fd:RevealButton">

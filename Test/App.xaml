@@ -5,6 +5,10 @@
              StartupUri="MainWindow.xaml">
   <Application.Resources>
     <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Tooltip.xaml"/>
+      </ResourceDictionary.MergedDictionaries>
+      
       <Style x:Key="DesignTimeWindowStyle"
              TargetType="Window">
         <Setter Property="Background"

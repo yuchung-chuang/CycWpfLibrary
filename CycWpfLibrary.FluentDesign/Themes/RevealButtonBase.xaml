@@ -61,7 +61,6 @@
     </DoubleAnimation>
   </Storyboard>
 
-
   <Style x:Key="RevealButtonBaseStyle"
          TargetType="ButtonBase">
     <Setter Property="Foreground"
@@ -78,6 +77,7 @@
             Value="True" />
     <Setter Property="FocusVisualStyle"
             Value="{x:Null}" />
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ButtonBase">
@@ -90,7 +90,8 @@
             <Border x:Name="focusBorder"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Visibility="Collapsed"
-                    BorderBrush="{local:TemplatedSolidBrush}">
+                    BorderBrush="{local:TemplatedSolidBrush}"
+                    Opacity="{StaticResource borderLightNormalOpacity}">
               <Border x:Name="background"
                       Opacity="0"
                       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}"

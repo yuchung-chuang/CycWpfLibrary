@@ -2,86 +2,70 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
+                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
+                    xmlns:re="clr-namespace:CycWpfLibrary.Resource;assembly=CycWpfLibrary.Resource">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="RevealButtonBase.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
+  <Style x:Key="WindowButtonPathStyleBase"
+         TargetType="Path">
+    <Setter Property="Width"
+            Value="12" />
+    <Setter Property="Height"
+            Value="12" />
+    <Setter Property="UseLayoutRounding"
+            Value="True" />
+    <Setter Property="VerticalAlignment"
+            Value="Center" />
+    <Setter Property="HorizontalAlignment"
+            Value="Center" />
+  </Style>
+  <Style x:Key="WindowButtonFillPathStyle"
+         TargetType="Path"
+         BasedOn="{StaticResource WindowButtonPathStyleBase}">
+    <Setter Property="Fill"
+            Value="White" />
+  </Style>
+  <Style x:Key="WindowButtonStrokePathStyle"
+         TargetType="Path"
+         BasedOn="{StaticResource WindowButtonPathStyleBase}">
+    <Setter Property="Stroke"
+            Value="White" />
+    <Setter Property="StrokeThickness"
+            Value="1" />
+    <Setter Property="StrokeLineJoin"
+            Value="Round" />
+  </Style>
   <DataTemplate x:Key="RestoreIcon">
-    <Grid UseLayoutRounding="True">
-      <Path Data="M1,3 L1,11 L9,11 L9,3 z M3,1 L3,2 L10,2 L10,9 L11,9 L11,1 z M2 ,0 L12,0 L12,10 L10,10 L10,12 L0,12 L0,2 L2 ,2 z"
-            Width="12"
-            Height="12"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Fill="White" />
-    </Grid>
+    <Path Data="{x:Static re:CycResources.RestoreButtonGeometryData}"
+          Style="{StaticResource WindowButtonFillPathStyle}" />
   </DataTemplate>
   <DataTemplate x:Key="CloseIcon">
-    <Grid UseLayoutRounding="True">
-      <Path Data="M1,0 L6,5 L11,0 L12,1 L7,6 L12,11 L11,12 L6,7 L1,12 L0,11 L5,6 L0,1 z"
-            Width="12"
-            Height="12"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Fill="White" />
-    </Grid>
+    <Path Data="{x:Static re:CycResources.CloseButtonGeometryData}"
+          Style="{StaticResource WindowButtonFillPathStyle}" />
   </DataTemplate>
   <DataTemplate x:Key="MaximizeIcon">
-    <Grid>
-      <Path Data="M1,1  L1 ,11 L11,11 L11,1 z M0,0 L12,0 L12,12 L0,12 z"
-            Width="12"
-            Height="12"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Fill="White" />
-    </Grid>
+    <Path Data="{x:Static re:CycResources.MaximizeButtonGeometryData}"
+          Style="{StaticResource WindowButtonFillPathStyle}" />
   </DataTemplate>
   <DataTemplate x:Key="MinimizeIcon">
-    <Grid>
-      <Path Data="M0,5 L12,5 L12,6 L0,6 z"
-            Width="12"
-            Height="12"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Fill="White" />
-    </Grid>
+    <Path Data="{x:Static re:CycResources.MinimizeButtonGeometryData}"
+          Style="{StaticResource WindowButtonFillPathStyle}" />
   </DataTemplate>
   <DataTemplate x:Key="TopMostIcon">
-    <Grid UseLayoutRounding="True">
-      <Path Data="M 6 12 L 6 2 L 10 6 M 6 12 L 6 2 L 2 6 M 2 1 L 10 1"
-            Width="12"
-            Height="12"
-            Stroke="White"
-            StrokeThickness="1"
-            StrokeLineJoin="Round"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center" />
-    </Grid>
+    <Path Data="{x:Static re:CycResources.TopmostButtonGeometryData}"
+          Style="{StaticResource WindowButtonStrokePathStyle}" />
   </DataTemplate>
   <DataTemplate x:Key="NotifyIcon">
-    <Grid UseLayoutRounding="True">
-      <Path Data="M 6 12 L 6 3 L 10 6 M 6 12 L 6 3 L 2 6 M 2 .5 L 10 .5 M 2 2 L 10 2"
-            Width="12"
-            Height="12"
-            Stroke="White"
-            StrokeThickness="1"
-            StrokeLineJoin="Round"
-            UseLayoutRounding="True"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            RenderTransformOrigin="0.5,0.5">
-        <Path.RenderTransform>
-          <RotateTransform Angle="180" />
-        </Path.RenderTransform>
-      </Path>
-    </Grid>
+    <Path Data="{x:Static re:CycResources.NotifyIconButtonGeometryData}"
+          Style="{StaticResource WindowButtonStrokePathStyle}"
+          RenderTransformOrigin="0.5,0.5">
+      <Path.RenderTransform>
+        <RotateTransform Angle="180" />
+      </Path.RenderTransform>
+    </Path>
   </DataTemplate>
 
   <Style TargetType="{x:Type local:RevealWindow}">
@@ -231,12 +215,12 @@
                                 Width="40"
                                 IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Topmost, Mode=TwoWay}"
                                 ContentTemplate="{StaticResource TopMostIcon}"
-                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableTopmostButton, Converter={cyc:VisibilityConverter}}"/>
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableTopmostButton, Converter={cyc:VisibilityConverter}}" />
                   <local:RevealButton x:Name="NotifyIconButton"
                                       ToolTip="Minimize to notify icon"
                                       ContentTemplate="{StaticResource NotifyIcon}"
                                       Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NotifyIconCommand}"
-                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableNotifyIconButton, Converter={cyc:VisibilityConverter}}"/>
+                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableNotifyIconButton, Converter={cyc:VisibilityConverter}}" />
                 </StackPanel>
               </Grid>
               <AdornerDecorator Grid.Row="1"
