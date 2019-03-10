@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{061B1DD9-815B-437F-8CD6-D20923BC0AF4}</ProjectGuid>
+    <ProjectGuid>{F7B31D87-B15A-4048-80FA-B3A571E1CF38}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>CycWpfLibrary.FluentDesign</RootNamespace>
     <AssemblyName>CycWpfLibrary.FluentDesign</AssemblyName>

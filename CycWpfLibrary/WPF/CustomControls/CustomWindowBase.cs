@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace CycWpfLibrary
 {
-  public abstract class CustomWindowBase : Window
+  public abstract class CustomWindowBase : ObservableWindow
   {
     public CustomWindowBase()
     {

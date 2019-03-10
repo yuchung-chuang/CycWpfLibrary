@@ -50,7 +50,7 @@ namespace CycWpfLibrary
 
     public static string ToHexString(this byte[] ba)
     {
-      return BitConverter.ToString(ba).Replace("-", "");
+      return "#" + BitConverter.ToString(ba).Replace("-", "");
     }
     
 

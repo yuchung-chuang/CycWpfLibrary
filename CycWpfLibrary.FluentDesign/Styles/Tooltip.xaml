@@ -5,13 +5,13 @@
          TargetType="ToolTip"
          BasedOn="{StaticResource {x:Type ToolTip}}">
     <Setter Property="BorderBrush"
-            Value="#990093FF" />
+            Value="#994BC8FF" />
     <Setter Property="Background"
             Value="Black" />
     <Setter Property="BorderThickness"
             Value="1" />
     <Setter Property="Foreground"
-            Value="#FF0093FF" />
+            Value="#FF4BC8FF" />
   </Style>
 
 </ResourceDictionary>
