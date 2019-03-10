@@ -9,6 +9,7 @@
                  mc:Ignorable="d"
                  d:DesignStyle="{StaticResource DesignTimeWindowStyle}"
                  Title="MainWindow"
+                 Icon="a.jpg"
                  Height="350"
                  Width="525">
   <Window.DataContext>

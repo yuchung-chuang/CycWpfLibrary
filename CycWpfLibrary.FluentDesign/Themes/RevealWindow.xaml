@@ -219,7 +219,7 @@
                   <local:RevealButton x:Name="NotifyIconButton"
                                       ToolTip="Minimize to notify icon"
                                       ContentTemplate="{StaticResource NotifyIcon}"
-                                       />
+                                      Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NotifyIconCommand}" />
                   <ToggleButton x:Name="TopMostButton"
                                 ToolTip="Top Most Window"
                                 Width="40"
