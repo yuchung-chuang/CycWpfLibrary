@@ -5,11 +5,12 @@
                     xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-  <sys:Double x:Key="backgroundMaxOpacity">0.25</sys:Double>
+  <sys:Double x:Key="backgroundMaxOpacity">0.5</sys:Double>
   <sys:Double x:Key="hoverLightMaxOpacity">0.5</sys:Double>
   <sys:Double x:Key="borderLightNormalOpacity">0.5</sys:Double>
   <sys:Double x:Key="borderLightMaxOpacity">1</sys:Double>
-  <sys:Double x:Key="pressLightMaxOpacity">1</sys:Double>
+  <sys:Double x:Key="pressLightMaxOpacity">0.5</sys:Double>
+
 
   <Style TargetType="{x:Type local:RevealButton}">
     <Setter Property="Foreground"
@@ -33,105 +34,33 @@
             <Border x:Name="borderLight"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBorderLight), Converter={cyc:VisibilityConverter}}"
-                    Opacity="{StaticResource borderLightNormalOpacity}">
-              <Border.BorderBrush>
-                <RadialGradientBrush MappingMode="Absolute"
-                                     RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerSize)}"
-                                     RadiusX="{Binding RelativeSource={RelativeSource Self}, Path=RadiusY}">
-                  <RadialGradientBrush.Opacity>
-                    <MultiBinding Converter="{local:OpacityConverter}">
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.TrackerOpacity)" />
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.IsEnter)" />
-                    </MultiBinding>
-                  </RadialGradientBrush.Opacity>
-                  <RadialGradientBrush.Center>
-                    <MultiBinding Converter="{local:RelativePositionConverter}">
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.RootObject)" />
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}" />
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.Position)" />
-                    </MultiBinding>
-                  </RadialGradientBrush.Center>
-                  <RadialGradientBrush.GradientOrigin>
-                    <MultiBinding Converter="{local:RelativePositionConverter}">
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.RootObject)" />
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}" />
-                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                               Path="(local:PointerTracker.Position)" />
-                    </MultiBinding>
-                  </RadialGradientBrush.GradientOrigin>
-                  <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
-                                Offset="0" />
-                  <GradientStop Color="Transparent"
-                                Offset="1" />
-                </RadialGradientBrush>
-              </Border.BorderBrush>
-            </Border>
+                    Opacity="{StaticResource borderLightNormalOpacity}"
+                    BorderBrush="{local:RevealBrush}" />
             <Border x:Name="focusBorder"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    Visibility="Collapsed">
-              <Border.BorderBrush>
-                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}" 
-                                 Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}"/>
-              </Border.BorderBrush>
+                    Visibility="Collapsed"
+                    BorderBrush="{local:TemplatedSolidBrush}">
+              <Border x:Name="background"
+                      Opacity="0"
+                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}"
+                      Background="{local:TemplatedSolidBrush}" />
             </Border>
-            
+
             <Border x:Name="revealBorder"
                     BorderThickness="{TemplateBinding BorderThickness}">
-              <Grid x:Name="revealGrid">
-                <Border x:Name="background"
-                        Opacity="0"
-                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}">
-                  <Border.Background>
-                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
-                                     Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}" />
-                  </Border.Background>
-                </Border>
+              <Grid>
                 <Border x:Name="hoverLight"
                         Opacity="0"
-                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}">
-                  <Border.Background>
-                    <RadialGradientBrush MappingMode="Absolute"
-                                         RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerSize)}"
-                                         RadiusX="{Binding RelativeSource={RelativeSource Self}, Path=RadiusY}"
-                                         Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}">
-                      <RadialGradientBrush.Center>
-                        <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                   Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                   Path="(local:PointerTracker.Position)" />
-                        </MultiBinding>
-                      </RadialGradientBrush.Center>
-                      <RadialGradientBrush.GradientOrigin>
-                        <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                   Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
-                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                   Path="(local:PointerTracker.Position)" />
-                        </MultiBinding>
-                      </RadialGradientBrush.GradientOrigin>
-                      <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
-                                    Offset="0" />
-                      <GradientStop Color="Transparent"
-                                    Offset="1" />
-                    </RadialGradientBrush>
-                  </Border.Background>
-                </Border>
+                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}"
+                        Background="{local:RevealBrush}" />
                 <Rectangle x:Name="pressLight"
                            Opacity="0"
                            Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnablePressLight), Converter={cyc:VisibilityConverter}}">
                   <Rectangle.Fill>
                     <RadialGradientBrush x:Name="pressLightBrush"
                                          MappingMode="Absolute"
-                                         RadiusY="5"
-                                         RadiusX="5"
+                                         RadiusY="{Binding ElementName=pressLightAnimationBinder, Path=Width}"
+                                         RadiusX="{Binding ElementName=pressLightAnimationBinder, Path=Width}"
                                          Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}">
                       <RadialGradientBrush.Center>
                         <MultiBinding Converter="{local:RelativePositionConverter}">
@@ -151,12 +80,12 @@
                                    Path="(local:PointerTracker.Position)" />
                         </MultiBinding>
                       </RadialGradientBrush.GradientOrigin>
-                      <GradientStop Color="Transparent"
-                                    Offset="0" />
-                      <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
-                                    Offset="0.5" />
-                      <GradientStop Color="Transparent"
-                                    Offset="1" />
+                      <GradientStop Offset="0"
+                                    Color="Transparent"/>
+                      <GradientStop Offset="0.5"
+                                    Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"/>
+                      <GradientStop Offset="1"
+                                    Color="Transparent"/>
                     </RadialGradientBrush>
                   </Rectangle.Fill>
                 </Rectangle>
@@ -176,6 +105,22 @@
             </Border>
 
 
+            <!--Animate from 0 to 1-->
+            <FrameworkElement x:Name="pressLightAnimationDummy"
+                              Width="0" />
+            <FrameworkElement x:Name="pressLightAnimationBinder">
+              <FrameworkElement.Width>
+                <!--From A=500 to B=50, {0 => 1} * (B - A) + A -->
+                <MultiBinding Converter="{cyc:MathConverter}"
+                              ConverterParameter="[0] * ([1] / 2 - 500) + 500 ">
+                  <Binding ElementName="pressLightAnimationDummy"
+                           Path="Width" />
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                           Path="(local:PointerTracker.TrackerSize)" />
+                </MultiBinding>
+              </FrameworkElement.Width>
+            </FrameworkElement>
+
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="CommonStates">
                 <VisualState x:Name="Normal" />
@@ -189,19 +134,10 @@
                         <CubicEase EasingMode="EaseOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
-                    
+
                     <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
                                      Storyboard.TargetName="hoverLight"
                                      To="{StaticResource hoverLightMaxOpacity}"
-                                     Duration="0:0:0.600">
-                      <DoubleAnimation.EasingFunction>
-                        <CubicEase EasingMode="EaseOut" />
-                      </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-
-                    <DoubleAnimation Storyboard.TargetName="background"
-                                     Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     To="{StaticResource backgroundMaxOpacity}"
                                      Duration="0:0:0.600">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
@@ -211,35 +147,26 @@
                 </VisualState>
                 <VisualState x:Name="Pressed">
                   <Storyboard>
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     Storyboard.TargetName="borderLight"
+                    <DoubleAnimation Storyboard.TargetName="borderLight"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
                                      To="{StaticResource borderLightMaxOpacity}"
                                      Duration="0:0:0.100">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
-                    
-                    <DoubleAnimation Storyboard.TargetName="background"
-                                     Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     To="{StaticResource backgroundMaxOpacity}"
-                                     Duration="0:0:0.600">
-                      <DoubleAnimation.EasingFunction>
-                        <CubicEase EasingMode="EaseOut" />
-                      </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
 
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     Storyboard.TargetName="hoverLight"
-                                     To="0"
+                    <DoubleAnimation Storyboard.TargetName="hoverLight"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     To="{StaticResource hoverLightMaxOpacity}"
                                      Duration="0:0:0.100">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     Storyboard.TargetName="pressLight"
+                    <DoubleAnimation Storyboard.TargetName="pressLight"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
                                      To="{StaticResource pressLightMaxOpacity}"
                                      Duration="0:0:0.100">
                       <DoubleAnimation.EasingFunction>
@@ -247,36 +174,9 @@
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusX)"
-                                     Storyboard.TargetName="pressLightBrush"
-                                     From="100"
-                                     To="50"
-                                     Duration="0:0:0.300">
-                      <DoubleAnimation.EasingFunction>
-                        <CubicEase EasingMode="EaseOut" />
-                      </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusX)"
-                                     Storyboard.TargetName="pressLightBrush"
-                                     To="500"
-                                     BeginTime="0:0:0.500"
-                                     Duration="0:0:4.000">
-                      <DoubleAnimation.EasingFunction>
-                        <SineEase EasingMode="EaseInOut" />
-                      </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusY)"
-                                     Storyboard.TargetName="pressLightBrush"
-                                     From="100"
-                                     To="50"
-                                     Duration="0:0:0.300">
-                      <DoubleAnimation.EasingFunction>
-                        <CubicEase EasingMode="EaseOut" />
-                      </DoubleAnimation.EasingFunction>
-                    </DoubleAnimation>
-                    <DoubleAnimation Storyboard.TargetProperty="(RadialGradientBrush.RadiusY)"
-                                     Storyboard.TargetName="pressLightBrush"
-                                     To="500"
+                    <DoubleAnimation Storyboard.TargetName="pressLightBrush"
+                                     Storyboard.TargetProperty="Opacity"
+                                     To="0"
                                      BeginTime="0:0:0.500"
                                      Duration="0:0:4.000">
                       <DoubleAnimation.EasingFunction>
@@ -284,13 +184,22 @@
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
 
-                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                     Storyboard.TargetName="pressLightBrush"
+                    <DoubleAnimation Storyboard.TargetName="pressLightAnimationDummy"
+                                     Storyboard.TargetProperty="Width"
+                                     From="0"
+                                     To="1"
+                                     Duration="0:0:0.300">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="pressLightAnimationDummy"
+                                     Storyboard.TargetProperty="Width"
                                      To="0"
                                      BeginTime="0:0:0.500"
-                                     Duration="0:0:4.000">
+                                     Duration="0:0:1.000">
                       <DoubleAnimation.EasingFunction>
-                        <SineEase EasingMode="EaseInOut" />
+                        <CubicEase EasingMode="EaseInOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
                   </Storyboard>
@@ -328,6 +237,15 @@
                       <DiscreteObjectKeyFrame KeyTime="00:00:00"
                                               Value="{x:Static Visibility.Visible}" />
                     </ObjectAnimationUsingKeyFrames>
+
+                    <DoubleAnimation Storyboard.TargetName="background"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     To="{StaticResource backgroundMaxOpacity}"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
                   </Storyboard>
                 </VisualState>
                 <VisualState x:Name="Unfocused">
@@ -337,6 +255,15 @@
                       <DiscreteObjectKeyFrame KeyTime="00:00:00"
                                               Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
+
+                    <DoubleAnimation Storyboard.TargetName="background"
+                                     Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     To="0"
+                                     Duration="0:0:0.600">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
                   </Storyboard>
                 </VisualState>
               </VisualStateGroup>

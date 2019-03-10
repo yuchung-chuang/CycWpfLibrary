@@ -65,6 +65,8 @@
     <Compile Include="CustomControls\RevealWindow.cs" />
     <Compile Include="CustomControls\RevealButton.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Markups\RevealBrush.cs" />
+    <Compile Include="Markups\TemplatedSolidBrush.cs" />
     <Compile Include="Resources\ResourceDictionaryEx.cs" />
     <Compile Include="Resources\SystemTheme.cs" />
     <Compile Include="Resources\ThemeHandler.cs" />
@@ -72,10 +74,6 @@
     <Compile Include="Utility\SystemInfo.cs" />
     <Compile Include="Utility\VersionInfo.cs" />
     <Compile Include="Utility\VersionInfos.cs" />
-    <Page Include="Styles\Button.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\Brushes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -88,19 +86,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\ListBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ScrollBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\TextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

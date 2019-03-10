@@ -21,8 +21,8 @@ namespace CycWpfLibrary
   /// MathConverter can act as a value converter, or as a multivalue converter (WPF only).
   /// It is also a markup extension (WPF only) which allows to avoid declaring resources,
   /// ConverterParameter must contain an arithmetic expression over converter arguments. Operations supported are +, -, * and /
-  /// Single argument of a value converter may referred as x, a, or {0}
-  /// Arguments of multi value converter may be referred as x,y,z,t (first-fourth argument), or a,b,c,d, or {0}, {1}, {2}, {3}, {4}, ...
+  /// Single argument of a value converter may referred as x, a, or [0]
+  /// Arguments of multi value converter may be referred as x,y,z,t (first-fourth argument), or a,b,c,d, or [0], [1], [2], [3], [4], ...
   /// The converter supports arithmetic expressions of arbitrary complexity, including nested subexpressions
   /// </remarks>
   public class MathConverter : ComboConverterBase<MathConverter>
@@ -278,12 +278,12 @@ namespace CycWpfLibrary
           return expression;
         }
 
-        if (c == '{')
+        if (c == '[')
         {
           ++pos;
-          var end = text.IndexOf('}', pos);
-          if (end < 0) { --pos; throw new ArgumentException("Unmatched '{'"); }
-          if (end == pos) { throw new ArgumentException("Missing parameter index after '{'"); }
+          var end = text.IndexOf(']', pos);
+          if (end < 0) { --pos; throw new ArgumentException("Unmatched '['"); }
+          if (end == pos) { throw new ArgumentException("Missing parameter index after '['"); }
           var result = new Variable(text.Substring(pos, end - pos).Trim());
           pos = end + 1;
           SkipWhiteSpace();
