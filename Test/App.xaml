@@ -5,9 +5,11 @@
              StartupUri="MainWindow.xaml">
   <Application.Resources>
     <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Controls.xaml" />
-      </ResourceDictionary.MergedDictionaries>
+      <Style x:Key="DesignTimeWindowStyle"
+             TargetType="Window">
+        <Setter Property="Background"
+                Value="Black" />
+      </Style>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

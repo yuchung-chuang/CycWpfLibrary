@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32.SafeHandles;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -49,7 +50,7 @@ namespace CycWpfLibrary
   }
   #endregion
 
-  public static class ImageExtensions
+  public static class ImageConverters
   {
     #region Converters
     // Uri
@@ -112,12 +113,16 @@ namespace CycWpfLibrary
 
     public static Bitmap ToBitmap(this BitmapSource bitmapSource)
     {
+      if (bitmapSource == null)
+        return new Bitmap(1, 1);
       var bitmap = new Bitmap(bitmapSource.PixelWidth, bitmapSource.PixelHeight, PixelFormatWinForm.Format32bppPArgb);
       var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppPArgb);
       bitmapSource.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
       bitmap.UnlockBits(data);
       return bitmap;
     }
+
+
 
     // Bitmap
     public static BitmapImage ToBitmapImage(this Bitmap bitmap)
@@ -175,6 +180,38 @@ namespace CycWpfLibrary
       IntPtr cursor = CreateIconIndirect(ref ico);
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
+    public static Icon ToIcon(this Bitmap bitmap)
+    {
+      IntPtr Hicon = bitmap.GetHicon();
+      Icon newIcon = Icon.FromHandle(Hicon);
+
+      //DestroyIcon(newIcon.Handle);
+      DeleteObject(Hicon);
+
+      return newIcon;
+    }
+
+    //Icon
+    public static ImageSource ToImageSource(this Icon icon)
+    {
+      Bitmap bitmap = icon.ToBitmap();
+      IntPtr hBitmap = bitmap.GetHbitmap();
+
+      ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(
+          hBitmap,
+          IntPtr.Zero,
+          Int32Rect.Empty,
+          BitmapSizeOptions.FromEmptyOptions());
+
+      if (!DeleteObject(hBitmap))
+      {
+        throw new Win32Exception();
+      }
+
+      return wpfBitmap;
+    }
+
+    //FrameworkElement
     public static Cursor ToCursor(this FrameworkElement element, PointWpf hotSpot)
     {// size changed? color changed?
       var width = element.Width;
@@ -188,7 +225,7 @@ namespace CycWpfLibrary
       var bitmap = bitmapSource.ToBitmap();
       return bitmap.ToCursor(hotSpot);
     }
-
+    
     // Not straight forward
     public static BitmapSource ToBitmapSource(this PixelBitmap pixelBitmap) => pixelBitmap.Bitmap.ToBitmapSource();
     public static PixelBitmap ToPixelBitmap(this BitmapImage bitmapImage) => bitmapImage.ToBitmap().ToPixelBitmap();
@@ -203,7 +240,7 @@ namespace CycWpfLibrary
         g.DrawImage(bitmap, -rect.X, -rect.Y);
       return output;
     }
-
+    
     public static Bitmap Crop(this Bitmap bitmap, Rect rect)
     {
       return bitmap.Crop(new Rectangle((int)rect.X, (int)rect.Y, (int)rect.Width, (int)rect.Height));
@@ -222,12 +259,14 @@ namespace CycWpfLibrary
 
     #region Helper methods
     [DllImport("gdi32.dll")]
-    public static extern bool DeleteObject(IntPtr hObject);
+    private static extern bool DeleteObject(IntPtr hObject);
     [DllImport("user32.dll")]
     private static extern IntPtr CreateIconIndirect(ref IconInfo piconinfo);
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool GetIconInfo(IntPtr hIcon, ref IconInfo piconinfo);
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    private static extern bool DestroyIcon(IntPtr handle);
     #endregion
   }
 }

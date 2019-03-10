@@ -1,17 +1,16 @@
-﻿<Window x:Class="Test.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Test"
-        xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
-        xmlns:fd="clr-namespace:CycWpfLibrary.FluentDesign;assembly=CycWpfLibrary.FluentDesign"
-        mc:Ignorable="d"
-        Title="MainWindow"
-        fd:AcrylicWindow.Enabled="True"
-        Background="Black"
-        Height="350"
-        Width="525">
+﻿<fd:RevealWindow x:Class="Test.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:Test"
+                 xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
+                 xmlns:fd="clr-namespace:CycWpfLibrary.FluentDesign;assembly=CycWpfLibrary.FluentDesign"
+                 mc:Ignorable="d"
+                 d:DesignStyle="{StaticResource DesignTimeWindowStyle}"
+                 Title="MainWindow"
+                 Height="350"
+                 Width="525">
   <Window.DataContext>
     <local:MainWindowViewModel />
   </Window.DataContext>
@@ -24,7 +23,6 @@
                fd:PointerTracker.TrackerSize="100"
                fd:PointerTracker.TrackerOpacity="0.5"
                fd:PointerTracker.TrackerColor="#FF00E8FF"
-               
                Background="Transparent">
       <WrapPanel.Resources>
         <Style TargetType="fd:RevealButton">
@@ -47,12 +45,12 @@
       <Label Name="label1"
              Content="{Binding Label}" />
       <fd:RevealButton Content="Command Button"
-                    Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"
-                    IsEnabled="False"/>
+                       Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"
+                       IsEnabled="False" />
       <fd:RevealButton Content="RoutedCommand Button"
-                    Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
+                       Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
       <fd:RevealButton Content="Change Cursor"
-                    Click="Button_Click" />
+                       Click="Button_Click" />
       <Rectangle Name="rectCursor"
                  Width="20"
                  Height="20"
@@ -73,6 +71,7 @@
       <fd:RevealButton Content="aaa" />
       <fd:RevealButton Content="aaa" />
     </WrapPanel>
+      
 
     <Button HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
@@ -81,5 +80,7 @@
             Content="To Window1"
             Background="Gray"
             Click="WindowButton_Click" />
+
+
   </Grid>
-</Window>
+</fd:RevealWindow>

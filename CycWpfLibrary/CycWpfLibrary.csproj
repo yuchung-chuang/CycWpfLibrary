@@ -47,7 +47,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>CycAppKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,6 +88,7 @@
     <Compile Include="System\Extensions\StructExtensions.cs" />
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
+    <Compile Include="WPF\CustomControls\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
     <Compile Include="WPF\ValueConverters\SolidColorBrushConverter.cs" />
@@ -130,7 +132,7 @@
     <Compile Include="Media\Images\ColorExtensions.cs" />
     <Compile Include="System\Methods\Math.cs" />
     <Compile Include="Media\Images\ColorResources.cs" />
-    <Compile Include="Media\Images\ImageExtensions.cs" />
+    <Compile Include="Media\Images\ImageConverters.cs" />
     <Compile Include="Media\Images\Drawing.cs" />
     <Compile Include="Media\Images\PixelBitmap.cs" />
     <Compile Include="WPF\AttachedProperties\obsolete\AttachedPropertyBase.cs" />
@@ -161,7 +163,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="CycAppKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

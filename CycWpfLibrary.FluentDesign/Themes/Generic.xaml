@@ -5,6 +5,7 @@
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Window.xaml" />
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Styles/Menu.xaml" />
     <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Themes/RevealButton.xaml" />
+    <ResourceDictionary Source="pack://application:,,,/CycWpfLibrary.FluentDesign;component/Themes/RevealWindow.xaml" />
   </ResourceDictionary.MergedDictionaries>
 
   <local:AddValueConverter x:Key="addValueConverter" />

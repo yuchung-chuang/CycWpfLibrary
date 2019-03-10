@@ -2,7 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
                     xmlns:animation="clr-namespace:CycWpfLibrary.FluentDesign.Animations"
-                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
+                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+  <sys:Double x:Key="backgroundMaxOpacity">0.25</sys:Double>
+  <sys:Double x:Key="hoverLightMaxOpacity">0.5</sys:Double>
+  <sys:Double x:Key="borderLightNormalOpacity">0.5</sys:Double>
+  <sys:Double x:Key="borderLightMaxOpacity">1</sys:Double>
+  <sys:Double x:Key="pressLightMaxOpacity">1</sys:Double>
 
   <Style TargetType="{x:Type local:RevealButton}">
     <Setter Property="Foreground"
@@ -19,45 +26,45 @@
             Value="True" />
     <Setter Property="FocusVisualStyle"
             Value="{x:Null}" />
-
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type local:RevealButton}">
           <Grid x:Name="root">
             <Border x:Name="borderLight"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=(local:PointerTracker.EnableBorderLight), Converter={cyc:VisibilityConverter}}">
+                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBorderLight), Converter={cyc:VisibilityConverter}}"
+                    Opacity="{StaticResource borderLightNormalOpacity}">
               <Border.BorderBrush>
                 <RadialGradientBrush MappingMode="Absolute"
-                                     RadiusY="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=(local:PointerTracker.TrackerSize)}"
-                                     RadiusX="{Binding RelativeSource={RelativeSource Mode=Self}, Path=RadiusY}">
+                                     RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerSize)}"
+                                     RadiusX="{Binding RelativeSource={RelativeSource Self}, Path=RadiusY}">
                   <RadialGradientBrush.Opacity>
                     <MultiBinding Converter="{local:OpacityConverter}">
-                      <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Border}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.TrackerOpacity)" />
-                      <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Border}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.IsEnter)" />
                     </MultiBinding>
                   </RadialGradientBrush.Opacity>
                   <RadialGradientBrush.Center>
                     <MultiBinding Converter="{local:RelativePositionConverter}">
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.RootObject)" />
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.Position)" />
                     </MultiBinding>
                   </RadialGradientBrush.Center>
                   <RadialGradientBrush.GradientOrigin>
                     <MultiBinding Converter="{local:RelativePositionConverter}">
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.RootObject)" />
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
-                      <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                      <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                Path="(local:PointerTracker.Position)" />
                     </MultiBinding>
                   </RadialGradientBrush.GradientOrigin>
-                  <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                  <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
                                 Offset="0" />
                   <GradientStop Color="Transparent"
                                 Offset="1" />
@@ -68,49 +75,49 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Visibility="Collapsed">
               <Border.BorderBrush>
-                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}" 
-                                 Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}"/>
+                <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}" 
+                                 Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}"/>
               </Border.BorderBrush>
             </Border>
             
-            <Border x:Name="contentBorder"
+            <Border x:Name="revealBorder"
                     BorderThickness="{TemplateBinding BorderThickness}">
-              <Grid x:Name="contentGrid">
+              <Grid x:Name="revealGrid">
                 <Border x:Name="background"
                         Opacity="0"
-                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}">
+                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}">
                   <Border.Background>
-                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
-                                     Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}" />
+                    <SolidColorBrush Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
+                                     Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}" />
                   </Border.Background>
                 </Border>
                 <Border x:Name="hoverLight"
                         Opacity="0"
-                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}">
+                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}">
                   <Border.Background>
                     <RadialGradientBrush MappingMode="Absolute"
-                                         RadiusY="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Path=(local:PointerTracker.TrackerSize)}"
-                                         RadiusX="{Binding RelativeSource={RelativeSource Mode=Self}, Path=RadiusY}"
-                                         Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}">
+                                         RadiusY="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerSize)}"
+                                         RadiusX="{Binding RelativeSource={RelativeSource Self}, Path=RadiusY}"
+                                         Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}">
                       <RadialGradientBrush.Center>
                         <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.Position)" />
                         </MultiBinding>
                       </RadialGradientBrush.Center>
                       <RadialGradientBrush.GradientOrigin>
                         <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Border}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.Position)" />
                         </MultiBinding>
                       </RadialGradientBrush.GradientOrigin>
-                      <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                      <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
                                     Offset="0" />
                       <GradientStop Color="Transparent"
                                     Offset="1" />
@@ -119,34 +126,34 @@
                 </Border>
                 <Rectangle x:Name="pressLight"
                            Opacity="0"
-                           Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.EnablePressLight), Converter={cyc:VisibilityConverter}}">
+                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnablePressLight), Converter={cyc:VisibilityConverter}}">
                   <Rectangle.Fill>
                     <RadialGradientBrush x:Name="pressLightBrush"
                                          MappingMode="Absolute"
                                          RadiusY="5"
                                          RadiusX="5"
-                                         Opacity="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerOpacity)}">
+                                         Opacity="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerOpacity)}">
                       <RadialGradientBrush.Center>
                         <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.Position)" />
                         </MultiBinding>
                       </RadialGradientBrush.Center>
                       <RadialGradientBrush.GradientOrigin>
                         <MultiBinding Converter="{local:RelativePositionConverter}">
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.RootObject)" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}" />
-                          <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}"
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}" />
+                          <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                    Path="(local:PointerTracker.Position)" />
                         </MultiBinding>
                       </RadialGradientBrush.GradientOrigin>
                       <GradientStop Color="Transparent"
                                     Offset="0" />
-                      <GradientStop Color="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Border}, Path=(local:PointerTracker.TrackerColor)}"
+                      <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.TrackerColor)}"
                                     Offset="0.5" />
                       <GradientStop Color="Transparent"
                                     Offset="1" />
@@ -171,23 +178,21 @@
 
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup x:Name="CommonStates">
-                <VisualState x:Name="Normal">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="MouseOver">
                   <Storyboard>
                     <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     Storyboard.TargetName="hoverLight"
-                                     To="0"
-                                     Duration="0:0:0.600">
+                                     Storyboard.TargetName="borderLight"
+                                     To="{StaticResource borderLightMaxOpacity}"
+                                     Duration="0:0:0.100">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
                       </DoubleAnimation.EasingFunction>
                     </DoubleAnimation>
-                  </Storyboard>
-                </VisualState>
-                <VisualState x:Name="MouseOver">
-                  <Storyboard>
+                    
                     <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
                                      Storyboard.TargetName="hoverLight"
-                                     To="1"
+                                     To="{StaticResource hoverLightMaxOpacity}"
                                      Duration="0:0:0.600">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
@@ -196,7 +201,7 @@
 
                     <DoubleAnimation Storyboard.TargetName="background"
                                      Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     To="0.5"
+                                     To="{StaticResource backgroundMaxOpacity}"
                                      Duration="0:0:0.600">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
@@ -206,9 +211,18 @@
                 </VisualState>
                 <VisualState x:Name="Pressed">
                   <Storyboard>
+                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                                     Storyboard.TargetName="borderLight"
+                                     To="{StaticResource borderLightMaxOpacity}"
+                                     Duration="0:0:0.100">
+                      <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut" />
+                      </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    
                     <DoubleAnimation Storyboard.TargetName="background"
                                      Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     To="0.5"
+                                     To="{StaticResource backgroundMaxOpacity}"
                                      Duration="0:0:0.600">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
@@ -226,7 +240,7 @@
 
                     <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
                                      Storyboard.TargetName="pressLight"
-                                     To="1"
+                                     To="{StaticResource pressLightMaxOpacity}"
                                      Duration="0:0:0.100">
                       <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut" />
