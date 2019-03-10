@@ -110,6 +110,10 @@
     <Compile Include="AcrylicBrush.cs" />
     <Compile Include="CustomControls\AcrylicPanel.cs" />
     <Compile Include="CustomControls\AcrylicWindow.cs" />
+    <Page Include="Themes\RevealButtonBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\RevealWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

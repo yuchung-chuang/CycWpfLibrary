@@ -22,49 +22,5 @@ namespace CycWpfLibrary.FluentDesign
       DefaultStyleKeyProperty.OverrideMetadata(typeof(RevealButton), new FrameworkPropertyMetadata(typeof(RevealButton)));
     }
 
-    public bool EnableHoverLight
-    {
-      get => (bool)GetValue(EnableHoverLightProperty);
-      set => SetValue(EnableHoverLightProperty, value);
-    }
-    public static readonly DependencyProperty EnableHoverLightProperty = DependencyProperty.Register(
-        nameof(EnableHoverLight),
-        typeof(bool),
-        typeof(RevealButton),
-        new PropertyMetadata(default(bool)));
-
-    public bool EnablePressLight
-    {
-      get => (bool)GetValue(EnablePressLightProperty);
-      set => SetValue(EnablePressLightProperty, value);
-    }
-    public static readonly DependencyProperty EnablePressLightProperty = DependencyProperty.Register(
-        nameof(EnablePressLight),
-        typeof(bool),
-        typeof(RevealButton),
-        new PropertyMetadata(default(bool)));
-
-    public double HoverLightSize
-    {
-      get => (double)GetValue(HoverLightSizeProperty);
-      set => SetValue(HoverLightSizeProperty, value);
-    }
-    public static readonly DependencyProperty HoverLightSizeProperty = DependencyProperty.Register(
-        nameof(HoverLightSize),
-        typeof(double),
-        typeof(RevealButton),
-        new PropertyMetadata(100d));
-
-    public double PressLightSize
-    {
-      get => (double)GetValue(PressLightSizeProperty);
-      set => SetValue(PressLightSizeProperty, value);
-    }
-    public static readonly DependencyProperty PressLightSizeProperty = DependencyProperty.Register(
-        nameof(PressLightSize),
-        typeof(double),
-        typeof(RevealButton),
-        new PropertyMetadata(default(double)));
-
   }
 }

@@ -3,6 +3,10 @@
                     xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="RevealButtonBase.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
   <DataTemplate x:Key="RestoreIcon">
     <Grid UseLayoutRounding="True">
       <Path Data="M1,3 L1,11 L9,11 L9,3 z M3,1 L3,2 L10,2 L10,9 L11,9 L11,1 z M2 ,0 L12,0 L12,10 L10,10 L10,12 L0,12 L0,2 L2 ,2 z"
@@ -79,22 +83,9 @@
     </Grid>
   </DataTemplate>
 
-  <Style x:Key="TitleBarButtonFocusVisual">
-    <Setter Property="Control.Template">
-      <Setter.Value>
-        <ControlTemplate>
-          <Rectangle Margin="2"
-                     SnapsToDevicePixels="True"
-                     Stroke="Transparent"
-                     StrokeDashArray="1 2"
-                     StrokeThickness="1" />
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-
   <Style x:Key="TitleBarButtonStyle"
-         TargetType="{x:Type local:RevealButton}">
+         TargetType="ButtonBase"
+         BasedOn="{StaticResource RevealButtonBaseStyle}">
     <Setter Property="Focusable"
             Value="False" />
     <Setter Property="Background"
@@ -107,6 +98,10 @@
             Value="Center" />
     <Setter Property="BorderThickness"
             Value="1" />
+    <Setter Property="IsTabStop"
+            Value="False" />
+    <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+            Value="True" />
   </Style>
 
   <Style TargetType="{x:Type local:RevealWindow}">
@@ -162,7 +157,6 @@
                     Height="26.4"
                     Background="#99000000"
                     local:PointerTracker.Enabled="True"
-                    local:PointerTracker.EnableBackgroundColor="False"
                     local:PointerTracker.TrackerSize="36"
                     local:PointerTracker.TrackerOpacity="1">
                 <Grid.ColumnDefinitions>
@@ -209,12 +203,9 @@
                             WindowChrome.IsHitTestVisibleInChrome="True">
                   <StackPanel.Resources>
                     <Style TargetType="local:RevealButton"
-                           BasedOn="{StaticResource TitleBarButtonStyle}">
-                      <Setter Property="IsTabStop"
-                              Value="False" />
-                      <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
-                              Value="True" />
-                    </Style>
+                           BasedOn="{StaticResource TitleBarButtonStyle}" />
+                    <Style TargetType="ToggleButton"
+                           BasedOn="{StaticResource TitleBarButtonStyle}" />
                   </StackPanel.Resources>
                   <local:RevealButton x:Name="NotifyIconButton"
                                       ToolTip="Minimize to notify icon"
@@ -224,7 +215,7 @@
                                 ToolTip="Top Most Window"
                                 Width="40"
                                 IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Topmost, Mode=TwoWay}"
-                                ContentTemplate="{StaticResource TopMostIcon}" />
+                                ContentTemplate="{StaticResource TopMostIcon}"/>
                   <local:RevealButton x:Name="MinimizeButton"
                                       ToolTip="Minimize"
                                       Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
