@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="RevealButtonBase.xaml" />
@@ -83,27 +84,6 @@
     </Grid>
   </DataTemplate>
 
-  <Style x:Key="TitleBarButtonStyle"
-         TargetType="ButtonBase"
-         BasedOn="{StaticResource RevealButtonBaseStyle}">
-    <Setter Property="Focusable"
-            Value="False" />
-    <Setter Property="Background"
-            Value="#66FFFFFF" />
-    <Setter Property="Width"
-            Value="40" />
-    <Setter Property="HorizontalContentAlignment"
-            Value="Center" />
-    <Setter Property="VerticalContentAlignment"
-            Value="Center" />
-    <Setter Property="BorderThickness"
-            Value="1" />
-    <Setter Property="IsTabStop"
-            Value="False" />
-    <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
-            Value="True" />
-  </Style>
-
   <Style TargetType="{x:Type local:RevealWindow}">
     <Setter Property="local:AcrylicWindow.Enabled"
             Value="True" />
@@ -129,7 +109,6 @@
             Value="SingleBorderWindow" />
     <Setter Property="FontFamily"
             Value="Segoe UI" />
-    
     <Setter Property="WindowChrome.WindowChrome">
       <Setter.Value>
         <WindowChrome CornerRadius="0"
@@ -194,32 +173,44 @@
                                   FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSize}}"
                                   Content="{TemplateBinding Title}" />
                 </StackPanel>
-                <StackPanel x:Name="WindowCommandButtonsPanel"
+                <StackPanel x:Name="WindowButtonsStackPanel"
                             Grid.Column="1"
                             Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Stretch"
                             Background="Transparent"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                   <StackPanel.Resources>
+                    <Style x:Key="TitleBarButtonStyle"
+                           TargetType="ButtonBase"
+                           BasedOn="{StaticResource RevealButtonBaseStyle}">
+                      <Setter Property="Focusable"
+                              Value="False" />
+                      <Setter Property="Background"
+                              Value="#66FFFFFF" />
+                      <Setter Property="Width"
+                              Value="40" />
+                      <Setter Property="HorizontalContentAlignment"
+                              Value="Center" />
+                      <Setter Property="VerticalContentAlignment"
+                              Value="Center" />
+                      <Setter Property="BorderThickness"
+                              Value="1" />
+                      <Setter Property="IsTabStop"
+                              Value="False" />
+                      <Setter Property="WindowChrome.IsHitTestVisibleInChrome"
+                              Value="True" />
+                    </Style>
                     <Style TargetType="local:RevealButton"
                            BasedOn="{StaticResource TitleBarButtonStyle}" />
                     <Style TargetType="ToggleButton"
                            BasedOn="{StaticResource TitleBarButtonStyle}" />
                   </StackPanel.Resources>
-                  <local:RevealButton x:Name="NotifyIconButton"
-                                      ToolTip="Minimize to notify icon"
-                                      ContentTemplate="{StaticResource NotifyIcon}"
-                                      Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NotifyIconCommand}" />
-                  <ToggleButton x:Name="TopMostButton"
-                                ToolTip="Top Most Window"
-                                Width="40"
-                                IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Topmost, Mode=TwoWay}"
-                                ContentTemplate="{StaticResource TopMostIcon}"/>
-                  <local:RevealButton x:Name="MinimizeButton"
-                                      ToolTip="Minimize"
-                                      Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
-                                      ContentTemplate="{StaticResource MinimizeIcon}" />
+                  <local:RevealButton x:Name="CloseButton"
+                                      ToolTip="Close"
+                                      Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
+                                      ContentTemplate="{StaticResource CloseIcon}" />
                   <Grid>
                     <local:RevealButton x:Name="RestoreButton"
                                         ToolTip="Restore"
@@ -231,10 +222,21 @@
                                         Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
                                         ContentTemplate="{StaticResource MaximizeIcon}" />
                   </Grid>
-                  <local:RevealButton x:Name="CloseButton"
-                                      ToolTip="Close"
-                                      Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
-                                      ContentTemplate="{StaticResource CloseIcon}" />
+                  <local:RevealButton x:Name="MinimizeButton"
+                                      ToolTip="Minimize"
+                                      Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
+                                      ContentTemplate="{StaticResource MinimizeIcon}" />
+                  <ToggleButton x:Name="TopMostButton"
+                                ToolTip="Top Most Window"
+                                Width="40"
+                                IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Topmost, Mode=TwoWay}"
+                                ContentTemplate="{StaticResource TopMostIcon}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableTopmostButton, Converter={cyc:VisibilityConverter}}"/>
+                  <local:RevealButton x:Name="NotifyIconButton"
+                                      ToolTip="Minimize to notify icon"
+                                      ContentTemplate="{StaticResource NotifyIcon}"
+                                      Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NotifyIconCommand}"
+                                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableNotifyIconButton, Converter={cyc:VisibilityConverter}}"/>
                 </StackPanel>
               </Grid>
               <AdornerDecorator Grid.Row="1"

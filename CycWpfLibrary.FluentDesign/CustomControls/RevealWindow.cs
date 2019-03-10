@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -13,33 +16,74 @@ namespace CycWpfLibrary.FluentDesign
       DefaultStyleKeyProperty.OverrideMetadata(typeof(RevealWindow), new FrameworkPropertyMetadata(typeof(RevealWindow)));
     }
 
-    private NotifyIcon notifyIcon;
-    public ICommand NotifyIconCommand { get; set; }
-
     public RevealWindow()
     {
-      this.notifyIcon = new NotifyIcon();
-      this.Loaded += RevealWindow_Loaded;
-      this.notifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
-      NotifyIconCommand = new RelayCommand(MinimizeToNotifyIcon);
+      InitializeNotifyIcon();
     }
 
     private void RevealWindow_Loaded(object sender, RoutedEventArgs e)
     {
-      this.notifyIcon.Icon = (this.Icon as BitmapSource).ToBitmap().ToIcon();
+      SetNotifyIcon();
     }
 
+    public override void OnApplyTemplate()
+    {
+      base.OnApplyTemplate();
+
+      AddCustomWindowControls();
+    }
+
+
+    #region TopmostButton
+    [Browsable(true)]
+    [Category(AppNames.CycWpfLibrary)]
+    [Description("Showing Topmost Button in title bar")]
+    public bool EnableTopmostButton { get; set; } = true; 
+    #endregion
+
+    #region CustomWindowControls
+    public Collection<System.Windows.Controls.Control> CustomWindowControls { get; set; } = new Collection<System.Windows.Controls.Control>();
+    private StackPanel WindowButtonsStackPanel;
+    private void AddCustomWindowControls()
+    {
+      WindowButtonsStackPanel = GetTemplateChild(nameof(WindowButtonsStackPanel)) as StackPanel;
+      foreach (var control in CustomWindowControls)
+      {
+        WindowButtonsStackPanel.Children.Add(control);
+      }
+    } 
+    #endregion
+
+    #region NotifyIcon
+    [Browsable(true)]
+    [Category(AppNames.CycWpfLibrary)]
+    [Description("Showing NotifyIcon Button in the title bar")]
+    public bool EnableNotifyIconButton { get; set; } = true;
+    protected NotifyIcon NotifyIcon { get; set; }
+    public ICommand NotifyIconCommand { get; set; }
+
+    private void InitializeNotifyIcon()
+    {
+      NotifyIcon = new NotifyIcon();
+      Loaded += RevealWindow_Loaded;
+      NotifyIcon.MouseDoubleClick += NotifyIcon_MouseDoubleClick;
+      NotifyIconCommand = new RelayCommand(MinimizeToNotifyIcon);
+    }
+    private void SetNotifyIcon()
+    {
+      NotifyIcon.Icon = (Icon as BitmapSource).ToBitmap().ToIcon();
+    }
     private void MinimizeToNotifyIcon()
     {
-      this.Hide();
-      notifyIcon.Visible = true;
+      Hide();
+      NotifyIcon.Visible = true;
     }
-
     private void NotifyIcon_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
     {
-      this.Show();
-      this.WindowState = WindowState.Normal;
-      notifyIcon.Visible = false;
+      Show();
+      WindowState = WindowState.Normal;
+      Activate();
     }
+    #endregion
   }
 }

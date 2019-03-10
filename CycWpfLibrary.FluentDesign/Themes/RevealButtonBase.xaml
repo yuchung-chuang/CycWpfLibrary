@@ -91,16 +91,15 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     Visibility="Collapsed"
                     BorderBrush="{local:TemplatedSolidBrush}">
-              
+              <Border x:Name="background"
+                      Opacity="0"
+                      Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}"
+                      Background="{local:TemplatedSolidBrush}" />
             </Border>
 
             <Border x:Name="revealBorder"
                     BorderThickness="{TemplateBinding BorderThickness}">
               <Grid>
-                <Border x:Name="background"
-                        Opacity="0"
-                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableBackgroundColor), Converter={cyc:VisibilityConverter}}"
-                        Background="{local:TemplatedSolidBrush}" />
                 <Border x:Name="hoverLight"
                         Opacity="0"
                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:PointerTracker.EnableHoverLight), Converter={cyc:VisibilityConverter}}"

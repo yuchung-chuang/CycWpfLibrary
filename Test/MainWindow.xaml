@@ -12,13 +12,13 @@
                  Icon="a.jpg"
                  Height="350"
                  Width="525">
-  <Window.DataContext>
+  <fd:RevealWindow.DataContext>
     <local:MainWindowViewModel />
-  </Window.DataContext>
-  <Window.CommandBindings>
+  </fd:RevealWindow.DataContext>
+  <fd:RevealWindow.CommandBindings>
     <CommandBinding Command="{x:Static local:MainWindowViewModel.RequeryCommand}"
                     Executed="Requery_Executed" />
-  </Window.CommandBindings>
+  </fd:RevealWindow.CommandBindings>
   <Grid>
     <WrapPanel fd:PointerTracker.Enabled="True"
                fd:PointerTracker.TrackerSize="100"
