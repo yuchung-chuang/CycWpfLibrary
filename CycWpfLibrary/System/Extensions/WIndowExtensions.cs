@@ -27,7 +27,7 @@ namespace CycWpfLibrary
     Top,
     Bottom,
   }
-  public static class ScreenExtensions
+  public static class WindowExtensions
   {
     /// <summary>
     /// 取得作業系統的Dpi放大率，需要在<paramref name="window"/>已經載入後使用。

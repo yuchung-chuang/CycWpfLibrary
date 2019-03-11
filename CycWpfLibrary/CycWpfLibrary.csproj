@@ -79,10 +79,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Media\Images\SaveImageServices.cs" />
     <Compile Include="System\Classes\PageManagerBase.cs" />
     <Compile Include="System\Classes\Constants.cs" />
+    <Compile Include="System\Classes\WindowServices.cs" />
     <Compile Include="System\Extensions\DoubleExtensions.cs" />
-    <Compile Include="Screen\ScreenExtensions.cs" />
+    <Compile Include="System\Extensions\WIndowExtensions.cs" />
     <Compile Include="System\Extensions\ObjectExtensions.cs" />
     <Compile Include="System\Extensions\StringExtensions.cs" />
     <Compile Include="System\Extensions\StructExtensions.cs" />
