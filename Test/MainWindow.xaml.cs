@@ -28,13 +28,6 @@ namespace Test
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-      //< Rectangle Name = "rectCursor"
-      //           Width = "20"
-      //           Height = "20"
-      //           Fill = "#7F00FFFF"
-      //           Stroke = "Black"
-      //           StrokeThickness = "2"
-      //           IsHitTestVisible = "False" />
       var rect = new Rectangle
       {
         Width = 20,
@@ -51,6 +44,11 @@ namespace Test
     {
       var window = new Window1();
       window.ShowDialog();
+    }
+
+    private void ScrollViewerEx_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+    {
+      
     }
   }
 }

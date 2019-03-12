@@ -111,6 +111,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CycWpfLibrary.CustomControls\CycWpfLibrary.CustomControls.csproj">
+      <Project>{1b0190c8-083c-4c23-9862-66c520641264}</Project>
+      <Name>CycWpfLibrary.CustomControls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary.FluentDesign\CycWpfLibrary.FluentDesign.csproj">
       <Project>{061b1dd9-815b-437f-8cd6-d20923bc0af4}</Project>
       <Name>CycWpfLibrary.FluentDesign</Name>

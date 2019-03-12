@@ -46,12 +46,11 @@ namespace CycWpfLibrary
     }
 
     #region Win32 Messages
-    private const int WM_MOUSEHWHEEL = 0x020E;
     protected override void OnSourceInitialized(EventArgs e)
     {
       base.OnSourceInitialized(e);
       var source = PresentationSource.FromVisual(this) as HwndSource;
-      source?.AddHook(WndProc);
+      source?.AddHook(WndProc); // Hook Win32 Messages to method
     }
 
     /// <summary>
@@ -66,7 +65,7 @@ namespace CycWpfLibrary
     {
       switch (msg)
       {
-        case WM_MOUSEHWHEEL:
+        case WndIDs.WM_MOUSEHWHEEL:
           int tilt = (short)wParam.GetHIWORD();
           HookMouseTilt(tilt);
           return (IntPtr)1;
@@ -81,7 +80,7 @@ namespace CycWpfLibrary
     /// </summary>
     private void HookMouseTilt(int tilt)
     {
-      OnMouseTilt(tilt); // invoke event
+      OnMouseTilt(tilt); // propagate event
     }
     public event EventHandler<MouseTiltEventArgs> MouseTilt;
     /// <summary>

@@ -6,6 +6,7 @@
                  xmlns:local="clr-namespace:Test"
                  xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
                  xmlns:fd="clr-namespace:CycWpfLibrary.FluentDesign;assembly=CycWpfLibrary.FluentDesign"
+                 xmlns:cc="clr-namespace:CycWpfLibrary.CustomControls;assembly=CycWpfLibrary.CustomControls"
                  mc:Ignorable="d"
                  d:DesignStyle="{StaticResource DesignTimeWindowStyle}"
                  Title="MainWindow"
@@ -24,8 +25,9 @@
            BasedOn="{StaticResource RevealTooltipStyle}" />
   </Window.Resources>
   <Grid>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                  PanningMode="Both">
+    <cc:ScrollViewerEx HorizontalScrollBarVisibility="Auto"
+                  PanningMode="Both"
+                       ScrollChanged="ScrollViewerEx_ScrollChanged">
       <WrapPanel Name="wrap"
                  fd:PointerTracker.Enabled="True"
                  fd:PointerTracker.TrackerSize="100"
@@ -90,6 +92,6 @@
         <fd:RevealButton Content="aaa" />
       </WrapPanel>
 
-    </ScrollViewer>
+    </cc:ScrollViewerEx>
   </Grid>
 </fd:RevealWindow>

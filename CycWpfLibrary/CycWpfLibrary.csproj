@@ -91,6 +91,7 @@
     <Compile Include="System\Extensions\StructExtensions.cs" />
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
+    <Compile Include="Win32\Win32MessageIDs.cs" />
     <Compile Include="WPF\CustomControls\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
