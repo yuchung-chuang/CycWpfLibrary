@@ -24,68 +24,72 @@
            BasedOn="{StaticResource RevealTooltipStyle}" />
   </Window.Resources>
   <Grid>
-    <WrapPanel fd:PointerTracker.Enabled="True"
-               fd:PointerTracker.TrackerSize="100"
-               fd:PointerTracker.TrackerOpacity="0.5"
-               fd:PointerTracker.TrackerColor="Cyan"
-               Background="Transparent">
-      <WrapPanel.Resources>
-        <Style TargetType="fd:RevealButton">
-          <Setter Property="Margin"
-                  Value="2" />
-          <Setter Property="Width"
-                  Value="100" />
-          <Setter Property="Height"
-                  Value="100" />
-          <Setter Property="Background"
-                  Value="Transparent" />
-          <Setter Property="Foreground"
-                  Value="White" />
-          <Setter Property="BorderThickness"
-                  Value="5" />
-          <Setter Property="Foreground"
-                  Value="#FF00E8FF" />
-        </Style>
-      </WrapPanel.Resources>
-      <Label Name="label1"
-             Content="{Binding Label}" />
-      <fd:RevealButton Content="Command Button"
-                       Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"
-                       IsEnabled="False" />
-      <fd:RevealButton Content="RoutedCommand Button"
-                       Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
-      <fd:RevealButton Content="Change Cursor"
-                       Click="Button_Click" />
-      <Rectangle Name="rectCursor"
-                 Width="20"
-                 Height="20"
-                 Fill="#7F00FFFF"
-                 Stroke="Black"
-                 StrokeThickness="2"
-                 IsHitTestVisible="False" />
-      <Image Source="a.jpg"
-             Width="100"
-             Height="100"
-             cyc:Pan.IsEnabled="True" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-      <fd:RevealButton Content="aaa" />
-    </WrapPanel>
-      
+    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                  PanningMode="Both">
+      <WrapPanel Name="wrap"
+                 fd:PointerTracker.Enabled="True"
+                 fd:PointerTracker.TrackerSize="100"
+                 fd:PointerTracker.TrackerOpacity="0.5"
+                 fd:PointerTracker.TrackerColor="Cyan"
+                 Background="Transparent"
+                 Width="800">
+        <WrapPanel.Resources>
+          <Style TargetType="fd:RevealButton">
+            <Setter Property="Margin"
+                    Value="2" />
+            <Setter Property="Width"
+                    Value="100" />
+            <Setter Property="Height"
+                    Value="100" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="BorderThickness"
+                    Value="5" />
+            <Setter Property="Foreground"
+                    Value="#FF00E8FF" />
+          </Style>
+        </WrapPanel.Resources>
+        <Label Name="label1"
+               Content="{Binding Label}" />
+        <fd:RevealButton Content="Command Button"
+                         Command="{x:Static local:MainWindowViewModel.ChangeLabelCommand}"
+                         IsEnabled="False" />
+        <fd:RevealButton Content="RoutedCommand Button"
+                         Command="{x:Static local:MainWindowViewModel.RequeryCommand}" />
+        <fd:RevealButton Content="Change Cursor"
+                         Click="Button_Click" />
+        <Rectangle Name="rectCursor"
+                   Width="20"
+                   Height="20"
+                   Fill="#7F00FFFF"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   IsHitTestVisible="False" />
+        <Image Source="a.jpg"
+               Width="100"
+               Height="100"
+               cyc:Pan.IsEnabled="True" />
+        <fd:RevealButton Content="To Window1"
+                Click="WindowButton_Click" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+        <fd:RevealButton Content="aaa" />
+      </WrapPanel>
 
-    <Button HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Width="100"
-            Height="50"
-            Content="To Window1"
-            Background="Gray"
-            Click="WindowButton_Click" />
-
-
+    </ScrollViewer>
   </Grid>
 </fd:RevealWindow>

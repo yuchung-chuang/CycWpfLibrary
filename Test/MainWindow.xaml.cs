@@ -16,6 +16,7 @@ namespace Test
     public MainWindow()
     {
       InitializeComponent();
+      
     }
 
     private void Requery_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -23,7 +24,6 @@ namespace Test
       // 按下按鈕或按下鍵盤Ctrl+R都會觸發
       var n = int.Parse(label1.Content as string);
       label1.Content = (n++).ToString();
-
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

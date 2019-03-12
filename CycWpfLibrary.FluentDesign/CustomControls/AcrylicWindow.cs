@@ -197,15 +197,11 @@ namespace CycWpfLibrary.FluentDesign
       obj.SetValue(AcrylicElement.FallbackColorProperty, value);
     }
 
-
-
     public bool ShowTitleBar
     {
       get { return (bool)GetValue(ShowTitleBarProperty); }
       set { SetValue(ShowTitleBarProperty, value); }
     }
-
-    // Using a DependencyProperty as the backing store for ShowTitleBar.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ShowTitleBarProperty;
     public static bool GetShowTitleBar(DependencyObject obj)
     {
@@ -280,8 +276,6 @@ namespace CycWpfLibrary.FluentDesign
 
   internal class AcrylicElement
   {
-
-
     public static Color GetTintColor(DependencyObject obj)
     {
       return (Color)obj.GetValue(TintColorProperty);

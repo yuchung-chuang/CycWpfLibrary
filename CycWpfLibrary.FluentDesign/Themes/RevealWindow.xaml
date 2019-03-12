@@ -3,7 +3,8 @@
                     xmlns:local="clr-namespace:CycWpfLibrary.FluentDesign"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:cyc="clr-namespace:CycWpfLibrary;assembly=CycWpfLibrary"
-                    xmlns:re="clr-namespace:CycWpfLibrary.Resource;assembly=CycWpfLibrary.Resource">
+                    xmlns:re="clr-namespace:CycWpfLibrary.Resource;assembly=CycWpfLibrary.Resource"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="RevealButtonBase.xaml" />
@@ -67,7 +68,9 @@
       </Path.RenderTransform>
     </Path>
   </DataTemplate>
-
+  <sys:Double x:Key="CaptionHeight">26.5</sys:Double>
+  <sys:Double x:Key="WindoeButtonWidth">40</sys:Double>
+  
   <Style TargetType="{x:Type local:RevealWindow}">
     <Setter Property="local:AcrylicWindow.Enabled"
             Value="True" />
@@ -89,16 +92,12 @@
             Value="True" />
     <Setter Property="TextOptions.TextFormattingMode"
             Value="Display" />
-    <Setter Property="WindowStyle"
-            Value="SingleBorderWindow" />
     <Setter Property="FontFamily"
             Value="Segoe UI" />
     <Setter Property="WindowChrome.WindowChrome">
       <Setter.Value>
-        <WindowChrome CornerRadius="0"
-                      GlassFrameThickness="1"
-                      UseAeroCaptionButtons="False"
-                      NonClientFrameEdges="None" />
+        <WindowChrome ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
+                      CaptionHeight="{StaticResource CaptionHeight}" />
       </Setter.Value>
     </Setter>
     <Setter Property="Template">
@@ -108,25 +107,17 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   Background="{TemplateBinding Background}"
                   BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid x:Name="LayoutRoot"
-                  Background="{TemplateBinding Background}">
-              <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
-
-              <Grid x:Name="PART_WindowTitleGrid"
-                    Grid.Row="0"
-                    Height="26.4"
-                    Background="#99000000"
-                    local:PointerTracker.Enabled="True"
-                    local:PointerTracker.TrackerSize="36"
-                    local:PointerTracker.TrackerOpacity="1">
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Horizontal">
+            <DockPanel x:Name="LayoutRoot"
+                       Background="{TemplateBinding Background}">
+              <DockPanel x:Name="PART_WindowTitle"
+                         DockPanel.Dock="Top"
+                         Height="{StaticResource CaptionHeight}"
+                         Background="#BB000000"
+                         local:PointerTracker.Enabled="True"
+                         local:PointerTracker.TrackerSize="{StaticResource WindoeButtonWidth}"
+                         local:PointerTracker.TrackerOpacity="1">
+                <StackPanel Orientation="Horizontal"
+                            DockPanel.Dock="Left">
                   <Button x:Name="IconButton"
                           Content="{TemplateBinding Icon}"
                           VerticalAlignment="Center"
@@ -158,7 +149,7 @@
                                   Content="{TemplateBinding Title}" />
                 </StackPanel>
                 <StackPanel x:Name="WindowButtonsStackPanel"
-                            Grid.Column="1"
+                            DockPanel.Dock="Right"
                             Orientation="Horizontal"
                             FlowDirection="RightToLeft"
                             HorizontalAlignment="Right"
@@ -174,7 +165,7 @@
                       <Setter Property="Background"
                               Value="#66FFFFFF" />
                       <Setter Property="Width"
-                              Value="40" />
+                              Value="{StaticResource WindoeButtonWidth}" />
                       <Setter Property="HorizontalContentAlignment"
                               Value="Center" />
                       <Setter Property="VerticalContentAlignment"
@@ -222,7 +213,7 @@
                                       Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=NotifyIconCommand}"
                                       Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableNotifyIconButton, Converter={cyc:VisibilityConverter}}" />
                 </StackPanel>
-              </Grid>
+              </DockPanel>
               <AdornerDecorator Grid.Row="1"
                                 KeyboardNavigation.IsTabStop="False">
                 <ContentPresenter x:Name="MainContentPresenter"
@@ -235,10 +226,9 @@
                           IsTabStop="False"
                           Visibility="Hidden"
                           WindowChrome.ResizeGripDirection="BottomRight" />
-            </Grid>
+            </DockPanel>
           </Border>
-
-
+          
           <ControlTemplate.Triggers>
             <Trigger Property="WindowState"
                      Value="Maximized">

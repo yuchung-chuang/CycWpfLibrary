@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
 namespace CycWpfLibrary
@@ -29,8 +30,7 @@ namespace CycWpfLibrary
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
     {
       base.OnMouseLeftButtonDown(e);
-      if (e.ButtonState == MouseButtonState.Pressed)
-        DragMove();
+      
     }
     protected override void OnContentRendered(EventArgs e)
     {
@@ -45,15 +45,63 @@ namespace CycWpfLibrary
       AddCustomWindowControls();
     }
 
-    #region CustomWindowControls
-    public Collection<System.Windows.Controls.Control> CustomWindowControls { get; set; } = new Collection<System.Windows.Controls.Control>();
-    private StackPanel WindowButtonsStackPanel;
+    #region Win32 Messages
+    private const int WM_MOUSEHWHEEL = 0x020E;
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+      base.OnSourceInitialized(e);
+      var source = PresentationSource.FromVisual(this) as HwndSource;
+      source?.AddHook(WndProc);
+    }
+
+    /// <summary>
+    /// Processing Win32 messages.
+    /// </summary>
+    /// <param name="hwnd">Window handle</param>
+    /// <param name="msg">Message ID</param>
+    /// <param name="wParam">Message "w" pointer.</param>
+    /// <param name="lParam">Message "l" pointer.</param>
+    /// <returns>Return specific value for specific message. Check documents of Win32 message processing.</returns>
+    private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+    {
+      switch (msg)
+      {
+        case WM_MOUSEHWHEEL:
+          int tilt = (short)wParam.GetHIWORD();
+          HookMouseTilt(tilt);
+          return (IntPtr)1;
+      }
+      return IntPtr.Zero;
+    }
+    #endregion
+
+    #region MouseTilt
+    /// <summary>
+    /// Invoked by Win32 message.
+    /// </summary>
+    private void HookMouseTilt(int tilt)
+    {
+      OnMouseTilt(tilt); // invoke event
+    }
+    public event EventHandler<MouseTiltEventArgs> MouseTilt;
+    /// <summary>
+    /// Invoked by <see cref="HookMouseTilt(int)"/>
+    /// </summary>
+    protected virtual void OnMouseTilt(int tilt)
+    {
+      MouseTilt?.Invoke(this, new MouseTiltEventArgs(tilt));
+    }
+    #endregion
+
+    #region TitlebarControls
+    public Collection<System.Windows.Controls.Control> TitlebarControls { get; set; } = new Collection<System.Windows.Controls.Control>();
+    private StackPanel TitlebarControlsStackPanel;
     private void AddCustomWindowControls()
     {
-      WindowButtonsStackPanel = GetTemplateChild(nameof(WindowButtonsStackPanel)) as StackPanel;
-      foreach (var control in CustomWindowControls)
+      TitlebarControlsStackPanel = GetTemplateChild(nameof(TitlebarControlsStackPanel)) as StackPanel;
+      foreach (var control in TitlebarControls)
       {
-        WindowButtonsStackPanel.Children.Add(control);
+        TitlebarControlsStackPanel.Children.Add(control);
       }
     }
     #endregion
@@ -143,5 +191,22 @@ namespace CycWpfLibrary
     }
     #endregion
 
+    #region DragMove
+    public bool EnableDragMove { get; set; }
+    private void ProcessDragMove(MouseButtonEventArgs e)
+    {
+      if (EnableDragMove && e.ButtonState == MouseButtonState.Pressed)
+        DragMove();
+    } 
+    #endregion
+  }
+
+  public class MouseTiltEventArgs : EventArgs
+  {
+    public int Tilt { get; set; }
+    public MouseTiltEventArgs(int tilt)
+    {
+      Tilt = tilt;
+    }
   }
 }
