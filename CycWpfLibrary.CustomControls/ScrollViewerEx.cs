@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,33 +11,30 @@ namespace CycWpfLibrary.CustomControls
 {
   public class ScrollViewerEx : ScrollViewer
   {
-
     public ScrollViewerEx()
+    {
+      RegisterMouseTilt();
+    }
+
+    #region MouseTilt
+    private void RegisterMouseTilt()
     {
       Loaded += (scrollviewerSender, loadArgs) =>
       {
         var window = Window.GetWindow(this) as CustomWindowBase;
-        window.MouseTilt += (windowSender, tiltArgs) =>
+        window.MouseHWheel += (windowSender, HWheelArgs) =>
         {
-          OnMouseTilt(tiltArgs.Tilt); // propagate event
+          OnMouseHWheel(HWheelArgs.Tilt); // propagate event
         };
       };
     }
 
-    public event EventHandler<MouseTiltEventArgs> MouseTilt;
-    protected virtual void OnMouseTilt(int tilt)
+    public event EventHandler<MouseTiltEventArgs> MouseHWheel;
+    protected virtual void OnMouseHWheel(int delta)
     {
-      MouseTilt?.Invoke(this, new MouseTiltEventArgs(tilt));
-      OnMouseTilting(tilt);
+      MouseHWheel?.Invoke(this, new MouseTiltEventArgs(delta));
+      ScrollToHorizontalOffset(HorizontalOffset + delta * 0.5);
     }
-
-    /// <summary>
-    /// Processing horizontal scrolling.
-    /// </summary>
-    /// <param name="tilt">The amount of tilt.</param>
-    protected virtual void OnMouseTilting(int tilt)
-    {
-      ScrollToHorizontalOffset(HorizontalOffset + tilt);
-    }
+    #endregion
   }
 }

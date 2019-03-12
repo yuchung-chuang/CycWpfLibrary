@@ -92,7 +92,7 @@
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="Win32\Win32MessageIDs.cs" />
-    <Compile Include="WPF\CustomControls\CustomWindowBase.cs" />
+    <Compile Include="WPF\BaseControls\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
     <Compile Include="WPF\ValueConverters\SolidColorBrushConverter.cs" />
@@ -122,10 +122,10 @@
     <Compile Include="WPF\ValueConverters\UniversalConverter.cs" />
     <Compile Include="WPF\Validations\ValidationHelpers.cs" />
     <Compile Include="WPF\Validations\Validations.cs" />
-    <Compile Include="WPF\ViewModels\ObservableDependencyObject.cs" />
-    <Compile Include="WPF\ViewModels\ObservableWindow.cs" />
-    <Compile Include="WPF\ViewModels\ViewModelBase.cs" />
-    <Compile Include="WPF\ViewModels\ObservableObject.cs" />
+    <Compile Include="WPF\BaseViewModels\ObservableDependencyObject.cs" />
+    <Compile Include="WPF\BaseViewModels\ObservableWindow.cs" />
+    <Compile Include="WPF\BaseViewModels\ViewModelBase.cs" />
+    <Compile Include="WPF\BaseViewModels\ObservableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
@@ -143,7 +143,7 @@
     <Compile Include="WPF\Commands\RelayCommand.cs" />
     <Compile Include="WPF\Xaml\XamlMarkupObject.cs" />
     <Compile Include="WPF\Commands\Interactivity.cs" />
-    <Compile Include="WPF\ViewModels\ObservableUserControl.cs" />
+    <Compile Include="WPF\BaseViewModels\ObservableUserControl.cs" />
     <Compile Include="System\Methods\NativeMethod.cs" />
     <Compile Include="Threading\TaskQueue.cs" />
     <Compile Include="WPF\Xaml\MergedStyles.cs" />

@@ -45,10 +45,5 @@ namespace Test
       var window = new Window1();
       window.ShowDialog();
     }
-
-    private void ScrollViewerEx_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
-    {
-      
-    }
   }
 }

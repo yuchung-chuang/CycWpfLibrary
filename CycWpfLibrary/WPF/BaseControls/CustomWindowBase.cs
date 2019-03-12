@@ -44,15 +44,18 @@ namespace CycWpfLibrary
 
       AddCustomWindowControls();
     }
-
-    #region Win32 Messages
     protected override void OnSourceInitialized(EventArgs e)
     {
       base.OnSourceInitialized(e);
+      HookWin32Message();
+    }
+
+    #region Win32 Messages
+    private void HookWin32Message()
+    {
       var source = PresentationSource.FromVisual(this) as HwndSource;
       source?.AddHook(WndProc); // Hook Win32 Messages to method
     }
-
     /// <summary>
     /// Processing Win32 messages.
     /// </summary>
@@ -63,32 +66,40 @@ namespace CycWpfLibrary
     /// <returns>Return specific value for specific message. Check documents of Win32 message processing.</returns>
     private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
     {
+      int delta;
       switch (msg)
       {
         case WndIDs.WM_MOUSEHWHEEL:
-          int tilt = (short)wParam.GetHIWORD();
-          HookMouseTilt(tilt);
+          delta = (short)wParam.HIWORD();
+          HookMouseHWheel(delta);
+          return (IntPtr)1;
+        case WndIDs.WM_MOUSEWHEEL:
+          delta = (short)wParam.HIWORD();
+          HookMouseWheel(delta);
           return (IntPtr)1;
       }
       return IntPtr.Zero;
     }
-    #endregion
 
-    #region MouseTilt
     /// <summary>
     /// Invoked by Win32 message.
     /// </summary>
-    private void HookMouseTilt(int tilt)
+    private void HookMouseHWheel(int delta)
     {
-      OnMouseTilt(tilt); // propagate event
+      OnMouseHWheel(delta); // propagate event
     }
-    public event EventHandler<MouseTiltEventArgs> MouseTilt;
+    public event EventHandler<MouseTiltEventArgs> MouseHWheel;
     /// <summary>
-    /// Invoked by <see cref="HookMouseTilt(int)"/>
+    /// Invoked by <see cref="HookMouseHWheel(int)"/>
     /// </summary>
-    protected virtual void OnMouseTilt(int tilt)
+    protected virtual void OnMouseHWheel(int delta)
     {
-      MouseTilt?.Invoke(this, new MouseTiltEventArgs(tilt));
+      MouseHWheel?.Invoke(this, new MouseTiltEventArgs(delta));
+    }
+
+    private void HookMouseWheel(int delta)
+    {
+      // Write behavior for MouseWheel event
     }
     #endregion
 
