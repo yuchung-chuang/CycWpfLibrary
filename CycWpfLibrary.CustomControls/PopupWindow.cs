@@ -32,7 +32,7 @@ namespace CycWpfLibrary.CustomControls
       resources.InitializeComponent();
       cornerRadius = (double)resources["PopupCornerRadius"];
       shadow = new Border
-      {
+      { 
         Style = resources["shadowStyle"] as Style,
       };
     }
