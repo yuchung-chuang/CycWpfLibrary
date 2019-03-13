@@ -128,7 +128,7 @@ namespace CycWpfLibrary.CustomControls
     private Border shadow;
     private Window mainWindow;
     private Panel mainPanel;
-    private Point centerPanelPos;
+    private Point centerPanelPos;/
     private Point centerScreenPos;
 
     private Rectangle[] targetRectangle;
