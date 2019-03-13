@@ -21,6 +21,8 @@ namespace CycWpfLibrary.CustomControls
       AllowsTransparency = true;
       WindowStyle = WindowStyle.None;
       SizeToContent = SizeToContent.WidthAndHeight;
+      ShowInTaskbar = false;
+
       mainWindow = Application.Current.MainWindow;
       mainWindow.EnsurePanelContent();
       mainPanel = mainWindow.Content as Panel;
