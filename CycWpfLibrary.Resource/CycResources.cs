@@ -39,6 +39,9 @@ namespace CycWpfLibrary.Resource
     public static Uri CycIconUri { get; }
       = new Uri(CycResourcesPackUri + "icon_cyc.png");
 
+    public static string CycIconUriString { get; }
+      = CycIconUri.ToString();
+
     public static DrawingBrush CrossboardBrush { get; } = new DrawingBrush
     {
       TileMode = TileMode.Tile,

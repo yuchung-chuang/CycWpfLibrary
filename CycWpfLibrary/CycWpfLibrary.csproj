@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" 
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.2.6.0\build\PropertyChanged.Fody.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -97,8 +96,11 @@
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="Win32\Win32MessageIDs.cs" />
+    <Compile Include="WPF\AttachedProperties\PasswordObserver.cs" />
+    <Compile Include="WPF\AttachedProperties\NoMatchValidator.cs" />
     <Compile Include="WPF\BaseControls\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
+    <Compile Include="WPF\Validations\ValidationRuleBase.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
     <Compile Include="WPF\ValueConverters\SolidColorBrushConverter.cs" />
     <Compile Include="WPF\ValueConverters\VisibilityConverter.cs" />
@@ -146,7 +148,7 @@
     <Compile Include="Media\Images\PixelBitmap.cs" />
     <Compile Include="WPF\AttachedProperties\obsolete\AttachedPropertyBase.cs" />
     <Compile Include="WPF\Commands\RelayCommand.cs" />
-    <Compile Include="WPF\Xaml\XamlMarkupObject.cs" />
+    <Compile Include="WPF\ValueConverters\ConverterBases\ConverterMarkup.cs" />
     <Compile Include="WPF\Commands\Interactivity.cs" />
     <Compile Include="WPF\BaseViewModels\ObservableUserControl.cs" />
     <Compile Include="System\Methods\NativeMethod.cs" />
