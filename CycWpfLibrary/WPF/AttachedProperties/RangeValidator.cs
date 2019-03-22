@@ -93,32 +93,31 @@ namespace CycWpfLibrary
 
     private static void TextBox_GotFocus(object sender, RoutedEventArgs e)
     {
-      Validate(sender as TextBox);
+      UpdateValidation(sender as TextBox);
     }
 
     private static void TextBox_TextChanged(object sender, EventArgs e)
     {
-      Validate(sender as TextBox);
+      UpdateValidation(sender as TextBox);
     }
 
-    private static void Validate(TextBox tb)
+    private static void UpdateValidation(TextBox tb)
     {
       BindingExpression exp = tb.GetBindingExpression(TextBox.TextProperty);
-      if (exp != null && exp.ParentBinding != null)
+      if (exp == null || exp.ParentBinding == null)
+        return;
+      var myValidation = exp.ParentBinding.ValidationRules.FirstOrDefault(r => r is RangeValidation) as RangeValidation;
+      if (myValidation == null)
       {
-        var myRule = exp.ParentBinding.ValidationRules.FirstOrDefault(r => r is RangeValidation) as RangeValidation;
-        if (myRule == null)
-        {
-          myRule = new RangeValidation();
-          exp.ParentBinding.ValidationRules.Add(myRule);
-        }
-        myRule.ValidatesOnTargetUpdated = true;
-        myRule.Minimum = (int)tb.GetValue(MinimumProperty);
-        myRule.Maximum = (int)tb.GetValue(MaximumProperty);
-        myRule.ExcludeMax = (bool)tb.GetValue(ExcludeMaxProperty);
-        myRule.ExcludeMin = (bool)tb.GetValue(ExcludeMinProperty);
-        //myRule.Validate(tb.Text, CultureInfo.CurrentCulture); //useless to call validation manually
+        myValidation = new RangeValidation();
+        exp.ParentBinding.ValidationRules.Add(myValidation);
       }
+      myValidation.ValidatesOnTargetUpdated = true;
+      myValidation.Minimum = GetMinimum(tb);
+      myValidation.Maximum = GetMaximum(tb);
+      myValidation.ExcludeMax = GetExcludeMax(tb);
+      myValidation.ExcludeMin = GetExcludeMin(tb);
+      //myRule.Validate(tb.Text, CultureInfo.CurrentCulture); //useless to call validation manually
     }
   }
 }
