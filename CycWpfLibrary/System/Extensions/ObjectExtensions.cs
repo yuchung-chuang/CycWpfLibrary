@@ -11,6 +11,7 @@ namespace CycWpfLibrary
     public static bool IsNumeric(this object obj)
     {
       switch (Type.GetTypeCode(obj.GetType()))
+
       {
         case TypeCode.Byte:
         case TypeCode.SByte:
@@ -27,6 +28,14 @@ namespace CycWpfLibrary
         default:
           return false;
       }
+    }
+
+    /// <summary>
+    /// return empty string if object is null
+    /// </summary>
+    public static string ToStringEx(this object obj)
+    {
+      return (obj ?? "").ToString();
     }
   }
 }
