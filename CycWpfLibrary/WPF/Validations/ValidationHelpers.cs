@@ -124,23 +124,23 @@ namespace CycWpfLibrary
     }
   }
 
-  public class StringListMarkup : MarkupExtension
+  public class MatchListBinding : MarkupExtension
   {
-    public class StringListDP : DependencyObject
+    public class MatchListDP : DependencyObject
     {
-      public List<string> StringCollection
+      public List<string> MatchList
       {
-        get => (List<string>)GetValue(StringCollectionProperty);
-        set => SetValue(StringCollectionProperty, value);
+        get => (List<string>)GetValue(MatchListProperty);
+        set => SetValue(MatchListProperty, value);
       }
-      public static readonly DependencyProperty StringCollectionProperty = DependencyProperty.Register(
-          nameof(StringCollection),
+      public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register(
+          nameof(MatchList),
           typeof(List<string>),
-          typeof(StringListDP),
+          typeof(MatchListDP),
           new PropertyMetadata(new List<string>()));
     }
 
-    private StringListDP DP { get; set; } = new StringListDP();
+    private MatchListDP DP { get; set; } = new MatchListDP();
     public PropertyPath Path { get; set; }
     public object Source { get; set; }
     public override object ProvideValue(IServiceProvider serviceProvider)
@@ -150,8 +150,8 @@ namespace CycWpfLibrary
         Path = Path,
         Source = Source,
       };
-      BindingOperations.SetBinding(DP, StringListDP.StringCollectionProperty, binding);
-      return DP.StringCollection;
+      BindingOperations.SetBinding(DP, MatchListDP.MatchListProperty, binding);
+      return DP.MatchList;
     }
   }
 }

@@ -87,6 +87,7 @@
     <Compile Include="System\Classes\PageManagerBase.cs" />
     <Compile Include="System\Classes\Constants.cs" />
     <Compile Include="System\Classes\WindowServices.cs" />
+    <Compile Include="System\Extensions\ApplicationExtensions.cs" />
     <Compile Include="System\Extensions\DoubleExtensions.cs" />
     <Compile Include="System\Extensions\PointerExtensions.cs" />
     <Compile Include="System\Extensions\WIndowExtensions.cs" />
@@ -97,8 +98,7 @@
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="Win32\Win32MessageIDs.cs" />
     <Compile Include="WPF\AttachedProperties\PasswordObserver.cs" />
-    <Compile Include="WPF\AttachedProperties\NoMatchValidator.cs" />
-    <Compile Include="WPF\BaseControls\CustomWindowBase.cs" />
+    <Compile Include="WPF\ControlBases\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\Validations\ValidationRuleBase.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
@@ -129,10 +129,10 @@
     <Compile Include="WPF\ValueConverters\UniversalConverter.cs" />
     <Compile Include="WPF\Validations\ValidationHelpers.cs" />
     <Compile Include="WPF\Validations\Validations.cs" />
-    <Compile Include="WPF\BaseViewModels\ObservableDependencyObject.cs" />
-    <Compile Include="WPF\BaseViewModels\ObservableWindow.cs" />
-    <Compile Include="WPF\BaseViewModels\ViewModelBase.cs" />
-    <Compile Include="WPF\BaseViewModels\ObservableObject.cs" />
+    <Compile Include="WPF\ViewModelBases\ObservableDependencyObject.cs" />
+    <Compile Include="WPF\ViewModelBases\ObservableWindow.cs" />
+    <Compile Include="WPF\ViewModelBases\ViewModelBase.cs" />
+    <Compile Include="WPF\ViewModelBases\ObservableObject.cs" />
     <Compile Include="Threading\AsyncAwaiter.cs" />
     <Compile Include="WinForm\Converters.cs" />
     <Compile Include="WinForm\RectangleExtenstions.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="WPF\Commands\RelayCommand.cs" />
     <Compile Include="WPF\ValueConverters\ConverterBases\ConverterMarkup.cs" />
     <Compile Include="WPF\Commands\Interactivity.cs" />
-    <Compile Include="WPF\BaseViewModels\ObservableUserControl.cs" />
+    <Compile Include="WPF\ViewModelBases\ObservableUserControl.cs" />
     <Compile Include="System\Methods\NativeMethod.cs" />
     <Compile Include="Threading\TaskQueue.cs" />
     <Compile Include="WPF\Xaml\MergedStyles.cs" />

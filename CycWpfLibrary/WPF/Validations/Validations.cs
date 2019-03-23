@@ -13,12 +13,31 @@ using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace CycWpfLibrary
-{
+{  
+  public class MatchValidation : ValidationRuleBase
+  {
+    public class MatchDP : DependencyObject
+    {
+      public string Match
+      {
+        get => (string)GetValue(MatchProperty);
+        set => SetValue(MatchProperty, value);
+      }
+      public static readonly DependencyProperty MatchProperty = DependencyProperty.Register(
+          nameof(Match),
+          typeof(string),
+          typeof(MatchDP),
+          new PropertyMetadata(""));
+    }
+    public MatchDP DP { get; set; }
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => new ValidationResult(DP.Match == value.ToStringEx(), Message);
+  }
+
   public class NoMatchValidation : ValidationRuleBase
   {
-    public List<string> StringList { get; set; }
+    public List<string> MatchList { get; set; }
 
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => new ValidationResult(!StringList.Any(str => str == value.ToStringEx()), Message);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => new ValidationResult(!MatchList.Any(str => str == value.ToStringEx()), Message);
   }
 
   public class NotNullValidation : ValidationRuleBase

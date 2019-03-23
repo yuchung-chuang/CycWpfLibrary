@@ -16,6 +16,8 @@ namespace CycWpfLibrary
 {
   public static class NativeMethod
   {
+    public static Window GetWindow() => Application.Current.MainWindow;
+
     /// <summary>
     /// 非同步執行<paramref name="action"/>，並使用<see cref="Cursors.Wait"/>。
     /// </summary>
