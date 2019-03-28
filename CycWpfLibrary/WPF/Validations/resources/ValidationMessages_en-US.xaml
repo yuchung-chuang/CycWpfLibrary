@@ -3,6 +3,28 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:CycWpfLibrary">
+
+  <sys:String x:Key="ValidationMessageNotSimilar">
+    Input string should not be similar with 
+  </sys:String>
+  <sys:String x:Key="ValidationMessageContainUpper">
+    Input string should contain upper letter
+  </sys:String>
+  <sys:String x:Key="ValidationMessageContainLower">
+    Input string should contain lower letter
+  </sys:String>
+  <sys:String x:Key="ValidationMessageContainSymbol">
+    Input string should contain symbol character
+  </sys:String>
+  <sys:String x:Key="ValidationMessageMinLength">
+    Input string should greater than 
+  </sys:String>
+  <sys:String x:Key="ValidationMessageMatch">
+    Input doesn't match with given string
+  </sys:String>
+  <sys:String x:Key="ValidationMessageNoMatch">
+    Input matches with given list
+  </sys:String>
   <sys:String x:Key="ValidationMessageNotNull">
     Input should not be null
   </sys:String>

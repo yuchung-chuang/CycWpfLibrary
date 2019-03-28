@@ -13,31 +13,46 @@ using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace CycWpfLibrary
-{  
+{
+  public class NotSimilarValidation : ValidationRuleBase
+  {
+    public MatchValidationDP DP { get; set; }
+    public double tolerance { get; set; }
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.NotSimilar(value, DP.Match, tolerance, Message);
+  }
+
+  public class ContainUpperValidation : ValidationRuleBase
+  {
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.ContainUpper(value, Message);
+  }
+
+  public class ContainLowerValidation : ValidationRuleBase
+  {
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.ContainLower(value, Message);
+  }
+
+  public class ContainSymbolValidation : ValidationRuleBase
+  {
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.ContainSymbol(value, Message);
+  }
+  public class MinLengthValidation : ValidationRuleBase
+  {
+    public int MinLength { get; set; }
+
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.MinLength(value, MinLength, Message);
+  }
+
   public class MatchValidation : ValidationRuleBase
   {
-    public class MatchDP : DependencyObject
-    {
-      public string Match
-      {
-        get => (string)GetValue(MatchProperty);
-        set => SetValue(MatchProperty, value);
-      }
-      public static readonly DependencyProperty MatchProperty = DependencyProperty.Register(
-          nameof(Match),
-          typeof(string),
-          typeof(MatchDP),
-          new PropertyMetadata(""));
-    }
-    public MatchDP DP { get; set; }
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => new ValidationResult(DP.Match == value.ToStringEx(), Message);
+    public MatchValidationDP DP { get; set; }
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.Match(value, DP.Match, Message);
   }
 
   public class NoMatchValidation : ValidationRuleBase
   {
     public List<string> MatchList { get; set; }
 
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => new ValidationResult(!MatchList.Any(str => str == value.ToStringEx()), Message);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.NoMatch(value, MatchList, Message);
   }
 
   public class NotNullValidation : ValidationRuleBase
