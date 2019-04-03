@@ -28,6 +28,7 @@ namespace CycWpfLibrary
     private static readonly string ContainSymbolMessage = "ValidationMessageContainSymbol";
     private static readonly string MinLengthMessage = "ValidationMessageMinLength";
     private static readonly string MatchMessage = "ValidationMessageMatch";
+    private static readonly string MatchAnyMessage = "ValidationMessageMatchAny";
     private static readonly string NoMatchMessage = "ValidationMessageNoMatch";
     private static readonly string IsNotNullMessage = "ValidationMessageNotNull";
     private static readonly string IsDoubleMessage = "ValidationMessageDouble";
@@ -63,9 +64,18 @@ namespace CycWpfLibrary
     {
       return new ValidationResult(match == value.ToStringEx(), message ?? GetDefaultMessage(MatchMessage));
     }
+
+    private static bool MatchAny(object value, List<string> matchList)
+    {
+      return matchList.Any(str => str == value.ToStringEx());
+    }
+    public static ValidationResult MatchAny(object value, List<string> matchList, string message)
+    {
+      return new ValidationResult(MatchAny(value, matchList), message ?? GetDefaultMessage(MatchAnyMessage));
+    }
     public static ValidationResult NoMatch(object value, List<string> matchList, string message)
     {
-      return new ValidationResult(!matchList.Any(str => str == value.ToStringEx()), message ?? GetDefaultMessage(NoMatchMessage));
+      return new ValidationResult(!MatchAny(value, matchList), message ?? GetDefaultMessage(NoMatchMessage));
     }
     public static ValidationResult IsNotNull(object value, string message = null)
     {
@@ -157,35 +167,18 @@ namespace CycWpfLibrary
     }
   }
 
-  public class MatchListBinding : MarkupExtension
+  public class MatchListDP : DependencyObject
   {
-    public class MatchListDP : DependencyObject
+    public List<string> MatchList
     {
-      public List<string> MatchList
-      {
-        get => (List<string>)GetValue(MatchListProperty);
-        set => SetValue(MatchListProperty, value);
-      }
-      public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register(
-          nameof(MatchList),
-          typeof(List<string>),
-          typeof(MatchListDP),
-          new PropertyMetadata(new List<string>()));
+      get => (List<string>)GetValue(MatchListProperty);
+      set => SetValue(MatchListProperty, value);
     }
-
-    private MatchListDP DP { get; set; } = new MatchListDP();
-    public PropertyPath Path { get; set; }
-    public object Source { get; set; }
-    public override object ProvideValue(IServiceProvider serviceProvider)
-    {
-      var binding = new Binding
-      {
-        Path = Path,
-        Source = Source,
-      };
-      BindingOperations.SetBinding(DP, MatchListDP.MatchListProperty, binding);
-      return DP.MatchList;
-    }
+    public static readonly DependencyProperty MatchListProperty = DependencyProperty.Register(
+        nameof(MatchList),
+        typeof(List<string>),
+        typeof(MatchListDP),
+        new PropertyMetadata(new List<string>()));
   }
 
   public class MatchValidationDP : DependencyObject

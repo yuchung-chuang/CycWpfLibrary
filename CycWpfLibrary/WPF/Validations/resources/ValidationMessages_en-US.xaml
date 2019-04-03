@@ -22,6 +22,9 @@
   <sys:String x:Key="ValidationMessageMatch">
     Input doesn't match with given string
   </sys:String>
+  <sys:String x:Key="ValidationMessageMatchAny">
+    Input doesn't match with any string in given list.
+  </sys:String>
   <sys:String x:Key="ValidationMessageNoMatch">
     Input matches with given list
   </sys:String>

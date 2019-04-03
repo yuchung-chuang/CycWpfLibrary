@@ -16,7 +16,7 @@ namespace CycWpfLibrary
 {
   public class NotSimilarValidation : ValidationRuleBase
   {
-    public MatchValidationDP DP { get; set; }
+    public MatchValidationDP DP { get; set; } = new MatchValidationDP();
     public double tolerance { get; set; }
     public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.NotSimilar(value, DP.Match, tolerance, Message);
   }
@@ -48,11 +48,17 @@ namespace CycWpfLibrary
     public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.Match(value, DP.Match, Message);
   }
 
+  public class MatchAnyValidation : ValidationRuleBase
+  {
+    public MatchListDP DP { get; set; } = new MatchListDP();
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.MatchAny(value, DP.MatchList, Message);
+  }
+
   public class NoMatchValidation : ValidationRuleBase
   {
-    public List<string> MatchList { get; set; }
+    public MatchListDP DP { get; set; } = new MatchListDP();
 
-    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.NoMatch(value, MatchList, Message);
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo) => ValidationHelpers.NoMatch(value, DP.MatchList, Message);
   }
 
   public class NotNullValidation : ValidationRuleBase
