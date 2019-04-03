@@ -12,17 +12,17 @@ namespace CycWpfLibrary
   public static class PasswordObserver
   {
     #region Attached Properties
-    public static readonly DependencyProperty ObservedPasswordProperty = DependencyProperty.RegisterAttached(
-        "ObservedPassword",
+    public static readonly DependencyProperty PasswordProperty = DependencyProperty.RegisterAttached(
+        "Password",
         typeof(string),
         typeof(PasswordObserver),
         new FrameworkPropertyMetadata(string.Empty));
     [Category(AppNames.CycWpfLibrary)]
     [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-    public static string GetObservedPassword(DependencyObject obj)
-        => (string)obj.GetValue(ObservedPasswordProperty);
-    public static void SetObservedPassword(DependencyObject obj, string value)
-        => obj.SetValue(ObservedPasswordProperty, value);
+    public static string GetPassword(DependencyObject obj)
+        => (string)obj.GetValue(PasswordProperty);
+    public static void SetPassword(DependencyObject obj, string value)
+        => obj.SetValue(PasswordProperty, value);
 
     public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached(
         "IsEnabled",
@@ -55,7 +55,7 @@ namespace CycWpfLibrary
     private static void OnPasswordChanged(object sender, RoutedEventArgs e)
     {
       var passwordBox = sender as PasswordBox;
-      SetObservedPassword(passwordBox, passwordBox.Password);
+      SetPassword(passwordBox, passwordBox.Password);
     }
   }
 }
