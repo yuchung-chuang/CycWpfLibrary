@@ -1,6 +1,7 @@
 ﻿using CycWpfLibrary;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -19,22 +20,33 @@ namespace CycWpfLibrary
     public static Window GetWindow() => Application.Current.MainWindow;
 
     /// <summary>
-    /// 非同步執行<paramref name="action"/>，並使用<see cref="Cursors.Wait"/>。
+    /// 非同步執行<paramref name="action"/>，使用<see cref="Cursors.Wait"/>。
     /// </summary>
     public static async Task CursorWaitForAsync(Action action)
     {
-      Application.Current.MainWindow.Cursor = Cursors.Wait;
+      await CursorWaitForAsync(action, CancellationToken.None);
+    }
+    
+    /// <summary>
+    /// 非同步執行<paramref name="action"/>，使用<see cref="Cursors.Wait"/>。
+    /// </summary>
+    /// <param name="token">提供工作取消的功能。</param>
+    public static async Task CursorWaitForAsync(Action action, CancellationToken token)
+    {
+      Mouse.OverrideCursor = Cursors.Wait;
       try //in case there is any error in the action
       {
-        await Task.Run(action);
+        var task = Task.Run(action, token);
+        // "await Task.Run" cannot invoke "finally", don't know why ...
+        await task.ContinueWith(t => { }, token);
       }
-      catch (Exception e)
+      catch (Exception)
       {
-        throw e;
+        throw;
       }
       finally
       {
-        Application.Current.MainWindow.Cursor = Cursors.Arrow;
+        Mouse.OverrideCursor = null;
       }
     }
 
