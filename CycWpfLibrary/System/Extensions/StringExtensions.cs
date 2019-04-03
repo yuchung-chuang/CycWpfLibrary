@@ -96,8 +96,9 @@ namespace CycWpfLibrary
     public static bool IsSimilarTo(this string strA, string strB, double tol = 0.1)
     {
       if (strA.Equals(strB))
-        return true; 
+        return true;
 
+      strB = strB.ToStringEx(); // null check
       return EditDistanceTo(strA, strB) / (0.5 * (strA.Length + strB.Length)) <= tol;
     }
 

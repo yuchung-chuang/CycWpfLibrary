@@ -7,7 +7,7 @@ namespace CycWpfLibrary
   /// <summary>
   /// 提供ViewMoel的基底功能。
   /// </summary>
-  public class ViewModelBase : ObservableObject
+  public class ViewModelBase : ObservableObject, IViewValidation
   {
     /// <summary>
     /// Dynamic expression
@@ -26,5 +26,6 @@ namespace CycWpfLibrary
       }
     }
 
+    public bool IsViewValid { get; set; }
   }
 }
