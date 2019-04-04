@@ -97,6 +97,7 @@
     <Compile Include="System\Extensions\UIElementExtensions.cs" />
     <Compile Include="Screen\ScreenMethods.cs" />
     <Compile Include="Win32\Win32MessageIDs.cs" />
+    <Compile Include="WPF\AttachedProperties\WatermarkService.cs" />
     <Compile Include="WPF\AttachedProperties\PasswordObserver.cs" />
     <Compile Include="WPF\ControlBases\CustomWindowBase.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
