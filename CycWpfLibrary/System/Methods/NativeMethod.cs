@@ -108,5 +108,27 @@ namespace CycWpfLibrary
     /// </summary>
     /// <remarks>由於傳入指標，當數據為參考型別時，不會更動擁有同樣數據的其他變數值。</remarks>
     public static void Swap<T>(ref T x, ref T y) => (x, y) = (y, x);
+
+    /// <summary>
+    /// Make default instance for <typeparamref name="TClass"/>
+    /// </summary>
+    /// <exception cref="InvalidOperationException"/>
+    public static TClass MakeInstance<TClass>()
+    {
+      var type = typeof(TClass);
+
+      var constructors = type.GetConstructors();
+      // Default: get the first public constructor
+      if (constructors.Length == 0)
+        throw new InvalidOperationException($"{type} doesn't have public constructor.");
+
+      // Default: get constructor without parameters
+      var constructor = constructors.FirstOrDefault(c => c.GetParameters().Length == 0);
+      if (constructor == null)
+        throw new InvalidOperationException($"{type} doesn't have public constructor without parameters.");
+      else
+        return (TClass)constructor.Invoke(null);
+
+    }
   }
 }
