@@ -52,10 +52,20 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\..\WpfCycChat\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\WpfCycChat\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\WpfCycChat\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\packages\PropertyChanged.Fody.2.6.0\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
@@ -83,6 +93,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DataModelBase.cs" />
+    <Compile Include="Database\DbService.cs" />
+    <Compile Include="IoC\IocContainer.cs" />
+    <Compile Include="IoC\IocContainerBase.cs" />
     <Compile Include="Media\Images\SaveImageServices.cs" />
     <Compile Include="System\Classes\PageManagerBase.cs" />
     <Compile Include="System\Classes\Constants.cs" />
@@ -101,20 +115,27 @@
     <Compile Include="WPF\AttachedProperties\PasswordObserver.cs" />
     <Compile Include="WPF\MVVM\Commands\RelayCommandGeneric.cs" />
     <Compile Include="WPF\ControlBases\CustomWindowBase.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\DesignerPlatformLibrary.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\Empty.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\FeatureDetection.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\IExecuteWithObject.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\IExecuteWithObjectAndResult.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\WeakAction.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\WeakActionGeneric.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\WeakFunc.cs" />
-    <Compile Include="WPF\MVVM\Messaging\Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="WPF\MVVM\IoC\ISimpleIoc.cs" />
+    <Compile Include="WPF\MVVM\IoC\PreferredConstructor.cs" />
+    <Compile Include="WPF\MVVM\IoC\SimpleIoc.cs" />
+    <Compile Include="WPF\MVVM\Helpers\DesignerPlatformLibrary.cs" />
+    <Compile Include="WPF\MVVM\Helpers\Empty.cs" />
+    <Compile Include="WPF\MVVM\Helpers\FeatureDetection.cs" />
+    <Compile Include="WPF\MVVM\Helpers\IExecuteWithObject.cs" />
+    <Compile Include="WPF\MVVM\Helpers\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="WPF\MVVM\Helpers\WeakAction.cs" />
+    <Compile Include="WPF\MVVM\Helpers\WeakActionGeneric.cs" />
+    <Compile Include="WPF\MVVM\Helpers\WeakFunc.cs" />
+    <Compile Include="WPF\MVVM\Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="WPF\MVVM\Messaging\EventMessage.cs" />
+    <Compile Include="WPF\MVVM\Messaging\Message.cs" />
     <Compile Include="WPF\MVVM\Messaging\Interfaces\ICleanup.cs" />
     <Compile Include="WPF\MVVM\Messaging\GenericMessage.cs" />
     <Compile Include="WPF\MVVM\Messaging\Interfaces\IMessenger.cs" />
     <Compile Include="WPF\MVVM\Messaging\MessageBase.cs" />
     <Compile Include="WPF\MVVM\Messaging\Messenger.cs" />
+    <Compile Include="WPF\MVVM\ViewModels\IViewValidation.cs" />
+    <Compile Include="WPF\MVVM\ViewModels\StaticPropertyChangedEventArgs.cs" />
     <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\Validations\ValidationRuleBase.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
@@ -144,7 +165,7 @@
     <Compile Include="WPF\ValueConverters\NumStrConverter.cs" />
     <Compile Include="WPF\ValueConverters\UniversalConverter.cs" />
     <Compile Include="WPF\Validations\ValidationHelpers.cs" />
-    <Compile Include="WPF\Validations\Validations.cs" />
+    <Compile Include="WPF\Validations\ValidationRules.cs" />
     <Compile Include="WPF\MVVM\ViewModels\ObservableDependencyObject.cs" />
     <Compile Include="WPF\MVVM\ViewModels\ObservableWindow.cs" />
     <Compile Include="WPF\MVVM\ViewModels\ViewModelBase.cs" />
@@ -190,6 +211,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -215,6 +237,7 @@
       <Name>CycWpfLibrary.Resource</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.2\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.2\build\Fody.targets')" />
 </Project>

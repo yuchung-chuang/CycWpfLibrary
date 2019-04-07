@@ -9,14 +9,9 @@ using System.Windows.Input;
 
 namespace CycWpfLibrary
 {
-  public interface IViewValidation
-  {
-    bool IsViewValid { get; set; }
-  }
-
   public static class TextBoxBehaviors
   {
-    public static void TextBox_LostFocus(object sender, RoutedEventArgs e, IViewValidation viewModel, DependencyObject view)
+    public static void ViewValidation(object sender, RoutedEventArgs e, IViewValidation viewModel, DependencyObject view)
     {
       if (sender is TextBox tb)
         tb.GetBindingExpression(TextBox.TextProperty).UpdateSource();
