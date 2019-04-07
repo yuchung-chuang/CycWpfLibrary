@@ -23,9 +23,10 @@ namespace CycWpfLibrary
     private static readonly ValidationMessages_enUS messages_enUS = new ValidationMessages_enUS();
 
     private static readonly string NotSimilarMessage = "ValidationMessageNotSimilar";
-    private static readonly string ContainUpperMessage = "ValidationMessageContainUpper";
-    private static readonly string ContainLowerMessage = "ValidationMessageContainLower";
-    private static readonly string ContainSymbolMessage = "ValidationMessageContainSymbol";
+    private static readonly string HasUpperMessage = "ValidationMessageHasUpper";
+    private static readonly string HasLowerMessage = "ValidationMessageHasLower";
+    private static readonly string HasNumberMessage = "ValidationMessageHasNumber";
+    private static readonly string HasSymbolMessage = "ValidationMessageHasSymbol";
     private static readonly string MinLengthMessage = "ValidationMessageMinLength";
     private static readonly string MatchMessage = "ValidationMessageMatch";
     private static readonly string MatchAnyMessage = "ValidationMessageMatchAny";
@@ -44,17 +45,21 @@ namespace CycWpfLibrary
     {
       return new ValidationResult(value.ToStringEx().IsNotSimilarTo(match, tolerance), message ?? GetDefaultMessage(NotSimilarMessage) + match);
     }
-    public static ValidationResult ContainUpper(object value, string message)
+    internal static ValidationResult HasNumber(object value, string message)
     {
-      return new ValidationResult(value.ToStringEx().ContainUpper(), message ?? GetDefaultMessage(ContainUpperMessage));
+      return new ValidationResult(value.ToStringEx().ContainNumber(), message ?? GetDefaultMessage(HasNumberMessage));
     }
-    public static ValidationResult ContainLower(object value, string message)
+    public static ValidationResult HasUpper(object value, string message)
     {
-      return new ValidationResult(value.ToStringEx().ContainLower(), message ?? GetDefaultMessage(ContainLowerMessage));
+      return new ValidationResult(value.ToStringEx().ContainUpper(), message ?? GetDefaultMessage(HasUpperMessage));
     }
-    public static ValidationResult ContainSymbol(object value, string message)
+    public static ValidationResult HasLower(object value, string message)
     {
-      return new ValidationResult(value.ToStringEx().ContainSymbol(), message ?? GetDefaultMessage(ContainSymbolMessage));
+      return new ValidationResult(value.ToStringEx().ContainLower(), message ?? GetDefaultMessage(HasLowerMessage));
+    }
+    public static ValidationResult HasSymbol(object value, string message)
+    {
+      return new ValidationResult(value.ToStringEx().ContainSymbol(), message ?? GetDefaultMessage(HasSymbolMessage));
     }
     public static ValidationResult MinLength(object value, int minLength, string message)
     {

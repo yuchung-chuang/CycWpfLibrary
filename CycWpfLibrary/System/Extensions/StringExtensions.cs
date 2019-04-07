@@ -32,6 +32,9 @@ namespace CycWpfLibrary
     public static bool ContainLower(this string str)
       => str.Any(ch => char.IsLower(ch));
 
+    public static bool ContainNumber(this string str)
+      => str.Any(ch => char.IsNumber(ch));
+
     /// <summary>
     /// Compute Damerau–Levenshtein distance for given strings.
     /// </summary>

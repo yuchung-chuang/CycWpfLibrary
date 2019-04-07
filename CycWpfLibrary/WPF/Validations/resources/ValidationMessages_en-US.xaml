@@ -7,13 +7,16 @@
   <sys:String x:Key="ValidationMessageNotSimilar">
     Input string should not be similar with 
   </sys:String>
-  <sys:String x:Key="ValidationMessageContainUpper">
+  <sys:String x:Key="ValidationMessageHasNumber">
+    Input string should contain number
+  </sys:String>
+  <sys:String x:Key="ValidationMessageHasUpper">
     Input string should contain upper letter
   </sys:String>
-  <sys:String x:Key="ValidationMessageContainLower">
+  <sys:String x:Key="ValidationMessageHasLower">
     Input string should contain lower letter
   </sys:String>
-  <sys:String x:Key="ValidationMessageContainSymbol">
+  <sys:String x:Key="ValidationMessageHasSymbol">
     Input string should contain symbol character
   </sys:String>
   <sys:String x:Key="ValidationMessageMinLength">
