@@ -6,10 +6,30 @@ using System.Threading.Tasks;
 
 namespace CycWpfLibrary
 {
-  public class EventMessage<TArgs> : MessageBase
+  public class EventMessage : MessageBase<EventMessage>
+  {
+    public object Args { get; set; }
+
+    public EventMessage()
+    {
+
+    }
+
+    public EventMessage(object args) : this()
+    {
+      Args = args;
+    }
+  }
+
+  public class EventMessage<TArgs> : MessageBase<EventMessage<TArgs>>
     where TArgs : class
   {
-    public EventMessage(TArgs args)
+    public EventMessage()
+    {
+
+    }
+
+    public EventMessage(TArgs args) : this()
     {
       Args = args;
     }
