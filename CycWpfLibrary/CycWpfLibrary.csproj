@@ -93,8 +93,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Database\DbMethods.cs" />
+    <Compile Include="Database\FormattedDbEntityValidationException.cs" />
     <Compile Include="Database\DataModelBase.cs" />
     <Compile Include="Database\DbService.cs" />
+    <Compile Include="Database\IData.cs" />
     <Compile Include="IoC\IocContainer.cs" />
     <Compile Include="IoC\IocContainerBase.cs" />
     <Compile Include="Media\Images\SaveImageServices.cs" />
@@ -130,13 +133,12 @@
     <Compile Include="WPF\MVVM\Messaging\EventMessage.cs" />
     <Compile Include="WPF\MVVM\Messaging\Message.cs" />
     <Compile Include="WPF\MVVM\Messaging\Interfaces\ICleanup.cs" />
-    <Compile Include="WPF\MVVM\Messaging\GenericMessage.cs" />
     <Compile Include="WPF\MVVM\Messaging\Interfaces\IMessenger.cs" />
     <Compile Include="WPF\MVVM\Messaging\MessageBase.cs" />
     <Compile Include="WPF\MVVM\Messaging\Messenger.cs" />
     <Compile Include="WPF\MVVM\ViewModels\IViewValidation.cs" />
     <Compile Include="WPF\MVVM\ViewModels\StaticPropertyChangedEventArgs.cs" />
-    <Compile Include="WPF\TypeConverters\CycInputTypeConverter.cs" />
+    <Compile Include="WPF\Input\TypeConverters\CycInputTypeConverter.cs" />
     <Compile Include="WPF\Validations\ValidationRuleBase.cs" />
     <Compile Include="WPF\ValueConverters\ColorAlphaConverter.cs" />
     <Compile Include="WPF\ValueConverters\SolidColorBrushConverter.cs" />

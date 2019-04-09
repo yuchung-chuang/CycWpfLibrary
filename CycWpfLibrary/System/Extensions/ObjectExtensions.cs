@@ -38,13 +38,16 @@ namespace CycWpfLibrary
       return (obj ?? "").ToString();
     }
 
-    private static PropertyInfo GetPropInfo<TProperty>(this Type type)
+    /// <summary>
+    /// Get <see cref="PropertyInfo"/> by type <typeparamref name="TProperty"/>
+    /// </summary>
+    public static PropertyInfo GetPropInfo<TProperty>(this Type type)
     {
       return type.GetProperties()
         .First(p => p.PropertyType == typeof(TProperty));
     }
     /// <summary>
-    /// Get property of <paramref name="obj"/> with <typeparamref name="TProperty"/>
+    /// Get property of <paramref name="obj"/> by type <typeparamref name="TProperty"/>
     /// </summary>
     public static TProperty Get<TProperty>(this object obj)
       where TProperty : class
@@ -54,7 +57,7 @@ namespace CycWpfLibrary
         .GetValue(obj) as TProperty;
     }
     /// <summary>
-    /// Get property of <paramref name="type"/> with <typeparamref name="TProperty"/>
+    /// Get property of <paramref name="type"/> by type <typeparamref name="TProperty"/>
     /// </summary>
     /// <remarks>Use for static class or static method</remarks>
     public static TProperty Get<TProperty>(this Type type)
