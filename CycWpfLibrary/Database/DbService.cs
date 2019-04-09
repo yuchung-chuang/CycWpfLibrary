@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -74,25 +75,84 @@ namespace CycWpfLibrary
     }
 
     public static readonly object errorToken = new object();
-    public static async Task<List<T>> GetAsync<T>(T entity)
-      where T : class
+    /// <summary>
+    /// Get list of data with specific type <typeparamref name="TItem"/>
+    /// </summary>
+    public static async Task<List<TItem>> GetAsync<TItem>(TItem entity)
+      where TItem : class
     {
-      return await GetAsync<T>();
+      return await GetAsync<TItem>();
     }
-    public static async Task<List<T>> GetAsync<T>() where T : class
+    /// <summary>
+    /// Get list of data with specific type <typeparamref name="TItem"/>
+    /// </summary>
+    public static async Task<List<TItem>> GetAsync<TItem>()
+      where TItem : class
     {
-      var output = new List<T>();
+      var output = new List<TItem>();
       await UsingDbContextAsync(() =>
       {
-        output = dbContext.Get<DbSet<T>>().ToList();
+        output = dbContext.Get<DbSet<TItem>>().ToList();
       });
       return output;
     }
-    public static async Task<bool> AddAsync<T>(T item) where T : class
+    /// <summary>
+    /// Get list of data satisfying <paramref name="predicate"/> with specific type <typeparamref name="TItem"/> 
+    /// </summary>
+    public static async Task<List<TItem>> GetAsync<TItem>(Func<TItem, bool> predicate)
+      where TItem : class
+    {
+      var output = new List<TItem>();
+      await UsingDbContextAsync(() =>
+      {
+        output = dbContext.Get<DbSet<TItem>>().Where(predicate).ToList();
+      });
+      return output;
+    }
+    /// <summary>
+    /// Add <paramref name="item"/> to database
+    /// </summary>
+    public static async Task<bool> AddAsync<TItem>(TItem item)
+      where TItem : class
     {
       return await UsingDbContextAsync(() =>
       {
-        dbContext.Get<DbSet<T>>().Add(item);
+        dbContext.Get<DbSet<TItem>>().Add(item);
+        dbContext.SaveChanges();
+      });
+    }
+    /// <summary>
+    /// Remove <paramref name="item"/> in database
+    /// </summary>
+    public static async Task<bool> RemoveAsync<TItem>(TItem item)
+      where TItem : class
+    {
+      return await UsingDbContextAsync(() =>
+      {
+        dbContext.Get<DbSet<TItem>>().Remove(item);
+        dbContext.SaveChanges();
+      });
+    }
+    /// <summary>
+    /// Remove item satisfying <paramref name="predicate"/> in database
+    /// </summary>
+    public static async Task<bool> RemoveAsync<TItem>(Func<TItem, bool> predicate)
+      where TItem : class
+    {
+      return await SetAsync(predicate, null);
+    }
+    /// <summary>
+    /// Set item satisfying <paramref name="predicate"/> to <paramref name="value"/>
+    /// </summary>
+    public static async Task<bool> SetAsync<TItem>(Func<TItem, bool> predicate, TItem value)
+      where TItem : class
+    {
+      return await UsingDbContextAsync(() =>
+      {
+        var item = dbContext.Get<DbSet<TItem>>().FirstOrDefault(predicate);
+        dbContext.Get<DbSet<TItem>>().Remove(item);
+        dbContext.SaveChanges();
+        dbContext.Get<DbSet<TItem>>().Add(value);
         dbContext.SaveChanges();
       });
     }

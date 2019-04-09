@@ -40,9 +40,38 @@ namespace CycChat.Core
       var flag = await DbService<TdbContext>.AddAsync(item);
       if (flag)
       {
-        GetChildType().Get<List<TItem>>().Add(item);
+        var childType = GetChildType();
+        childType.Get<List<TItem>>().Add(item);
+
+        RaiseStaticPropertyChanged<TItem>(childType);
       }
       return flag;
+    }
+
+    public static async Task<bool> SetAsync<TItem, TdbContext>(Func<TItem, bool> predicate, TItem value)
+      where TItem : class
+      where TdbContext : DbContext, new()
+    {
+      var flag = await DbService<TdbContext>.SetAsync(predicate, value);
+      if (flag)
+      {
+        var childType = GetChildType();
+        var list = childType.Get<List<TItem>>();
+        var item = list.First(predicate);
+        list.Remove(item);
+        list.Add(value);
+
+        RaiseStaticPropertyChanged<TItem>(childType);
+      }
+      return flag;
+    }
+
+    internal static void RaiseStaticPropertyChanged<TItem>(Type childType)
+      where TItem : class
+    {
+      var className = childType.Name;
+      var propName = childType.GetPropInfo<List<TItem>>().Name;
+      OnStaticPropertyChanged(className, propName);
     }
   }
 }
