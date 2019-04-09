@@ -22,8 +22,10 @@ namespace CycWpfLibrary
   /// You can create your own message types by extending this class.
   /// </summary>
   ////[ClassInfo(typeof(Messenger))]
-  public abstract class MessageBase
+  public abstract class MessageBase<TChild> where TChild : MessageBase<TChild>, new()
   {
+    public readonly static TChild Empty = new TChild();
+
     /// <summary>
     /// Initializes a new instance of the MessageBase class.
     /// </summary>
@@ -62,7 +64,7 @@ namespace CycWpfLibrary
       protected set;
     }
 
-    /// <summary>
+/// <summary>
     /// Gets or sets the message's intended target. This property can be used
     /// to give an indication as to whom the message was intended for. Of course
     /// this is only an indication, amd may be null.
