@@ -18,7 +18,7 @@ namespace CycWpfLibrary
     /// <returns>XML字串</returns>
     public static string Serialize<T>(T obj) where T : class
     {
-      XmlSerializer serializer = new XmlSerializer(typeof(T));
+      var serializer = new XmlSerializer(typeof(T));
       var stringWriter = new StringWriter();
       using (var xmlWriter = XmlWriter.Create(stringWriter))
       {
@@ -35,7 +35,7 @@ namespace CycWpfLibrary
     /// <returns>物件</returns>
     public static T Deserialize<T>(string xmlString) where T : class
     {
-      XmlSerializer deserializer = new XmlSerializer(typeof(T));
+      var deserializer = new XmlSerializer(typeof(T));
       using (TextReader reader = new StringReader(xmlString))
       {
         try

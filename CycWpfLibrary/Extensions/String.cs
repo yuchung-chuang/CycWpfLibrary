@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CycWpfLibrary
 {
@@ -21,7 +18,7 @@ namespace CycWpfLibrary
 
     public static bool ContainSymbol(this string str)
     {
-      Regex regex = new Regex("[!@#$%^&*(),.?\":{}|<>]");
+      var regex = new Regex("[!@#$%^&*(),.?\":{}|<>]");
       var b = regex.IsMatch(str);
       return b;
     }
@@ -55,22 +52,22 @@ namespace CycWpfLibrary
         return 0;
       }
 
-      int length1 = strA.Length;
-      int length2 = strB.Length;
+      var length1 = strA.Length;
+      var length2 = strB.Length;
 
-      int[,] d = new int[length1 + 1, length2 + 1];
+      var d = new int[length1 + 1, length2 + 1];
 
       int cost, del, ins, sub;
 
-      for (int i = 0; i <= d.GetUpperBound(0); i++)
+      for (var i = 0; i <= d.GetUpperBound(0); i++)
         d[i, 0] = i;
 
-      for (int i = 0; i <= d.GetUpperBound(1); i++)
+      for (var i = 0; i <= d.GetUpperBound(1); i++)
         d[0, i] = i;
 
-      for (int i = 1; i <= d.GetUpperBound(0); i++)
+      for (var i = 1; i <= d.GetUpperBound(0); i++)
       {
-        for (int j = 1; j <= d.GetUpperBound(1); j++)
+        for (var j = 1; j <= d.GetUpperBound(1); j++)
         {
           if (strA[i - 1] == strB[j - 1])
             cost = 0;

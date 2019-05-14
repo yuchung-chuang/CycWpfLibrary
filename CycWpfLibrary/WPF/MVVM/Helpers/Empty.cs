@@ -31,12 +31,6 @@ namespace CycWpfLibrary
         /// <summary>
         /// Gets the empty task.
         /// </summary>
-        public static Task Task
-        {
-            get
-            {
-                return ConcreteTask;
-            }
-        }
+        public static Task Task => ConcreteTask;
     }
 }

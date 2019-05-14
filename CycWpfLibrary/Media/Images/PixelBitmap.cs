@@ -17,23 +17,24 @@ namespace CycWpfLibrary
   {
     public readonly PixelFormat PixelFormat = PixelFormat.Format32bppArgb;
     public readonly int Depth = 4; //根據Format32bppArgb
-    private readonly object key = new object();
+    private readonly object _key = new object();
 
     public int Width { get; private set; }
     public int Height { get; private set; }
     public SizeWinForm Size { get; private set; }
     public int Stride { get; private set; }  //根據Format32bppArgb
 
-    private Bitmap bitmap;
+    private Bitmap _bitmap;
     /// <summary>
     /// 自動設定<see cref="Width"/>, <see cref="Height"/>, <see cref="Size"/>, <see cref="Stride"/>等欄位。
     /// </summary>
+    // ReSharper disable once InconsistentNaming
     private Bitmap _Bitmap
     {
-      get => bitmap;
+      get => _bitmap;
       set
       {
-        bitmap = value;
+        _bitmap = value;
         Width = _Bitmap.Width;
         Height = _Bitmap.Height;
         Size = _Bitmap.Size;
@@ -48,7 +49,7 @@ namespace CycWpfLibrary
       get
       {
         Bitmap bitmap;
-        lock (key)
+        lock (_key)
         {
           bitmap = _Bitmap.Clone() as Bitmap;
         }
@@ -56,20 +57,20 @@ namespace CycWpfLibrary
       }
       set
       {
-        lock (key)
+        lock (_key)
         {
           _Bitmap = value;
           BitmapToPixel();
         }
       }
     }
-    private byte[] _Pixel;
+    private byte[] _pixel;
     public byte[] Pixel
     {
-      get => _Pixel;
+      get => _pixel;
       set
       {
-        _Pixel = value;
+        _pixel = value;
         PixelToBitmap();
       }
     }
@@ -105,7 +106,7 @@ namespace CycWpfLibrary
       {
         var pixelbitmap = new PixelBitmap();
         pixelbitmap._Bitmap = Bitmap;
-        pixelbitmap._Pixel = _Pixel.Clone() as byte[];
+        pixelbitmap._pixel = _pixel.Clone() as byte[];
         return pixelbitmap;
       }
     } //比 new 一個物件快十倍
@@ -137,11 +138,11 @@ namespace CycWpfLibrary
     /// </summary>
     public byte[,,] GetPixel3Argb()
     {
-      var pixel = _Pixel.Clone() as byte[];
+      var pixel = _pixel.Clone() as byte[];
       var pixel3 = new byte[Width, Height, Depth];
       int idx;
-      for (int x = 0; x < Width; x++)
-        for (int y = 0; y < Height; y++)
+      for (var x = 0; x < Width; x++)
+        for (var y = 0; y < Height; y++)
         {
           idx = x * Depth + y * Stride;
           pixel3[x, y, 3] = pixel[idx + 0]; //B
@@ -156,33 +157,33 @@ namespace CycWpfLibrary
     private void PixelToBitmap()
     {
       //將image鎖定到系統內的記憶體的某個區塊中，並將這個結果交給BitmapData類別的imageData
-      BitmapData bitmapData = bitmap.LockBits(
+      var bitmapData = _bitmap.LockBits(
       new Rectangle(0, 0, Width, Height),
       ImageLockMode.ReadOnly,
       PixelFormat);
 
       //複製pixel到bitmapData中
-      Marshal.Copy(_Pixel, 0, bitmapData.Scan0, _Pixel.Length);
+      Marshal.Copy(_pixel, 0, bitmapData.Scan0, _pixel.Length);
 
       //解鎖
-      bitmap.UnlockBits(bitmapData);
+      _bitmap.UnlockBits(bitmapData);
     }
     private void BitmapToPixel()
     {
       //將image鎖定到系統內的記憶體的某個區塊中，並將這個結果交給BitmapData類別的imageData
-      BitmapData bitmapData = bitmap.LockBits(
+      var bitmapData = _bitmap.LockBits(
         new Rectangle(0, 0, Width, Height),
         ImageLockMode.ReadOnly,
         PixelFormat);
 
       //初始化pixel陣列，用來儲存所有像素的訊息
-      _Pixel = new byte[bitmapData.Stride * Height];
+      _pixel = new byte[bitmapData.Stride * Height];
 
       //複製imageData的RGB信息到pixel陣列中
-      Marshal.Copy(bitmapData.Scan0, _Pixel, 0, _Pixel.Length);
+      Marshal.Copy(bitmapData.Scan0, _pixel, 0, _pixel.Length);
 
       //解鎖
-      bitmap.UnlockBits(bitmapData); //其他地方正在使用物件.....
+      _bitmap.UnlockBits(bitmapData); //其他地方正在使用物件.....
 
     }
 

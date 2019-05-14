@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace CycWpfLibrary
 {
   public static class ArrayExtensions
   {
-    public static (int, int) IndexOf(this int[,] array, int value)
+    /// <summary>
+    /// Find the index of <paramref name="value"/> in <paramref name="array"/>
+    /// </summary>
+    /// <typeparam name="T">The type of array. Note that it should implement <see cref="object.Equals(object)"/> method so as the comparasion is correct.</typeparam>
+    public static (int, int) IndexOf<T>(this T[,] array, T value)
     {
       var L1 = array.GetLength(0);
       var L2 = array.GetLength(1);
-      for (int i = 0; i < L1; i++)
+      for (var i = 0; i < L1; i++)
       {
-        for (int j = 0; j < L2; j++)
+        for (var j = 0; j < L2; j++)
         {
           var item = array[i, j];
-          if (item == value)
+          if (item.Equals(value))
           {
             return (i, j);
           }
@@ -31,7 +31,7 @@ namespace CycWpfLibrary
     public static T[,] RotateClockwise<T>(this T[,] array, int times = 1)
       where T : new()
     {
-      for (int i = 0; i < times; i++)
+      for (var i = 0; i < times; i++)
       {
         array = array.RotateClockwise90();
       }
@@ -40,7 +40,7 @@ namespace CycWpfLibrary
     public static T[,,] RotateClockwise<T>(this T[,,] array, int times = 1)
       where T : new()
     {
-      for (int i = 0; i < times; i++)
+      for (var i = 0; i < times; i++)
       {
         array = array.RotateClockwise90();
       }
@@ -53,9 +53,9 @@ namespace CycWpfLibrary
       (int row, int col) size = (array.GetLength(0), array.GetLength(1));
       var output = new T[size.col, size.row];
 
-      for (int row = 0; row < size.row; row++)
+      for (var row = 0; row < size.row; row++)
       {
-        for (int col = 0; col < size.col; col++)
+        for (var col = 0; col < size.col; col++)
         {
           output[(size.col - 1) - col, row] = array[row, col];
         }
@@ -67,11 +67,11 @@ namespace CycWpfLibrary
     {
       (int row, int col, int dep) Length = (array.GetLength(0), array.GetLength(1), array.GetLength(2));
       var output = new T[Length.col, Length.row, Length.dep];
-      for (int dep = 0; dep < Length.dep; dep++)
+      for (var dep = 0; dep < Length.dep; dep++)
       {
-        for (int row = 0; row < Length.row; row++)
+        for (var row = 0; row < Length.row; row++)
         {
-          for (int col = 0; col < Length.col; col++)
+          for (var col = 0; col < Length.col; col++)
           {
             output[(Length.col - 1) - col, row, dep] = array[row, col, dep];
           }
@@ -80,15 +80,24 @@ namespace CycWpfLibrary
       return output;
     }
 
-    public static T[] Resize<T>(this T[,] array)
+    public static T[] Resize<T>(this T[,] array, bool colFirst = true)
     {
       var rowN = array.GetLength(0);
       var colN = array.GetLength(1);
       var output = new T[rowN * colN];
       var idx = 0;
-      for (int row = 0; row < rowN; row++)
-        for (int col = 0; col < colN; col++)
-          output[idx++] = array[row, col];
+      if (colFirst)
+      {
+        for (var row = 0; row < rowN; row++)
+          for (var col = 0; col < colN; col++)
+            output[idx++] = array[row, col];
+      }
+      else
+      {
+        for (var col = 0; col < colN; col++)
+          for (var row = 0; row < rowN; row++)
+            output[idx++] = array[row, col];
+      }
       return output;
     }
     public static T[] Resize<T>(this T[,,] array)
@@ -98,9 +107,9 @@ namespace CycWpfLibrary
       var depN = array.GetLength(2);
       var output = new T[rowN * colN * depN];
       var idx = 0;
-      for (int row = 0; row < rowN; row++)
-        for (int col = 0; col < colN; col++)
-          for (int dep = 0; dep < depN; dep++)
+      for (var row = 0; row < rowN; row++)
+        for (var col = 0; col < colN; col++)
+          for (var dep = 0; dep < depN; dep++)
             output[idx++] = array[row, col, dep];
       return output;
     }
@@ -109,8 +118,8 @@ namespace CycWpfLibrary
       var vector = array.Resize();
       var output = new T[rowN, colN];
       var idx = 0;
-      for (int row = 0; row < rowN; row++)
-        for (int col = 0; col < colN; col++)
+      for (var row = 0; row < rowN; row++)
+        for (var col = 0; col < colN; col++)
           output[row, col] = vector[idx++];
       return output;
     }
@@ -120,7 +129,7 @@ namespace CycWpfLibrary
       var length = array1.GetLength(0);
       if (length != array2.GetLength(0))
         return false;
-      for (int i = 0; i < length; i++)
+      for (var i = 0; i < length; i++)
         if (!array1[i].Equals(array2[i]))
           return false;
       return true;
@@ -133,13 +142,46 @@ namespace CycWpfLibrary
         return false;
       if (colN != array2.GetLength(1))
         return false;
-      for (int row = 0; row < rowN; row++)
-        for (int col = 0; col < colN; col++)
+      for (var row = 0; row < rowN; row++)
+        for (var col = 0; col < colN; col++)
           if (!array1[row, col].Equals(array2[row, col]))
             return false;
       return true;
 
     }
 
+    public static T[] GetCol<T>(this T[,] array, int col)
+    {
+      return Enumerable.Range(0, array.GetLength(0))
+              .Select(x => array[x, col])
+              .ToArray();
+    }
+    public static T[] GetRow<T>(this T[,] array, int row)
+    {
+      return Enumerable.Range(0, array.GetLength(1))
+              .Select(x => array[row, x])
+              .ToArray();
+    }
+
+    public static List<T> GetRange<T>(this T[] array, int index, int count)
+      => array.ToList().GetRange(index, count);
+    /// <summary>
+    /// Return a list of elements in <paramref name="array"/> starting from <paramref name="index"/> to end
+    /// </summary>
+    public static List<T> GetRange<T>(this T[] array, int index)
+      => array.GetRange(index, array.Length - index);
+
+    public static void Clear<T>(this T[,] array)
+    {
+      var L1 = array.GetLength(0);
+      var L2 = array.GetLength(1);
+      for (var i = 0; i < L1; i++)
+      {
+        for (var j = 0; j < L2; j++)
+        {
+          array[i, j] = default;
+        }
+      }
+    }
   }
 }

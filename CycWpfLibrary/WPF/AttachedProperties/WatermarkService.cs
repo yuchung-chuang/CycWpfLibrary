@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -30,7 +27,7 @@ namespace CycWpfLibrary
 
     private static void OnWatermarkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-      Control control = (Control)d;
+      var control = (Control)d;
       control.Loaded += Control_Loaded;
 
       if (d is ComboBox)
@@ -47,14 +44,14 @@ namespace CycWpfLibrary
 
       if (d is ItemsControl && !(d is ComboBox))
       {
-        ItemsControl i = (ItemsControl)d;
+        var i = (ItemsControl)d;
 
         // for Items property  
         i.ItemContainerGenerator.ItemsChanged += ItemsChanged;
         itemsControls.Add(i.ItemContainerGenerator, i);
 
         // for ItemsSource property  
-        DependencyPropertyDescriptor prop = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, i.GetType());
+        var prop = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, i.GetType());
         prop.AddValueChanged(i, ItemsSourceChanged);
       }
     }
@@ -71,7 +68,7 @@ namespace CycWpfLibrary
     /// <param name="e">A <see cref="RoutedEventArgs"/> that contains the event data.</param>
     private static void Control_GotKeyboardFocus(object sender, RoutedEventArgs e)
     {
-      Control c = (Control)sender;
+      var c = (Control)sender;
       if (ShouldShowWatermark(c))
       {
         ShowWatermark(c);
@@ -89,7 +86,7 @@ namespace CycWpfLibrary
     /// <param name="e">A <see cref="RoutedEventArgs"/> that contains the event data.</param>
     private static void Control_Loaded(object sender, RoutedEventArgs e)
     {
-      Control control = (Control)sender;
+      var control = (Control)sender;
       if (ShouldShowWatermark(control))
       {
         ShowWatermark(control);
@@ -103,7 +100,7 @@ namespace CycWpfLibrary
     /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
     private static void ItemsSourceChanged(object sender, EventArgs e)
     {
-      ItemsControl c = (ItemsControl)sender;
+      var c = (ItemsControl)sender;
       if (c.ItemsSource != null)
       {
         if (ShouldShowWatermark(c))
@@ -148,18 +145,18 @@ namespace CycWpfLibrary
     /// <param name="control">Element to remove the watermark from</param>
     private static void RemoveWatermark(UIElement control)
     {
-      AdornerLayer layer = AdornerLayer.GetAdornerLayer(control);
+      var layer = AdornerLayer.GetAdornerLayer(control);
 
       // layer could be null if control is no longer in the visual tree
       if (layer != null)
       {
-        Adorner[] adorners = layer.GetAdorners(control);
+        var adorners = layer.GetAdorners(control);
         if (adorners == null)
         {
           return;
         }
 
-        foreach (Adorner adorner in adorners)
+        foreach (var adorner in adorners)
         {
           if (adorner is WatermarkAdorner)
           {
@@ -176,7 +173,7 @@ namespace CycWpfLibrary
     /// <param name="control">Control to show the watermark on</param>
     private static void ShowWatermark(Control control)
     {
-      AdornerLayer layer = AdornerLayer.GetAdornerLayer(control);
+      var layer = AdornerLayer.GetAdornerLayer(control);
 
       // layer could be null if control is no longer in the visual tree
       if (layer != null)
@@ -230,41 +227,36 @@ namespace CycWpfLibrary
     public WatermarkAdorner(UIElement adornedElement, object watermark) :
        base(adornedElement)
     {
-      this.IsHitTestVisible = false;
+      IsHitTestVisible = false;
 
-      this.contentPresenter = new ContentPresenter();
-      this.contentPresenter.Content = watermark;
-      this.contentPresenter.Opacity = 0.5;
-      this.contentPresenter.Margin = new Thickness(Control.Margin.Left + Control.Padding.Left, Control.Margin.Top + Control.Padding.Top, 0, 0);
+      contentPresenter = new ContentPresenter();
+      contentPresenter.Content = watermark;
+      contentPresenter.Opacity = 0.5;
+      contentPresenter.Margin = new Thickness(Control.Margin.Left + Control.Padding.Left, Control.Margin.Top + Control.Padding.Top, 0, 0);
 
-      if (this.Control is ItemsControl && !(this.Control is ComboBox))
+      if (Control is ItemsControl && !(Control is ComboBox))
       {
-        this.contentPresenter.VerticalAlignment = VerticalAlignment.Center;
-        this.contentPresenter.HorizontalAlignment = HorizontalAlignment.Center;
+        contentPresenter.VerticalAlignment = VerticalAlignment.Center;
+        contentPresenter.HorizontalAlignment = HorizontalAlignment.Center;
       }
 
       // Hide the control adorner when the adorned element is hidden
-      Binding binding = new Binding("IsVisible");
+      var binding = new Binding("IsVisible");
       binding.Source = adornedElement;
       binding.Converter = new BooleanToVisibilityConverter();
-      this.SetBinding(VisibilityProperty, binding);
+      SetBinding(VisibilityProperty, binding);
     }
 
     /// <summary>
     /// Gets the number of children for the <see cref="ContainerVisual"/>.
     /// </summary>
-    protected override int VisualChildrenCount
-    {
-      get { return 1; }
-    }
+    protected override int VisualChildrenCount => 1;
 
     /// <summary>
     /// Gets the control that is being adorned
     /// </summary>
-    private Control Control
-    {
-      get { return (Control)this.AdornedElement; }
-    }
+    private Control Control => (Control)AdornedElement;
+
     /// <summary>
     /// Returns a specified child <see cref="Visual"/> for the parent <see cref="ContainerVisual"/>.
     /// </summary>
@@ -272,7 +264,7 @@ namespace CycWpfLibrary
     /// <returns>The child <see cref="Visual"/>.</returns>
     protected override Visual GetVisualChild(int index)
     {
-      return this.contentPresenter;
+      return contentPresenter;
     }
 
     /// <summary>
@@ -283,7 +275,7 @@ namespace CycWpfLibrary
     protected override Size MeasureOverride(Size constraint)
     {
       // Here's the secret to getting the adorner to cover the whole control
-      this.contentPresenter.Measure(Control.RenderSize);
+      contentPresenter.Measure(Control.RenderSize);
       return Control.RenderSize;
     }
     /// <summary>
@@ -293,7 +285,7 @@ namespace CycWpfLibrary
     /// <returns>The actual size used.</returns>
     protected override Size ArrangeOverride(Size finalSize)
     {
-      this.contentPresenter.Arrange(new Rect(finalSize));
+      contentPresenter.Arrange(new Rect(finalSize));
       return finalSize;
     }
 

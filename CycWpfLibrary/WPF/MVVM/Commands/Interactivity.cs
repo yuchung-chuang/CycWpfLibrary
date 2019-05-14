@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Interactivity;
 using TriggerBase = System.Windows.Interactivity.TriggerBase;
-using TriggerCollection = System.Windows.Interactivity.TriggerCollection;
 
 namespace CycWpfLibrary
 {
@@ -72,18 +71,18 @@ namespace CycWpfLibrary
         DependencyObject d,
         DependencyPropertyChangedEventArgs e)
     {
-      InteractivityTemplate dt = (InteractivityTemplate)e.NewValue;
+      var dt = (InteractivityTemplate)e.NewValue;
 #if (!SILVERLIGHT)
       dt.Seal();
 #endif
-      InteractivityItems ih = (InteractivityItems)dt.LoadContent();
-      BehaviorCollection bc = Interaction.GetBehaviors(d);
-      TriggerCollection tc = Interaction.GetTriggers(d);
+      var ih = (InteractivityItems)dt.LoadContent();
+      var bc = Interaction.GetBehaviors(d);
+      var tc = Interaction.GetTriggers(d);
 
-      foreach (Behavior behavior in ih.Behaviors)
+      foreach (var behavior in ih.Behaviors)
         bc.Add(behavior);
 
-      foreach (TriggerBase trigger in ih.Triggers)
+      foreach (var trigger in ih.Triggers)
         tc.Add(trigger);
 
 

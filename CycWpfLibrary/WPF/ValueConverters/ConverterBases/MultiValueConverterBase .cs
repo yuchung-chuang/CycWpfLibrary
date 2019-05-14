@@ -1,23 +1,17 @@
-﻿using CycWpfLibrary;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Markup;
 
 namespace CycWpfLibrary
 {
   /// <summary>
   /// 提供具有<see cref="IMultiValueConverter"/>功能的類別。
   /// </summary>
-  /// <typeparam name="MultiValueConverterType">要實作的MultiValueConverter類別。</typeparam>
-  public abstract class MultiValueConverterBase<MultiValueConverterType> : ConverterMarkup<MultiValueConverterType>, IMultiValueConverter 
-    where MultiValueConverterType : class, new()
+  /// <typeparam name="TMultiValueConverter">要實作的MultiValueConverter類別。</typeparam>
+  public abstract class MultiValueConverterBase<TMultiValueConverter> : ConverterMarkup<TMultiValueConverter>, IMultiValueConverter 
+    where TMultiValueConverter : class, new()
   {
-    public abstract object Convert(object[] values, System.Type targetType, object parameter, CultureInfo culture);
+    public abstract object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
 
     public abstract object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture);
   }

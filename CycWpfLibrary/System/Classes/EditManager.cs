@@ -1,7 +1,5 @@
-﻿using CycWpfLibrary;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CycWpfLibrary

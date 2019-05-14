@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using static System.Math;
 using Application = System.Windows.Application;
 using Panel = System.Windows.Controls.Panel;
 using PointWpf = System.Windows.Point;
 using SP = System.Windows.SystemParameters;
-using PixelFormatWinForm = System.Drawing.Imaging.PixelFormat;
-using CycWpfLibrary;
-using System.Runtime.InteropServices;
-using PointWF = System.Drawing.Point;
 
 namespace CycWpfLibrary
 {
@@ -34,8 +25,8 @@ namespace CycWpfLibrary
     /// </summary>
     public static PointWpf GetDpiRatio(this Window window)
     {
-      PointWpf DpiRatio = new PointWpf(1, 1);
-      PresentationSource source = PresentationSource.FromVisual(window);
+      var DpiRatio = new PointWpf(1, 1);
+      var source = PresentationSource.FromVisual(window);
       if (source == null)
       {
         throw new NullReferenceException("找不到此Window的Visual");

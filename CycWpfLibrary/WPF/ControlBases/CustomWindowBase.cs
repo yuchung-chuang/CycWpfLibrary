@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
@@ -104,7 +100,7 @@ namespace CycWpfLibrary
     #endregion
 
     #region TitlebarControls
-    public Collection<System.Windows.Controls.Control> TitlebarControls { get; set; } = new Collection<System.Windows.Controls.Control>();
+    public Collection<Control> TitlebarControls { get; set; } = new Collection<Control>();
     private StackPanel TitlebarControlsStackPanel;
     private void AddCustomWindowControls()
     {
@@ -174,7 +170,7 @@ namespace CycWpfLibrary
     }
     private void CloseWindow(object sender, ExecutedRoutedEventArgs e)
     {
-      this.Close();
+      Close();
     }
     private void MaximizeWindow(object sender, ExecutedRoutedEventArgs e)
     {
@@ -190,8 +186,7 @@ namespace CycWpfLibrary
     }
     private void ShowSystemMenu(object sender, ExecutedRoutedEventArgs e)
     {
-      var element = e.OriginalSource as FrameworkElement;
-      if (element == null)
+      if (!(e.OriginalSource is FrameworkElement element))
         return;
 
       var point = WindowState == WindowState.Maximized ? new Point(0, element.ActualHeight)

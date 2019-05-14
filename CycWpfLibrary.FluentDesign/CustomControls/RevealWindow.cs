@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using CycWpfLibrary.MVVM;
 
 namespace CycWpfLibrary.FluentDesign
 {

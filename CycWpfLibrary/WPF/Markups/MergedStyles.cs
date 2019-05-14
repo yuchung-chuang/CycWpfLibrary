@@ -15,7 +15,7 @@ namespace CycWpfLibrary
       if (null == MergeStyle)
         return BasedOn;
 
-      Style newStyle = new Style(BasedOn.TargetType,
+      var newStyle = new Style(BasedOn.TargetType,
                                  BasedOn);
 
       MergeWithStyle(newStyle, MergeStyle);

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static System.Math;
 using static CycWpfLibrary.NativeMethod;
 
@@ -10,6 +6,12 @@ namespace CycWpfLibrary
 {
   public static class Math
   {
+    public static readonly Random random = new Random();
+
+    public static int RandInt() => random.Next();
+    public static int RandInt(int max) => random.Next(max);
+    public static int RandInt(int min, int max) => random.Next(min, max);
+
     public static int LinConvert(int value1, int max1, int min1, int max2, int min2)
     {
       return (int)Round(LinConvert((double)value1, max1, min1, max2, min2));
@@ -20,7 +22,7 @@ namespace CycWpfLibrary
     }
     public static double LinConvert(double value1, double max1, double min1, double max2, double min2)
     {
-      double r = (max2 - min2) / (max1 - min1);
+      var r = (max2 - min2) / (max1 - min1);
       return (min2 + (value1 - min1) * r);
     }
 

@@ -1,17 +1,10 @@
-﻿using CycWpfLibrary;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
-using System.Windows.Media;
-using System.Xml;
 
 namespace CycWpfLibrary
 {
@@ -83,7 +76,7 @@ namespace CycWpfLibrary
     /// </example>
     public static double TimeIt(Action action)
     {
-      Stopwatch sw = new Stopwatch();//引用stopwatch物件
+      var sw = new Stopwatch();//引用stopwatch物件
       sw.Restart();
       //-----目標程式-----//
       action.Invoke();

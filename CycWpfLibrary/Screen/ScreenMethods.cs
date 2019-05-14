@@ -18,15 +18,15 @@ namespace CycWpfLibrary
     public static List<(TaskBarDock Dock, double Width, Rect Rect)> GetTaskBarLocationPerScreen()
     {
       var dpiRatio = Application.Current.MainWindow.GetDpiRatio();
-      List<(TaskBarDock, double, Rect)> taskBars = new List<(TaskBarDock, double, Rect)>();
+      var taskBars = new List<(TaskBarDock, double, Rect)>();
       foreach (var screen in Screen.AllScreens)
       {
         if (screen.Bounds.Equals(screen.WorkingArea))
           continue; // No taskbar on this screen.
 
-        TaskBarDock dock = TaskBarDock.None;
+        var dock = TaskBarDock.None;
         double width = 0;
-        Rect rect = new Rect();
+        var rect = new Rect();
 
         var leftDockedWidth = Abs(Abs(screen.Bounds.Left) - Abs(screen.WorkingArea.Left));
         var topDockedHeight = Abs(Abs(screen.Bounds.Top) - Abs(screen.WorkingArea.Top));

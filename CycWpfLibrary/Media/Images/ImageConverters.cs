@@ -41,11 +41,11 @@ namespace CycWpfLibrary
     public SafeIconHandle(IntPtr hIcon)
         : base(true)
     {
-      this.SetHandle(hIcon);
+      SetHandle(hIcon);
     }
     protected override bool ReleaseHandle()
     {
-      return DestroyIcon(this.handle);
+      return DestroyIcon(handle);
     }
   }
   #endregion
@@ -82,7 +82,7 @@ namespace CycWpfLibrary
     // BitmapImage
     public static Bitmap ToBitmap(this BitmapImage bitmapImage)
     {
-      using (MemoryStream outStream = new MemoryStream())
+      using (var outStream = new MemoryStream())
       {
         var enc = new PngBitmapEncoder(); // 使用PngEncoder才不會流失透明度
         enc.Frames.Add(BitmapFrame.Create(bitmapImage));
@@ -103,7 +103,7 @@ namespace CycWpfLibrary
       src.EndInit();
 
       //copy to bitmap
-      Bitmap bitmap = new Bitmap(src.PixelWidth, src.PixelHeight, PixelFormatWinForm.Format32bppArgb);
+      var bitmap = new Bitmap(src.PixelWidth, src.PixelHeight, PixelFormatWinForm.Format32bppArgb);
       var data = bitmap.LockBits(new Rectangle(PointWinForm.Empty, bitmap.Size), ImageLockMode.WriteOnly, PixelFormatWinForm.Format32bppArgb);
       src.CopyPixels(Int32Rect.Empty, data.Scan0, data.Height * data.Stride, data.Stride);
       bitmap.UnlockBits(data);
@@ -127,12 +127,12 @@ namespace CycWpfLibrary
     // Bitmap
     public static BitmapImage ToBitmapImage(this Bitmap bitmap)
     {
-      using (MemoryStream stream = new MemoryStream())
+      using (var stream = new MemoryStream())
       {
         bitmap.Save(stream, ImageFormat.Png);
 
         stream.Position = 0;
-        BitmapImage result = new BitmapImage();
+        var result = new BitmapImage();
         result.BeginInit();
         result.CacheOption = BitmapCacheOption.OnLoad;
         result.StreamSource = stream;
@@ -143,7 +143,7 @@ namespace CycWpfLibrary
     }
     public static BitmapSource ToBitmapSource(this Bitmap bitmap)
     {
-      IntPtr hBitmap = bitmap.GetHbitmap();
+      var hBitmap = bitmap.GetHbitmap();
       BitmapSource retval;
 
       try
@@ -168,7 +168,7 @@ namespace CycWpfLibrary
     public static Cursor ToCursor(this Bitmap bitmap, PointWpf hotSpot)
     {
       /// get icon from input bitmap
-      IconInfo ico = new IconInfo();
+      var ico = new IconInfo();
       GetIconInfo(bitmap.GetHicon(), ref ico);
 
       /// set the hotspot
@@ -177,13 +177,13 @@ namespace CycWpfLibrary
       ico.fIcon = false;
 
       /// create a cursor from iconinfo
-      IntPtr cursor = CreateIconIndirect(ref ico);
+      var cursor = CreateIconIndirect(ref ico);
       return CursorInteropHelper.Create(new SafeIconHandle(cursor));
     }
     public static Icon ToIcon(this Bitmap bitmap)
     {
-      IntPtr Hicon = bitmap.GetHicon();
-      Icon newIcon = Icon.FromHandle(Hicon);
+      var Hicon = bitmap.GetHicon();
+      var newIcon = Icon.FromHandle(Hicon);
 
       //DestroyIcon(newIcon.Handle);
       DeleteObject(Hicon);
@@ -194,8 +194,8 @@ namespace CycWpfLibrary
     //Icon
     public static ImageSource ToImageSource(this Icon icon)
     {
-      Bitmap bitmap = icon.ToBitmap();
-      IntPtr hBitmap = bitmap.GetHbitmap();
+      var bitmap = icon.ToBitmap();
+      var hBitmap = bitmap.GetHbitmap();
 
       ImageSource wpfBitmap = Imaging.CreateBitmapSourceFromHBitmap(
           hBitmap,
@@ -236,7 +236,7 @@ namespace CycWpfLibrary
     public static Bitmap Crop(this Bitmap bitmap, Rectangle rect)
     {
       var output = new Bitmap(rect.Width, rect.Height);
-      using (Graphics g = Graphics.FromImage(output))
+      using (var g = Graphics.FromImage(output))
         g.DrawImage(bitmap, -rect.X, -rect.Y);
       return output;
     }
@@ -249,7 +249,7 @@ namespace CycWpfLibrary
     public static Bitmap SetPixelFormat(this Bitmap bitmap, PixelFormatWinForm pixelFormat)
     {
       var bitmapFormatted = new Bitmap(bitmap.Width, bitmap.Height, pixelFormat);
-      using (Graphics g = Graphics.FromImage(bitmapFormatted))
+      using (var g = Graphics.FromImage(bitmapFormatted))
       {
         g.DrawImage(bitmap, new Rectangle(0, 0, bitmap.Width, bitmap.Height));
       }

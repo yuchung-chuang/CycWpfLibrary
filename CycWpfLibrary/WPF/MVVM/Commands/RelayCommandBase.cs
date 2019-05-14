@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CycWpfLibrary
@@ -17,8 +13,8 @@ namespace CycWpfLibrary
     /// </summary>
     public event EventHandler CanExecuteChanged
     {
-      add { CommandManager.RequerySuggested += value; }
-      remove { CommandManager.RequerySuggested -= value; }
+      add => CommandManager.RequerySuggested += value;
+      remove => CommandManager.RequerySuggested -= value;
     }
 
     public abstract bool CanExecute(object parameter);

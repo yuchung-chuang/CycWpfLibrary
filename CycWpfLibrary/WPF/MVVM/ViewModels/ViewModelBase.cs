@@ -1,8 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
-
-namespace CycWpfLibrary
+﻿namespace CycWpfLibrary
 {
   /// <summary>
   /// 提供ViewMoel的基底功能。

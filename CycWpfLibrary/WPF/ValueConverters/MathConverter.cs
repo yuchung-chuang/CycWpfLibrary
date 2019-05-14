@@ -3,14 +3,12 @@
  * ivan [at] ikriv.com
  * They are distributed under the Apache License http://www.apache.org/licenses/LICENSE-2.0.html
  */
-using CycWpfLibrary;
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
 
 namespace CycWpfLibrary
 {
@@ -43,7 +41,7 @@ namespace CycWpfLibrary
     {
       try
       {
-        decimal result = Parse(parameter.ToString()).Eval(values);
+        var result = Parse(parameter.ToString()).Eval(values);
         if (targetType == typeof(decimal)) return result;
         if (targetType == typeof(string)) return result.ToString();
         if (targetType == typeof(int)) return (int)result;
@@ -191,7 +189,7 @@ namespace CycWpfLibrary
         }
         catch (Exception ex)
         {
-          string msg =
+          var msg =
               String.Format("MathConverter: error parsing expression '{0}'. {1} at position {2}", text, ex.Message, pos);
 
           throw new ArgumentException(msg, ex);
@@ -200,7 +198,7 @@ namespace CycWpfLibrary
 
       private IExpression ParseExpression()
       {
-        IExpression left = ParseTerm();
+        var left = ParseTerm();
 
         while (true)
         {
@@ -211,7 +209,7 @@ namespace CycWpfLibrary
           if (c == '+' || c == '-')
           {
             ++pos;
-            IExpression right = ParseTerm();
+            var right = ParseTerm();
             left = new BinaryOperation(c, left, right);
           }
           else
@@ -223,7 +221,7 @@ namespace CycWpfLibrary
 
       private IExpression ParseTerm()
       {
-        IExpression left = ParseFactor();
+        var left = ParseFactor();
 
         while (true)
         {
@@ -234,7 +232,7 @@ namespace CycWpfLibrary
           if (c == '*' || c == '/')
           {
             ++pos;
-            IExpression right = ParseFactor();
+            var right = ParseFactor();
             left = new BinaryOperation(c, left, right);
           }
           else

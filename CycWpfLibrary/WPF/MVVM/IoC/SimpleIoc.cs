@@ -1,20 +1,4 @@
-﻿// ****************************************************************************
-// <copyright file="SimpleIoc.cs" company="GalaSoft Laurent Bugnion">
-// Copyright © GalaSoft Laurent Bugnion 2011-2016
-// </copyright>
-// ****************************************************************************
-// <author>Laurent Bugnion</author>
-// <email>laurent@galasoft.ch</email>
-// <date>10.4.2011</date>
-// <project>GalaSoft.MvvmLight.Extras</project>
-// <web>http://www.mvvmlight.net</web>
-// <license>
-// See license.txt in this project or http://www.galasoft.ch/license_MIT.txt
-// </license>
-// <LastBaseLevel>BL0005</LastBaseLevel>
-// ****************************************************************************
-
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

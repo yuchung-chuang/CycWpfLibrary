@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CycWpfLibrary
 {
@@ -86,7 +83,7 @@ namespace CycWpfLibrary
     /// </summary>
     public static object Get(this object obj, string propertyName)
     {
-      PropertyInfo property = obj.GetType().GetProperty(propertyName);
+      var property = obj.GetType().GetProperty(propertyName);
       return property.GetValue(obj);
     }
     /// <summary>
@@ -94,7 +91,7 @@ namespace CycWpfLibrary
     /// </summary>
     public static void Set(this object obj, string propertyName, object value)
     {
-      PropertyInfo property = obj.GetType().GetProperty(propertyName);
+      var property = obj.GetType().GetProperty(propertyName);
       property.SetValue(obj, value);
     }
   }

@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
@@ -109,6 +111,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CycWpfLibrary.MVVM\CycWpfLibrary.MVVM.csproj">
+      <Project>{6CF8ED27-E4C2-4D75-9A9B-7ED0352A13C0}</Project>
+      <Name>CycWpfLibrary.MVVM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CycWpfLibrary.Resource\CycWpfLibrary.Resource.csproj">
       <Project>{be626a2b-f351-4768-a246-4cab2a7f6a56}</Project>
       <Name>CycWpfLibrary.Resource</Name>

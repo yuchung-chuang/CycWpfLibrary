@@ -1,17 +1,10 @@
-﻿using CycWpfLibrary;
-using CycWpfLibrary.Resource;
+﻿using CycWpfLibrary.Resource;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using static System.Math;
 
 
 namespace CycWpfLibrary
@@ -107,7 +100,7 @@ namespace CycWpfLibrary
       var scale = transforms.GetScale();
 
       //ZoomSpeed
-      double zoom = e.Delta > 0 ? .2 : -.2;
+      var zoom = e.Delta > 0 ? .2 : -.2;
 
       var relative = e.GetPosition(element);
       var absolute = e.GetAbsolutePosition(element);

@@ -1,14 +1,8 @@
-﻿using CycWpfLibrary;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace CycWpfLibrary
 {
@@ -103,7 +97,7 @@ namespace CycWpfLibrary
 
     private static void UpdateValidation(TextBox tb)
     {
-      BindingExpression exp = tb.GetBindingExpression(TextBox.TextProperty);
+      var exp = tb.GetBindingExpression(TextBox.TextProperty);
       if (exp == null || exp.ParentBinding == null)
         return;
       var myValidation = exp.ParentBinding.ValidationRules.FirstOrDefault(r => r is RangeValidation) as RangeValidation;

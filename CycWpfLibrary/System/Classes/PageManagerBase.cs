@@ -1,11 +1,5 @@
-﻿using CycWpfLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CycWpfLibrary
@@ -60,16 +54,16 @@ namespace CycWpfLibrary
     /// </summary>
     public virtual bool TurnTo(int index)
     {
-      var turns = index - this.Index;
+      var turns = index - Index;
       if (turns > 0)
       {
-        for (int i = 0; i < turns; i++)
+        for (var i = 0; i < turns; i++)
           if (!TurnNext())
             return false;
       }
       else if (turns < 0)
       {
-        for (int i = 0; i > turns; i--)
+        for (var i = 0; i > turns; i--)
           if (!TurnBack())
             return false;
       }
