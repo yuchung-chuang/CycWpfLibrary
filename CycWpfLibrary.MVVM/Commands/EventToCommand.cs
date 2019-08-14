@@ -33,16 +33,10 @@ namespace CycWpfLibrary.MVVM
             null,
             (s, e) =>
             {
-              var sender = s as EventToCommand;
-              if (sender == null)
-              {
+              if (!(s is EventToCommand sender))
                 return;
-              }
-
               if (sender.AssociatedObject == null)
-              {
                 return;
-              }
 
               sender.EnableDisableElement();
             }));

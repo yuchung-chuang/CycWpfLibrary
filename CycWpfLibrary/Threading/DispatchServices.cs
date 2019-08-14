@@ -8,7 +8,7 @@ namespace CycWpfLibrary.Threading
 {
   public static class DispatchServices
   {
-    private static Dispatcher dispatcher = Application.Current.Dispatcher;
+    private static Dispatcher dispatcher = Application.Current?.Dispatcher;
     public static void Invoke(Action action)
     {
       if (dispatcher is null || dispatcher.CheckAccess())

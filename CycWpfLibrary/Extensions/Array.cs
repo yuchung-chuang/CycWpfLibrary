@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CycWpfLibrary
@@ -163,6 +164,11 @@ namespace CycWpfLibrary
               .ToArray();
     }
 
+    public static T[] GetY<T>(this T[,] array, int y) 
+      => array.GetCol(y);
+    public static T[] GetX<T>(this T[,] array, int x)
+      => array.GetRow(x);
+
     public static List<T> GetRange<T>(this T[] array, int index, int count)
       => array.ToList().GetRange(index, count);
     /// <summary>
@@ -183,5 +189,7 @@ namespace CycWpfLibrary
         }
       }
     }
+
   }
+  
 }
