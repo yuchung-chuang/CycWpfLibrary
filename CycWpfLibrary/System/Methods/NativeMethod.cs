@@ -83,7 +83,6 @@ namespace CycWpfLibrary
       //-----目標程式-----//
       sw.Stop();//碼錶停止
       var ms = sw.Elapsed.TotalMilliseconds;
-      Debug.WriteLine(ms.ToString());
       return ms;
     }
 

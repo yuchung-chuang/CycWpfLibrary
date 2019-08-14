@@ -1,11 +1,83 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace CycWpfLibrary
 {
   public static class ObjectExtensions
   {
+    private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+    
+    public static T RecursiveDeepClone<T>(this T obj)
+    {
+      return (T)RecursiveDeepClone((object)obj);
+    }
+    public static object RecursiveDeepClone(this object originalObj)
+    {
+      return InternalCopy(originalObj, new Dictionary<object, object>(new ReferenceEqualityComparer()));
+
+      object InternalCopy(object obj, IDictionary<object, object> visited)
+      {
+        if (obj == null)
+          return null;
+
+        var typeToReflect = obj.GetType();
+        if (typeToReflect.IsPrimitive())
+          return obj;
+
+        if (visited.ContainsKey(obj))
+          return visited[obj];
+
+        if (typeof(Delegate).IsAssignableFrom(typeToReflect))
+          return null;
+
+        var cloneObject = CloneMethod.Invoke(obj, null);
+        visited.Add(obj, cloneObject);
+        CopyFields(obj, visited, cloneObject, typeToReflect);
+        RecursiveCopyBaseTypePrivateFields(obj, visited, cloneObject, typeToReflect);
+        return cloneObject;
+      }
+
+      void RecursiveCopyBaseTypePrivateFields(object obj, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
+      {
+        if (typeToReflect.BaseType != null)
+        {
+          RecursiveCopyBaseTypePrivateFields(obj, visited, cloneObject, typeToReflect.BaseType);
+          CopyFields(obj, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
+        }
+      }
+
+      void CopyFields(object obj, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
+      {
+        foreach (var fieldInfo in typeToReflect.GetFields(bindingFlags))
+        {
+          if (filter != null && filter(fieldInfo) == false) continue;
+          if (fieldInfo.FieldType.IsPrimitive()) continue;
+          var originalFieldValue = fieldInfo.GetValue(obj);
+          var clonedFieldValue = InternalCopy(originalFieldValue, visited);
+          fieldInfo.SetValue(cloneObject, clonedFieldValue);
+        }
+      }
+    }
+
+    /// <summary>
+    /// Your class MUST be marked as <see cref="SerializableAttribute"/>
+    /// </summary>
+    public static T SerializeDeepClone<T>(this T obj)
+    {
+      using (var ms = new MemoryStream())
+      {
+        var formatter = new BinaryFormatter();
+        formatter.Serialize(ms, obj);
+        ms.Position = 0;
+
+        return (T)formatter.Deserialize(ms);
+      }
+    }
+
     public static bool IsNumeric(this object obj)
     {
       switch (Type.GetTypeCode(obj.GetType()))
@@ -84,7 +156,7 @@ namespace CycWpfLibrary
     public static object Get(this object obj, string propertyName)
     {
       var property = obj.GetType().GetProperty(propertyName);
-      return property.GetValue(obj);
+      return property?.GetValue(obj);
     }
     /// <summary>
     /// Setter with dynamic expression
@@ -92,7 +164,7 @@ namespace CycWpfLibrary
     public static void Set(this object obj, string propertyName, object value)
     {
       var property = obj.GetType().GetProperty(propertyName);
-      property.SetValue(obj, value);
+      property?.SetValue(obj, value);
     }
   }
 }

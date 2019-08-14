@@ -14,7 +14,7 @@ namespace CycWpfLibrary
     public static dynamic Remove(this Enum enumA, Enum enumB)
     {
       var (a, b) = ConvertEnums(enumA, enumB);
-      return enumA.Contain(enumB) ? a ^ b : a;
+      return a & ~b;
     }
 
     public static bool Contain(this Enum enumA, Enum enumB)

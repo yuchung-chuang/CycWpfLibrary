@@ -41,6 +41,16 @@ namespace CycWpfLibrary
       return !(i1 == i2);
     }
 
+    public static bool operator ==(PointInt p1, (int x, int y) p2)
+    {
+      return p1 != null && (p1.X == p2.x && p1.Y == p2.y);
+    }
+
+    public static bool operator !=(PointInt p1, (int x, int y) p2)
+    {
+      return !(p1 == p2);
+    }
+
     public override bool Equals(object obj) 
       => obj is PointInt i &&
              X == i.X &&
