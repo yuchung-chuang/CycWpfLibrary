@@ -102,7 +102,7 @@ namespace CycWpfLibrary.CustomControls
         popup.targetRect = new Rect[n];
         popup.targetMargin = new Thickness[n];
         popup.shadowRectGeo = new RectangleGeometry[n];
-        for (int i = 0; i < target.Length; i++)
+        for (var i = 0; i < target.Length; i++)
         {
           popup.targetPanelLoc[i] = target[i].TransformToAncestor(popup.mainPanel).Transform(new Point());
           popup.targetScreenLoc[i] = target[i].PointToScreenDPI(new Point());
@@ -162,7 +162,7 @@ namespace CycWpfLibrary.CustomControls
       // define shapes
       initialRect = new Rect(new Point(), mainPanel.RenderSize);
       initialMargin = new Thickness(0, 0, 0, 0);
-      for (int i = 0; i < PlacementTargets?.Length; i++)
+      for (var i = 0; i < PlacementTargets?.Length; i++)
       {
         targetRect[i] = new Rect(targetPanelLoc[i].Minus((padding, padding)), PlacementTargets[i]?.RenderSize.Add((padding, padding).Times(2)) ?? new Size());
         shadowRectGeo[i] = new RectangleGeometry(PlacementTargets.Length > 0 ? initialRect : targetRect[i], cornerRadius, cornerRadius);
@@ -176,13 +176,13 @@ namespace CycWpfLibrary.CustomControls
         mainPanel.Children.Add(targetRectangle[i]);
       }
 
-      CombinedGeometry combinedGeo = new CombinedGeometry
+      var combinedGeo = new CombinedGeometry
       {
         GeometryCombineMode = GeometryCombineMode.Exclude,
         Geometry1 = new RectangleGeometry(initialRect),
         Geometry2 = new RectangleGeometry(),
       };
-      for (int i = 0; i < PlacementTargets?.Length; i++)
+      for (var i = 0; i < PlacementTargets?.Length; i++)
       {
         combinedGeo = new CombinedGeometry
         {
@@ -220,7 +220,7 @@ namespace CycWpfLibrary.CustomControls
       this.ShiftWindowOntoScreen();
       this.BeginAnimation(TopProperty, Top + animationSlide, Top, enterMs);
       this.BeginAnimation(OpacityProperty, 0d, 1, enterMs);
-      for (int i = 0; i < PlacementTargets?.Length; i++)
+      for (var i = 0; i < PlacementTargets?.Length; i++)
       {
         shadowRectGeo[i].BeginAnimation(RectangleGeometry.RectProperty, initialRect, targetRect[i], enterMs);
         targetRectangle[i].BeginAnimation(MarginProperty, targetMargin[i], enterMs);
@@ -237,7 +237,7 @@ namespace CycWpfLibrary.CustomControls
     {
       this.BeginAnimation(OpacityProperty, 0d, leaveMs);
       this.BeginAnimation(TopProperty, Top + animationSlide, leaveMs);
-      for (int i = 0; i < PlacementTargets?.Length; i++)
+      for (var i = 0; i < PlacementTargets?.Length; i++)
       {
         shadowRectGeo[i].BeginAnimation(RectangleGeometry.RectProperty, initialRect, leaveMs);
         targetRectangle[i].BeginAnimation(MarginProperty, initialMargin, leaveMs);

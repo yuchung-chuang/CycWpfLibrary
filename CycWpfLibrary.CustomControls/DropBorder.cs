@@ -64,6 +64,7 @@ namespace CycWpfLibrary.CustomControls
       base.OnApplyTemplate();
       PART_Border = GetTemplateChild(PART_Border_Name) as Border;
       PART_Border.Drop += PART_Border_Drop;
+      AllowDrop = true;
     }
 
     private void PART_Border_Drop(object sender, DragEventArgs e)
@@ -72,7 +73,7 @@ namespace CycWpfLibrary.CustomControls
         return;
 
       // Note that you can have more than one file.
-      string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+      var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
       DropFileName = files[0];
       DropFileNames = AllowMultipleDrop ? files : files.Take(1).ToArray();

@@ -15,7 +15,7 @@ namespace CycWpfLibrary.CustomControls
 
     private void ResizeThumb_DragDelta(object sender, DragDeltaEventArgs e)
     {
-      Control designerItem = this.DataContext as Control;
+      var designerItem = this.DataContext as Control;
 
       if (designerItem != null)
       {

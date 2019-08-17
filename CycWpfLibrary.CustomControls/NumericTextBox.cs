@@ -37,7 +37,7 @@ namespace CycWpfLibrary.CustomControls
 
     private void Operate(string operation)
     {
-      int input = 0;
+      var input = 0;
 
       if (int.TryParse(this.Text, out input))
       {
